@@ -7,7 +7,6 @@
       <a @click="signout">Logout</a>
     </div>
     <router-view/>
-    <button class="btn btn-danger" @click.prevent="getProducts">測試</button>
   </div>
 </template>
 
