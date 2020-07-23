@@ -2,7 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/login">Login</router-link> |
+      <a @click="signout">Logout</a>
     </div>
     <router-view/>
     <button class="btn btn-danger" @click.prevent="getProducts">測試</button>
@@ -41,6 +43,14 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/products/all`;
       this.$http.get(url).then((respones) => {
         console.log(respones);
+      });
+    },
+    signout() {
+      const url = `${process.env.VUE_APP_APIPATH}/logout`;
+      this.$http.post(url).then((response) => {
+        if (response.data.success) {
+          alert(response.data.message);
+        }
       });
     },
   },
