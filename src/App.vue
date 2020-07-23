@@ -5,10 +5,13 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+    <button class="btn btn-danger" @click.prevent="getProducts">測試</button>
   </div>
 </template>
 
 <style lang="scss">
+@import "./assets/all.scss";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -30,3 +33,16 @@
   }
 }
 </style>
+
+<script>
+export default {
+  methods: {
+    getProducts() {
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/products/all`;
+      this.$http.get(url).then((respones) => {
+        console.log(respones);
+      });
+    },
+  },
+};
+</script>
