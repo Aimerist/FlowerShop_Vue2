@@ -21,8 +21,9 @@
               <i class="fas fa-spinner fa-spin"></i>
               查看更多
             </button>
-            <button type="button" class="btn btn-outline-danger btn-sm ml-auto">
-              <i class="fas fa-spinner fa-spin"></i>
+            <button type="button" class="btn btn-outline-danger btn-sm ml-auto"
+              @click="addProductToCart(item.id)">
+              <!-- <i class="fas fa-spinner fa-spin"></i> -->
               加到購物車
             </button>
           </div>
@@ -46,6 +47,19 @@ export default {
       vm.$http.get(url).then((response) => {
         if (response.data.success) {
           vm.Products = JSON.parse(JSON.stringify(response.data.products));
+        }
+      });
+    },
+    addProductToCart(id, qty = 1) {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
+      const product = {
+        product_id: id,
+        qty,
+      };
+      vm.$http.post(url, { data: product }).then((response) => {
+        if (response.data.success) {
+          alert(response.data.message);
         }
       });
     },
