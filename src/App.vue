@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/login">Login</router-link> |
+      <router-link :to="{ name: 'Products' }">Product</router-link> |
       <a @click="signout">Logout</a>
     </div>
     <router-view/>
