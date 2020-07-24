@@ -48,10 +48,11 @@
             </div>
           </div>
           <div class="d-flex">
-            <button type="button" class="btn btn-outline-secondary btn-sm">
+            <router-link type="button" class="btn btn-outline-secondary btn-sm"
+              :to="{ name: 'ProductDetail', params: { productId: `${item.id}` }}">
               <i class="fas fa-spinner fa-spin"></i>
               查看更多
-            </button>
+            </router-link>
             <button type="button" class="btn btn-outline-danger btn-sm ml-auto"
               @click="addProductToCart(item.id)">
               <!-- <i class="fas fa-spinner fa-spin"></i> -->
