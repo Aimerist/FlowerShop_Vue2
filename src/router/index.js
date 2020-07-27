@@ -30,6 +30,11 @@ const routes = [
     name: 'ProductDetail',
     component: () => import('../views/front/ProductDetail.vue'),
   },
+  {
+    path: '/admin',
+    name: 'Dashboard',
+    component: () => import('../views/Dashobard.vue'),
+  },
 ];
 
 const router = new VueRouter({
