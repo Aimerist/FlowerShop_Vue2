@@ -43,6 +43,7 @@
         </tr>
       </tbody>
     </table>
+    <Pagination :page="Page" @ChanePageKey="getProductsList"></Pagination>
 <!-- Modal -->
     <!-- product -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
@@ -172,23 +173,29 @@
 
 <script>
 import $ from 'jquery';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
+  components: {
+    Pagination,
+  },
   data() {
     return {
       Products: {},
       tempProduct: {},
+      Page: {},
       productId: '',
       isEdit: false,
     };
   },
   methods: {
-    getProductsList() {
+    getProductsList(page = 1) {
       const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/products`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/products?page=${page}`;
       vm.$http.get(url).then((response) => {
         if (response.data.success) {
-          vm.Products = JSON.parse(JSON.stringify(response.data.products));
+          vm.Products = response.data.products;
+          vm.Page = response.data.pagination;
         }
       });
     },
