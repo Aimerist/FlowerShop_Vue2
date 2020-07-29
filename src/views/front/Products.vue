@@ -30,6 +30,39 @@
         </div>
       </div>
     </div>
+<!-- 收藏內容 -->
+    <div class="btn-group">
+      <button type="button" class="btn" data-toggle="dropdown">
+        <i class="fas fa-heart fa-lg"></i>
+        <span class="badge badge-pill badge-danger">{{favoritesLength}}</span>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <div class="p-2 px-sm-3">
+          <h5 class="text-center">收藏清單</h5>
+          <table class="table mb-2" style="min-width:270px">
+            <tbody>
+              <tr v-for="favorite in Favorites" :key="favorite.id">
+                <td class="px-1">
+                  <a class="text-danger"
+                    @click.prevent="removeFavorite(favorite.id)">
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
+                </td>
+                <td class="px-1">{{ favorite.title }}</td>
+                <td class="text-right px-1">{{ favorite.price}} 元</td>
+              </tr>
+              <tr>
+                <td class="text-center" v-if="favoritesLength===0">快去加入收藏吧!</td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-outline-danger btn-block"
+            v-if="favoritesLength!==0"
+            data-toggle="modal" data-target="#delFavoriteModal">
+            刪除全部</button>
+        </div>
+      </div>
+    </div>
 <!-- 產品列表 -->
     <div class="row mt-4">
       <div class="col-md-4 mb-4">
@@ -58,6 +91,36 @@
               <!-- <i class="fas fa-spinner fa-spin"></i> -->
               加到購物車
             </button>
+            <button class="btn" v-if="!isFavorite(item.id)"
+              @click="addFavorite(item.id, item.title, item.price)">
+              <i class="far fa-heart"></i></button>
+            <button class="btn" v-if="isFavorite(item.id)"
+              @click="removeFavorite(item.id)">
+              <i class="fas fa-heart"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- delFavoriteModal -->
+    <div class="modal fade" id="delFavoriteModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content border-0">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <span>刪除產品</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            是否刪除 <strong class="text-danger">全部收藏</strong> 商品(刪除後將無法恢復)。
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger"
+              @click="deletAllFavorite">確認刪除</button>
           </div>
         </div>
       </div>
@@ -66,11 +129,14 @@
 </template>
 
 <script>
+import $ from 'jquery';
+
 export default {
   data() {
     return {
       Products: {},
       Carts: {},
+      Favorites: [],
     };
   },
   methods: {
@@ -105,10 +171,46 @@ export default {
         }
       });
     },
+    getFavorite() {
+      this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];
+    },
+    addFavorite(id, title, price) {
+      if (!this.isFavorite(id)) {
+        this.Favorites.push({ id, title, price });
+        localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
+      } else {
+        alert('已經加入過了唷', this.Favorites);
+      }
+    },
+    isFavorite(id) {
+      if (this.Favorites.some((item) => item.id === id)) {
+        return true;
+      }
+      return false;
+    },
+    removeFavorite(id) {
+      if (this.isFavorite(id)) {
+        this.Favorites.splice(this.Favorites.indexOf(id), 1);
+        localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
+      } else {
+        alert('目前並被沒有收藏唷', this.Favorites);
+      }
+    },
+    deletAllFavorite() {
+      localStorage.removeItem('favoriteData');
+      this.getFavorite();
+      $('#delFavoriteModal').modal('hide');
+    },
   },
   created() {
     this.getProducts();
     this.getCart();
+    this.getFavorite();
+  },
+  computed: {
+    favoritesLength() {
+      return this.Favorites.length || 0;
+    },
   },
 };
 </script>
