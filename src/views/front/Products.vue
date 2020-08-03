@@ -63,10 +63,25 @@
         </div>
       </div>
     </div>
+<!-- 商品類別 -->
+    <ul>
+      <li class="list-unstyled">
+        <button class="btn btn-outline-info btn-sm"
+          :class="{active: nowCategoryStatus === ''}"
+          @click="nowCategoryStatus=''"
+          >全部顯示</button>
+        <button class="btn btn-outline-info btn-sm"
+          :class="{active: nowCategoryStatus === `${category}`}"
+          @click="nowCategoryStatus=`${category}`"
+          v-for="category in Categories" :key="category"
+          >{{ category }}</button>
+      </li>
+    </ul>
 <!-- 產品列表 -->
     <div class="row mt-4">
-      <div class="col-md-4 mb-4">
-        <div class="border-0 shadow-sm" v-for="item in Products" :key="item.id">
+      <div class="col-md-4 mb-4"
+       v-for="item in filterData" :key="item.id">
+        <div class="border-0 shadow-sm">
           <img style="height: 150px; background-size: cover; background-position: center"
             :style="{backgroundImage: `url(${item.imageUrl})`}">
           <div>
@@ -134,18 +149,24 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      Products: {},
+      Products: [],
       Carts: {},
       Favorites: [],
+      Categories: [],
+      nowCategoryStatus: '',
     };
   },
   methods: {
     getProducts() {
       const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/products`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/products/all`;
       vm.$http.get(url).then((response) => {
         if (response.data.success) {
-          vm.Products = JSON.parse(JSON.stringify(response.data.products));
+          vm.Products = JSON.parse(JSON.stringify(response.data.products))
+            .filter((item) => item.is_enabled);
+          vm.Categories = vm.Products
+            .map((item) => item.category)
+            .filter((item, index, arr) => arr.indexOf(item) === index);
         }
       });
     },
@@ -210,6 +231,13 @@ export default {
   computed: {
     favoritesLength() {
       return this.Favorites.length || 0;
+    },
+    filterData() {
+      const vm = this;
+      if (vm.nowCategoryStatus) {
+        return vm.Products.filter((item) => item.category === vm.nowCategoryStatus);
+      }
+      return vm.Products;
     },
   },
 };
