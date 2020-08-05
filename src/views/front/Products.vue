@@ -34,7 +34,7 @@
     <div class="btn-group">
       <button type="button" class="btn" data-toggle="dropdown">
         <i class="fas fa-heart fa-lg"></i>
-        <span class="badge badge-pill badge-danger">{{favoritesLength}}</span>
+        <span class="badge badge-pill badge-danger">{{Favorites.length}}</span>
       </button>
       <div class="dropdown-menu dropdown-menu-right">
         <div class="p-2 px-sm-3">
@@ -52,12 +52,12 @@
                 <td class="text-right px-1">{{ favorite.price}} 元</td>
               </tr>
               <tr>
-                <td class="text-center" v-if="favoritesLength===0">快去加入收藏吧!</td>
+                <td class="text-center" v-if="Favorites.length===0">快去加入收藏吧!</td>
               </tr>
             </tbody>
           </table>
           <button class="btn btn-outline-danger btn-block"
-            v-if="favoritesLength!==0"
+            v-if="Favorites.length!==0"
             data-toggle="modal" data-target="#delFavoriteModal">
             刪除全部</button>
         </div>
@@ -229,9 +229,6 @@ export default {
     this.getFavorite();
   },
   computed: {
-    favoritesLength() {
-      return this.Favorites.length || 0;
-    },
     filterData() {
       const vm = this;
       if (vm.nowCategoryStatus) {
