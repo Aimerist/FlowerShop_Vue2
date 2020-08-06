@@ -91,7 +91,9 @@
           <div>
             <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
             <h5 class="card-title">
-              <a href="#" class="text-dark">{{ item.title }}</a>
+              <router-link class="text-dark"
+                :to="{ name: 'ProductDetail', params: { productId: `${item.id}` }}">
+                {{ item.title }}</router-link>
             </h5>
             <p>{{ item.conext }}</p>
             <div class="d-flex justify-content-between align-items-baseline">
