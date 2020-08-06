@@ -7,28 +7,34 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login.vue'),
-  },
-  {
-    path: '/products',
-    name: 'Products',
-    component: () => import('../views/front/Products.vue'),
-  },
-  {
-    path: '/products/:productId',
-    name: 'ProductDetail',
-    component: () => import('../views/front/ProductDetail.vue'),
+    component: () => import('../views/Layout.vue'),
+    children: [
+      {
+        path: '/',
+        name: 'Home',
+        component: Home,
+      },
+      {
+        path: '/about',
+        name: 'About',
+        component: () => import('../views/About.vue'),
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/Login.vue'),
+      },
+      {
+        path: '/products',
+        name: 'Products',
+        component: () => import('../views/front/Products.vue'),
+      },
+      {
+        path: '/products/:productId',
+        name: 'ProductDetail',
+        component: () => import('../views/front/ProductDetail.vue'),
+      },
+    ],
   },
   {
     path: '/admin',

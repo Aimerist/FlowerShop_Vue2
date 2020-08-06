@@ -1,13 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link :to="{ name: 'Products' }">Product</router-link> |
-      <router-link :to="{ name: 'ProductsList' }">Dashboard</router-link> |
-      <a @click="signout">Logout</a>
-    </div>
+    <div id="nav"></div>
     <router-view/>
   </div>
 </template>
@@ -24,36 +17,6 @@
 }
 
 #nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  padding: 40px;
 }
 </style>
-
-<script>
-export default {
-  methods: {
-    getProducts() {
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/products/all`;
-      this.$http.get(url).then((respones) => {
-        console.log(respones);
-      });
-    },
-    signout() {
-      const url = `${process.env.VUE_APP_APIPATH}/logout`;
-      this.$http.post(url).then((response) => {
-        if (response.data.success) {
-          alert(response.data.message);
-        }
-      });
-    },
-  },
-};
-</script>
