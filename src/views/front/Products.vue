@@ -4,7 +4,7 @@
     <div class="btn-group">
       <button type="button" class="btn" data-toggle="dropdown">
         <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="badge badge-pill badge-danger">0</span>
+        <span class="badge badge-pill badge-danger">{{Carts.length}}</span>
       </button>
       <div class="dropdown-menu dropdown-menu-right">
         <div class="p-2 px-sm-3">
@@ -13,13 +13,17 @@
             <tbody>
               <tr v-for="cart in Carts" :key="cart.id">
                 <td class="px-1">
-                  <a href="#" class="text-danger">
+                  <a href="#" class="text-danger"
+                    @click.prevent="removeProductToCart(cart.id)">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </td>
                 <td class="px-1">{{ cart.product.title }}</td>
                 <td class="px-1">{{ cart.qty }} {{ cart.product.unit }}</td>
                 <td class="text-right px-1">{{ cart.total}} 元</td>
+              </tr>
+              <tr>
+                <td class="text-center" v-if="Carts.length===0">去購物吧!</td>
               </tr>
             </tbody>
           </table>
@@ -181,6 +185,12 @@ export default {
         if (response.data.success) {
           vm.getCart();
         }
+      });
+    },
+    removeProductToCart(id) {
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart/${id}`;
+      this.$http.delete(url).then(() => {
+        this.getCart();
       });
     },
     getCart() {
