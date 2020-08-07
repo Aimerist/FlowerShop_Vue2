@@ -55,6 +55,11 @@ const routes = [
         name: 'OrderList',
         component: () => import('../views/back/OrderList.vue'),
       },
+      {
+        path: 'coupons',
+        name: 'CouponList',
+        component: () => import('../views/back/CouponList.vue'),
+      },
     ],
   },
 ];
