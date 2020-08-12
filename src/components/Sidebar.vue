@@ -2,76 +2,56 @@
   <div>
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">
-              <span data-feather="home"></span>
-              Dashboard <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-              Orders
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Integrations
-            </a>
-          </li>
-        </ul>
-
+        <hr>
         <h6 class="sidebar-heading d-flex justify-content-between
-          align-items-centerpx-3 mt-4 mb-1 text-muted">
-          <span>Saved reports</span>
-          <a class="d-flex align-items-center text-muted" href="#"
-            aria-label="Add a new report">
+          align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>管理員</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
             <span data-feather="plus-circle"></span>
           </a>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Current month
-            </a>
+            <router-link class="nav-link" :to="{name:'ProductsList'}">
+              <i class="fas fa-box-open"></i>
+              產品列表
+            </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Last quarter
-            </a>
+            <router-link class="nav-link" :to="{name:'OrderList'}">
+              <i class="far fa-list-alt"></i>
+              訂單列表
+            </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Social engagement
-            </a>
+            <router-link class="nav-link" :to="{name:'CouponList'}">
+              <i class="fas fa-ticket-alt"></i>
+              優惠卷列表
+            </router-link>
           </li>
+        </ul>
+        <hr>
+        <h6 class="sidebar-heading d-flex justify-content-between
+          align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>模擬功能</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Year-end sale
+            <router-link class="nav-link" :to="{name: 'Products'}">
+              <i class="fas fa-shopping-cart"></i>
+              購物
+            </router-link>
+          </li>
+        </ul>
+        <hr>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" @click.prevent="">
+              <i class="fas fa-sign-out-alt"></i>
+              登出
             </a>
           </li>
         </ul>
@@ -87,7 +67,7 @@
   bottom: 0;
   left: 0;
   z-index: 100; /* Behind the navbar */
-  padding: 130px 0 0; /* Height of navbar */
+  padding: 60px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   text-align: left;
 }
