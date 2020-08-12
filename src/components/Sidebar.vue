@@ -49,7 +49,7 @@
         <hr>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" @click.prevent="">
+            <a class="nav-link" @click.prevent="signout">
               <i class="fas fa-sign-out-alt"></i>
               登出
             </a>
@@ -59,6 +59,21 @@
     </nav>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    signout() {
+      const url = `${process.env.VUE_APP_APIPATH}/logout`;
+      this.$http.post(url).then((response) => {
+        if (response.data.success) {
+          this.$router.push({ name: 'Products' });
+        }
+      });
+    },
+  },
+};
+</script>
 
 <style scoped>
 .sidebar {
@@ -98,6 +113,7 @@
 .sidebar .nav-link {
   font-weight: 500;
   color: #333;
+  cursor: pointer;
 }
 
 .sidebar .nav-link .feather {
