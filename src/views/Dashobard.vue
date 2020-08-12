@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar></Navbar>
     <div class="container-fluid">
       <div class="row">
         <Sidebar></Sidebar>
@@ -13,12 +12,10 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue';
 import Sidebar from '../components/Sidebar.vue';
 
 export default {
   components: {
-    Navbar,
     Sidebar,
   },
 };
