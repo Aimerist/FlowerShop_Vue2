@@ -48,16 +48,19 @@ const routes = [
       {
         path: '',
         name: 'ProductsList',
+        meta: { requiresAuth: true },
         component: () => import('../views/back/ProductsList.vue'),
       },
       {
         path: 'orders',
         name: 'OrderList',
+        meta: { requiresAuth: true },
         component: () => import('../views/back/OrderList.vue'),
       },
       {
         path: 'coupons',
         name: 'CouponList',
+        meta: { requiresAuth: true },
         component: () => import('../views/back/CouponList.vue'),
       },
     ],
