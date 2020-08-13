@@ -39,7 +39,7 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       vm.$http.post(url, vm.user).then((response) => {
         if (response.data.success) {
-          vm.$router.push({ name: 'About' });
+          vm.$router.push({ name: 'ProductsList' });
         }
       });
     },
