@@ -11,20 +11,18 @@
         <div class="collapse navbar-collapse" id="navbarsExample07XL">
           <ul class="navbar-nav mr-auto color">
             <li class="nav-item">
-              <router-link class="nav-link" to="/">Home
+              <router-link class="nav-link"
+                :to="{ name: 'Products' }">Product
                 <span class="sr-only">(current)</span></router-link></li>
             <li class="nav-item">
-              <router-link class="nav-link"
-                :to="{ name: 'Products' }">Product</router-link></li>
-            <!-- <li class="nav-item">
-              <router-link class="nav-link" href="#">Coupon</router-link></li> -->
+              <a class="nav-link" href="#">Coupon</a></li>
             <li class="nav-item">
               <router-link class="nav-link"
                 to="/about">About</router-link></li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="!isLongin">
               <router-link class="nav-link"
-                to="/login">Login</router-link></li>
-            <li class="nav-item">
+                :to="{ name: 'Login' }">Login</router-link></li>
+            <li class="nav-item"  v-if="isLongin">
               <router-link class="nav-link"
                 :to="{ name: 'ProductsList' }">Dashboard</router-link></li>
           </ul>
@@ -40,7 +38,26 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isLongin: false,
+    };
+  },
   methods: {
+    Loginstatus() {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}/api/user/check`;
+      vm.$http.post(url).then((response) => {
+        if (response.data.success) {
+          vm.isLongin = true;
+        } else {
+          vm.isLongin = false;
+        }
+      });
+    },
+  },
+  created() {
+    this.Loginstatus();
   },
 };
 </script>
