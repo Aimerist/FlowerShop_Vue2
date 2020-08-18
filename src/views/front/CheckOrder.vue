@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
     <div class="h4 text-center mb-3">購 物 車 清 單</div>
     <table class="table">
       <thead>
@@ -65,15 +68,18 @@ export default {
     return {
       Carts: {},
       couponCode: '',
+      isLoading: false,
     };
   },
   methods: {
     getCart() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
+      vm.isLoading = true;
       vm.$http.get(url).then((response) => {
         if (response.data.success) {
           vm.Carts = response.data.data;
+          vm.isLoading = false;
         }
       });
     },

@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
 <!-- 購物車內容 -->
     <div class="btn-group">
       <button type="button" class="btn" data-toggle="dropdown">
@@ -160,12 +163,14 @@ export default {
       Favorites: [],
       Categories: [],
       nowCategoryStatus: '',
+      isLoading: false,
     };
   },
   methods: {
     getProducts() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/products/all`;
+      vm.isLoading = true;
       vm.$http.get(url).then((response) => {
         if (response.data.success) {
           vm.Products = JSON.parse(JSON.stringify(response.data.products))
@@ -173,6 +178,7 @@ export default {
           vm.Categories = vm.Products
             .map((item) => item.category)
             .filter((item, index, arr) => arr.indexOf(item) === index);
+          vm.isLoading = false;
         }
       });
     },

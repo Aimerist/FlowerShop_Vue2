@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
 <!-- 購物車內容 -->
     <div class="btn-group">
       <button type="button" class="btn" data-toggle="dropdown">
@@ -151,15 +154,18 @@ export default {
       Carts: {},
       Favorites: [],
       qty: '',
+      isLoading: false,
     };
   },
   methods: {
     getProduct() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/product/${vm.productId}`;
+      vm.isLoading = true;
       vm.$http.get(url).then((response) => {
         if (response.data.success) {
           vm.Product = JSON.parse(JSON.stringify(response.data.product));
+          vm.isLoading = false;
         }
       });
     },
