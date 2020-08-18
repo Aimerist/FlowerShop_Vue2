@@ -12,9 +12,10 @@
       <div class="dropdown-menu dropdown-menu-right" :class="{'show': isShowCart}">
         <div class="p-2 px-sm-3">
           <h5 class="text-center">購物車清單</h5>
-          <table class="table mb-2" style="min-width:270px">
+          <table class="table mb-2 table-hover" style="min-width:270px">
             <tbody>
-              <tr v-for="cart in Carts" :key="cart.id">
+              <tr v-for="cart in Carts" :key="cart.id" class="clicktable-row"
+                @click="productLink(cart.product_id)">
                 <td class="px-1">
                   <a href="#" class="text-danger"
                     @click.prevent="removeProductToCart(cart.id)">
@@ -46,9 +47,10 @@
       <div class="dropdown-menu dropdown-menu-right">
         <div class="p-2 px-sm-3">
           <h5 class="text-center">收藏清單</h5>
-          <table class="table mb-2" style="min-width:270px">
+          <table class="table mb-2 table-hover" style="min-width:270px">
             <tbody>
-              <tr v-for="favorite in Favorites" :key="favorite.id">
+              <tr v-for="favorite in Favorites" :key="favorite.id" class="clicktable-row"
+                @click="productLink(favorite.id)">
                 <td class="px-1">
                   <a class="text-danger"
                     @click.prevent="removeFavorite(favorite.id)">
@@ -183,6 +185,9 @@ export default {
         }
       });
     },
+    productLink(id) {
+      this.$router.push({ name: 'ProductDetail', params: { productId: id } });
+    },
     addProductToCart(id, qty = 1) {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
@@ -265,3 +270,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.clicktable-row {
+  cursor: pointer;
+}
+</style>
