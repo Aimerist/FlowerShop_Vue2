@@ -4,12 +4,12 @@
       <loading :active.sync="isLoading"></loading>
     </div>
 <!-- 購物車內容 -->
-    <div class="btn-group">
+    <div class="btn-group" :class="{'show': isShowCart}">
       <button type="button" class="btn" data-toggle="dropdown">
         <i class="fas fa-shopping-cart fa-lg"></i>
         <span class="badge badge-pill badge-danger">{{Carts.length}}</span>
       </button>
-      <div class="dropdown-menu dropdown-menu-right">
+      <div class="dropdown-menu dropdown-menu-right" :class="{'show': isShowCart}">
         <div class="p-2 px-sm-3">
           <h5 class="text-center">購物車清單</h5>
           <table class="table mb-2" style="min-width:270px">
@@ -164,6 +164,7 @@ export default {
       Categories: [],
       nowCategoryStatus: '',
       isLoading: false,
+      isShowCart: false,
     };
   },
   methods: {
@@ -189,10 +190,17 @@ export default {
         product_id: id,
         qty,
       };
+      vm.isLoading = true;
       vm.$http.post(url, { data: product }).then((response) => {
         if (response.data.success) {
+          vm.isLoading = false;
           vm.getCart();
         }
+      }).then(() => {
+        vm.isShowCart = true;
+        setTimeout(() => {
+          vm.isShowCart = false;
+        }, 3000);
       });
     },
     removeProductToCart(id) {
