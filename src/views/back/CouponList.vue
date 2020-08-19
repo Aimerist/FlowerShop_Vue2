@@ -24,7 +24,7 @@
           <td class="d-lg-table-cell d-none align-middle">
             {{item.code}}</td>
           <td class="d-sm-table-cell d-none align-middle">
-            {{item.percent}}</td>
+            {{item.percent | percentage}}</td>
           <td class="d-md-table-cell d-none align-middle">
             {{item.due_date | date}}</td>
           <td class="d-sm-table-cell d-none align-middle">
@@ -133,10 +133,14 @@
 <script>
 import $ from 'jquery';
 import Pagination from '@/components/Pagination.vue';
+import percentage from '@/filters/percentage';
 
 export default {
   components: {
     Pagination,
+  },
+  filters: {
+    percentage,
   },
   data() {
     return {
