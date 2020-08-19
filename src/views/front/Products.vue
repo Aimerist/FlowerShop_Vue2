@@ -18,7 +18,7 @@
                 @click="productLink(cart.product_id)">
                 <td class="px-1">
                   <a href="#" class="text-danger"
-                    @click.prevent="removeProductToCart(cart.id)">
+                    @click.stop.prevent="removeProductToCart(cart.id)">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </td>
@@ -53,7 +53,7 @@
                 @click="productLink(favorite.id)">
                 <td class="px-1">
                   <a class="text-danger"
-                    @click.prevent="removeFavorite(favorite.id)">
+                    @click.stop.prevent="removeFavorite(favorite.id)">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </td>
