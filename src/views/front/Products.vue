@@ -24,7 +24,7 @@
                 </td>
                 <td class="px-1">{{ cart.product.title }}</td>
                 <td class="px-1">{{ cart.qty }} {{ cart.product.unit }}</td>
-                <td class="text-right px-1">{{ cart.total}} 元</td>
+                <td class="text-right px-1">{{ cart.total | currency }}</td>
               </tr>
               <tr>
                 <td class="text-center" v-if="Carts.length===0">去購物吧!</td>
@@ -58,7 +58,7 @@
                   </a>
                 </td>
                 <td class="px-1">{{ favorite.title }}</td>
-                <td class="text-right px-1">{{ favorite.price}} 元</td>
+                <td class="text-right px-1">{{ favorite.price | currency }}</td>
               </tr>
               <tr>
                 <td class="text-center" v-if="Favorites.length===0">快去加入收藏吧!</td>
@@ -102,8 +102,8 @@
             </h5>
             <p>{{ item.conext }}</p>
             <div class="d-flex justify-content-between align-items-baseline">
-              <del class="h6">原價 {{ item.price }} 元</del>
-              <div class="h5">現在只要 {{ item.origin_price }} 元</div>
+              <del class="h6">原價 {{ item.price | currency }}</del>
+              <div class="h5">特價 {{ item.origin_price | currency }}</div>
             </div>
           </div>
           <div class="d-flex">

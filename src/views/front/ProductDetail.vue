@@ -24,7 +24,7 @@
                 </td>
                 <td class="px-1">{{ cart.product.title }}</td>
                 <td class="px-1">{{ cart.qty }} {{ cart.product.unit }}</td>
-                <td class="text-right px-1">{{ cart.total}} 元</td>
+                <td class="text-right px-1">{{ cart.total | currency }}</td>
               </tr>
               <tr>
                 <td class="text-center" v-if="Carts.length===0">去購物吧!</td>
@@ -58,7 +58,7 @@
                   </a>
                 </td>
                 <td class="px-1">{{ favorite.title }}</td>
-                <td class="text-right px-1">{{ favorite.price}} 元</td>
+                <td class="text-right px-1">{{ favorite.price | currency}}</td>
               </tr>
               <tr>
                 <td class="text-center" v-if="Favorites.length===0">快去加入收藏吧!</td>
@@ -109,8 +109,8 @@
         <tr><th>分類：</th><td>{{Product.category}}</td></tr>
         <tr><th>內容：</th><td>{{Product.content}}</td></tr>
         <tr><th>描述：</th><td>{{Product.description}}</td></tr>
-        <tr><th>售價：</th><td>{{Product.origin_price}}</td></tr>
-        <tr><th>原價：</th><td>{{Product.price}}</td></tr>
+        <tr><th>售價：</th><td>{{Product.origin_price | currency }}</td></tr>
+        <tr><th>原價：</th><td>{{Product.price | currency}}</td></tr>
         <tr><th>單位：</th><td>{{Product.unit}}</td></tr>
         <tr><th>是否啟用</th><td>{{Product.is_enabled}}</td></tr>
         <tr><th>圖片</th><td>

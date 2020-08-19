@@ -28,9 +28,9 @@
           <td class="d-md-table-cell d-none align-middle">
             {{item.title}}</td>
           <td class="d-md-table-cell d-none align-middle">
-            {{item.origin_price}}</td>
+            {{item.origin_price | currency}}</td>
           <td class="d-md-table-cell d-none align-middle">
-            {{item.price}}</td>
+            {{item.price | currency}}</td>
           <td class="d-md-table-cell d-none align-middle">
             <span v-if="item.is_enabled" class="text-success">啟動</span>
             <span v-else class="text-secondary">未啟動</span></td>

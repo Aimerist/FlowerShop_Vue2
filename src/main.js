@@ -8,11 +8,14 @@ import router from './router';
 import store from './store';
 import 'bootstrap';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import currencyFilter from './filters/currency';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 axios.defaults.withCredentials = true;
+
 Vue.component('Loading', Loading);
+Vue.filter('currency', currencyFilter);
 
 new Vue({
   router,

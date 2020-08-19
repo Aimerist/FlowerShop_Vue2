@@ -20,7 +20,7 @@
             :style="{backgroundImage:`url(${cart.product.imageUrl})`}"></td>
           <td>{{ cart.product.title }}</td>
           <td>{{ cart.qty }} / {{ cart.product.unit }}</td>
-          <td>{{ cart.total}} 元</td>
+          <td>{{ cart.total | currency }}</td>
           <td>
             <a href="#" class="text-danger" @click.prevent="removeProductToCart(cart.id)">
               <i class="fas fa-trash-alt"></i>
@@ -31,11 +31,11 @@
       <tfoot>
         <tr>
           <td colspan="3" class="text-right">總計</td>
-          <td class="text-right"> {{Carts.total}} 元</td>
+          <td class="text-right"> {{Carts.total | currency }}</td>
         </tr>
         <tr v-if="Carts.final_total !== Carts.total">
           <td colspan="3" class="text-right text-success">折扣價</td>
-          <td class="text-right text-success">{{ Carts.final_total }}</td>
+          <td class="text-right text-success">{{ Carts.final_total | currency }}</td>
         </tr>
       </tfoot>
     </table>
