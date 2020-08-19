@@ -26,7 +26,7 @@
           <td class="d-sm-table-cell d-none align-middle">
             {{item.percent}}</td>
           <td class="d-md-table-cell d-none align-middle">
-            {{item.due_date}}</td>
+            {{item.due_date | date}}</td>
           <td class="d-sm-table-cell d-none align-middle">
             <span v-if="item.is_enabled" class="text-success">啟動</span>
             <span v-else class="text-secondary">未啟動</span></td>
@@ -179,7 +179,7 @@ export default {
         url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
         apiMethd = 'put';
       }
-      vm.tempCoupon.due_date = new Date(vm.tempCoupon.due_date).getTime();
+      vm.tempCoupon.due_date = Math.floor(new Date(vm.tempCoupon.due_date) / 1000);
       vm.$http[apiMethd](url, { data: vm.tempCoupon }).then((response) => {
         if (response.data.success) {
           $('#addCouponModal').modal('hide');

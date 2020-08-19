@@ -29,7 +29,7 @@
             </ul>
           </td>
           <td scope="row" class="d-sm-table-cell d-none align-middle">{{item.total | currency}}</td>
-          <td scope="row" class="d-lg-table-cell d-none align-middle">{{item.create_at}}</td>
+          <td scope="row" class="d-lg-table-cell d-none align-middle">{{item.create_at | date}}</td>
           <td scope="row" class="d-xl-table-cell d-none align-middle">{{item.message}}</td>
           <td scope="row" class="align-middle">
             <button class="btn btn-outline-info btn-sm">修改</button>
