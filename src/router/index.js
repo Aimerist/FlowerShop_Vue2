@@ -39,6 +39,11 @@ const routes = [
         name: 'CheckOrder',
         component: () => import('../views/front/CheckOrder.vue'),
       },
+      {
+        path: '/consumerform',
+        name: 'ConsumerForm',
+        component: () => import('../views/front/ConsumerForm.vue'),
+      },
     ],
   },
   {
