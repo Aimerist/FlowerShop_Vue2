@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AlertMessage></AlertMessage>
     <div class="container-fluid">
       <div class="row">
         <Sidebar></Sidebar>
@@ -13,10 +14,12 @@
 
 <script>
 import Sidebar from '../components/Sidebar.vue';
+import AlertMessage from '../components/AlertMessage.vue';
 
 export default {
   components: {
     Sidebar,
+    AlertMessage,
   },
 };
 </script>

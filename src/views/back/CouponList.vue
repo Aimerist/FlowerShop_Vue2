@@ -186,9 +186,10 @@ export default {
       vm.tempCoupon.due_date = Math.floor(new Date(vm.tempCoupon.due_date) / 1000);
       vm.$http[apiMethd](url, { data: vm.tempCoupon }).then((response) => {
         if (response.data.success) {
-          $('#addCouponModal').modal('hide');
           vm.getCoupons();
+          vm.$bus.$emit('message:push', response.data.message, 'success');
         }
+        $('#addCouponModal').modal('hide');
       });
     },
     delCoupon(id) {
@@ -197,8 +198,11 @@ export default {
       vm.$http.delete(url).then((response) => {
         if (response.data.success) {
           vm.getCoupons();
-          $('#delCouponModal').modal('hide');
+          vm.$bus.$emit('message:push', response.data.message, 'success');
+        } else {
+          vm.$bus.$emit('message:push', response.data.message, 'danger');
         }
+        $('#delCouponModal').modal('hide');
       });
     },
   },
