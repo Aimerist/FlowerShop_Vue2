@@ -83,7 +83,7 @@
               <i class="far fa-heart"></i> 收藏商品
             </button>
           </td>
-          <td v-if="isFavorite(Product.id)" @click="removeFavorite(Product.id)">
+          <td v-if="isFavorite(Product.id)">
             <button class="btn p-0"
               @click="removeFavorite(Product.id)">
               <i class="fas fa-heart"></i> 取消收藏
@@ -184,6 +184,7 @@ export default {
         if (response.data.success) {
           vm.isLoading = false;
           vm.getCart();
+          vm.$bus.$emit('message:push', '已加入購物車', 'success');
         }
       }).then(() => {
         vm.isShowCart = true;
@@ -193,9 +194,11 @@ export default {
       });
     },
     removeProductToCart(id) {
+      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart/${id}`;
-      this.$http.delete(url).then(() => {
-        this.getCart();
+      this.$http.delete(url).then((response) => {
+        vm.getCart();
+        vm.$bus.$emit('message:push', response.data.message, 'warning');
       });
     },
     getCart() {
@@ -214,8 +217,9 @@ export default {
       if (!this.isFavorite(id)) {
         this.Favorites.push({ id, title, price });
         localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
+        this.$bus.$emit('message:push', '已加入收藏夾', 'success');
       } else {
-        alert('已經加入過了唷', this.Favorites);
+        this.$bus.$emit('message:push', '已經加入過收藏夾了唷', 'danger');
       }
     },
     isFavorite(id) {
@@ -228,14 +232,16 @@ export default {
       if (this.isFavorite(id)) {
         this.Favorites.splice(this.Favorites.indexOf(id), 1);
         localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
+        this.$bus.$emit('message:push', '已刪除', 'warning');
       } else {
-        alert('目前並被沒有收藏唷', this.Favorites);
+        this.$bus.$emit('message:push', '目前並被沒有收藏唷', 'danger');
       }
     },
     deletAllFavorite() {
       localStorage.removeItem('favoriteData');
       this.getFavorite();
       $('#delFavoriteModal').modal('hide');
+      this.$bus.$emit('message:push', '已全部刪除', 'warning');
     },
   },
   created() {

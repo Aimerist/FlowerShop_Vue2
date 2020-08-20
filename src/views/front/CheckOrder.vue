@@ -84,9 +84,12 @@ export default {
       });
     },
     removeProductToCart(id) {
+      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart/${id}`;
-      this.$http.delete(url).then(() => {
-        this.getCart();
+      vm.isLoading = true;
+      this.$http.delete(url).then((response) => {
+        vm.getCart();
+        vm.$bus.$emit('message:push', response.data.message, 'warning');
       });
     },
     addCouponCode() {
@@ -96,10 +99,11 @@ export default {
         code: vm.couponCode,
       };
       this.$http.post(url, { data: coupon }).then((response) => {
-        console.log(response);
         if (response.data.success) {
-          console.log(response.data.message);
           vm.getCart();
+          vm.$bus.$emit('message:push', response.data.message, 'success');
+        } else {
+          vm.$bus.$emit('message:push', response.data.message, 'danger');
         }
       });
     },

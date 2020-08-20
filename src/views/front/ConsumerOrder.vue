@@ -89,6 +89,7 @@ export default {
       vm.$http.post(url).then((response) => {
         if (response.data.success) {
           vm.getOrder();
+          vm.$bus.$emit('message:push', response.data.message, 'success');
         }
       });
     },

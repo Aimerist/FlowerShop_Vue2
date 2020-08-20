@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AlertMessage></AlertMessage>
     <nav class="navbar navbar-expand-lg fixed-top py-3  rounded text-uppercase ">
       <div class="container-xl navbar-light">
         <a class="navbar-brand" href="#">Flower Shop</a>
@@ -37,7 +38,12 @@
 </template>
 
 <script>
+import AlertMessage from '../components/AlertMessage.vue';
+
 export default {
+  components: {
+    AlertMessage,
+  },
   data() {
     return {
       isLongin: false,

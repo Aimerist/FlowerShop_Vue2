@@ -95,12 +95,17 @@ export default {
         if (valid) {
           vm.$http.post(url, { data: vm.form }).then((response) => {
             if (response.data.success) {
+              vm.$bus.$emit('message:push', response.data.message, 'success');
               vm.$router.push({
                 name: 'ConsumerOrder',
                 params: { orderId: response.data.orderId },
               });
+            } else {
+              vm.$bus.$emit('message:push', response.data.message, 'danger');
             }
           });
+        } else {
+          vm.$bus.$emit('message:push', '欄位填寫不完整', 'danger');
         }
       });
     },
