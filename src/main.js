@@ -8,6 +8,7 @@ import router from './router';
 import store from './store';
 import 'bootstrap';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import './bus';
 import currencyFilter from './filters/currency';
 import dateFilter from './filters/date';
 
