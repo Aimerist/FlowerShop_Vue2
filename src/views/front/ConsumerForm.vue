@@ -88,7 +88,6 @@ export default {
     };
   },
   methods: {
-    // -MF8ncOKZZrjhhHPpqDZ
     createdOrder() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order`;
@@ -96,9 +95,10 @@ export default {
         if (valid) {
           vm.$http.post(url, { data: vm.form }).then((response) => {
             if (response.data.success) {
-              console.log(response.data.message);
-            } else {
-              console.log(response.data.message);
+              vm.$router.push({
+                name: 'ConsumerOrder',
+                params: { orderId: response.data.orderId },
+              });
             }
           });
         }
