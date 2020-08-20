@@ -30,6 +30,10 @@
                   <th>收件地址</th>
                   <td>{{order.user.address}}</td>
                 </tr>
+                <tr v-if="order.message">
+                  <th>留言</th>
+                  <td>{{order.message}}</td>
+                </tr>
                 <tr>
                   <th>訂單金額</th>
                   <td>{{order.total|currency}}</td>
