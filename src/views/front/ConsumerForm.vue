@@ -2,8 +2,8 @@
   <div>
     <div class="h4 text-center mb-3">填 寫 訂 單 資 料</div>
     <div class="my-5 row justify-content-center">
-      <ValidationObserver>
-        <form class="text-left">
+      <ValidationObserver ref="form">
+        <form class="text-left" @submit.prevent="createdOrder">
           <div class="row">
             <div class="form-group col-md-6">
               <label for="username">姓名</label>
@@ -26,7 +26,7 @@
             <label for="useremail">信箱</label>
             <ValidationProvider name="信箱" rules="required|email" v-slot="{ errors }">
               <input type="email" class="form-control" name="email" id="useremail"
-                v-model="form.user.email" placeholder="請輸入信箱" required>
+                v-model="form.user.email" placeholder="請輸入信箱">
               <span class="text-danger">{{ errors[0] }}</span>
             </ValidationProvider>
           </div>
@@ -44,7 +44,13 @@
             v-model="form.message"></textarea>
           </div>
           <div class="text-right">
-            <button class="btn btn-danger">送出訂單</button>
+            <router-link to="/checkorder" class="btn btn-success">
+              <i class="fas fa-arrow-left"></i>
+              回上一步
+            </router-link>
+            <button class="btn btn-danger">
+              送出訂單
+              <i class="fas fa-arrow-right"></i></button>
           </div>
         </form>
       </ValidationObserver>
@@ -80,6 +86,24 @@ export default {
         user: {},
       },
     };
+  },
+  methods: {
+    // -MF8ncOKZZrjhhHPpqDZ
+    createdOrder() {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order`;
+      this.$refs.form.validate().then((valid) => {
+        if (valid) {
+          vm.$http.post(url, { data: vm.form }).then((response) => {
+            if (response.data.success) {
+              console.log(response.data.message);
+            } else {
+              console.log(response.data.message);
+            }
+          });
+        }
+      });
+    },
   },
 };
 </script>
