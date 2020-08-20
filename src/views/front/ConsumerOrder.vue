@@ -38,7 +38,9 @@
                   <th>付款狀態</th>
                   <td>
                     <span v-if="!order.is_paid">尚未付款</span>
-                    <span class="text-success" v-if="order.is_paid">付款完成</span>
+                    <span class="text-success" v-if="order.is_paid">
+                      {{order.paid_date|date}} <strong>完成付款</strong>
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -47,7 +49,8 @@
           <div class="col-md-5">
             <div class="text-right">
               <button class="btn btn-danger btn-block"
-                v-if="!order.is_paid">確認付款</button>
+                v-if="!order.is_paid"
+                @click="payOrder">確認付款</button>
             </div>
           </div>
         </div>
@@ -69,11 +72,19 @@ export default {
   methods: {
     getOrder() {
       const vm = this;
-      const url = `
-      ${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order/${vm.order.id}`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order/${vm.order.id}`;
       vm.$http.get(url).then((response) => {
         if (response.data.success) {
           vm.order = response.data.order;
+        }
+      });
+    },
+    payOrder() {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/pay/${vm.order.id}`;
+      vm.$http.post(url).then((response) => {
+        if (response.data.success) {
+          vm.getOrder();
         }
       });
     },
