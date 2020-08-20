@@ -44,6 +44,11 @@ const routes = [
         name: 'ConsumerForm',
         component: () => import('../views/front/ConsumerForm.vue'),
       },
+      {
+        path: '/consumerorder/:orderId',
+        name: 'ConsumerOrder',
+        component: () => import('../views/front/ConsumerOrder.vue'),
+      },
     ],
   },
   {
