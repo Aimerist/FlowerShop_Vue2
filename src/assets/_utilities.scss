@@ -1,0 +1,21 @@
+body {
+  color: #343a40;
+}
+
+ul {
+  margin: 0;
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.link-line:hover {
+  box-shadow: inset 0 -8px 0px #EEDEA6;
+  text-decoration: none;
+}
