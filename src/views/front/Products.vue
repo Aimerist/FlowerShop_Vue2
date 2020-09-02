@@ -322,6 +322,9 @@ export default {
     background-size: cover;
     object-fit:cover;
   }
+  .card-body {
+    min-height: 145px;
+  }
   .card-title {
     color: #5e573e;
     font-weight: 600;
