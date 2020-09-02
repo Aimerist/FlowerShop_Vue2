@@ -117,7 +117,7 @@
                     {{ item.title }}</router-link>
                 </h5>
                 <div class="px-2 pb-1"
-                  style="color: #555;">{{ item.content }}</div>
+                  style="color: #555;">{{ item.content | contentLength }}</div>
                 <div class="d-flex align-items-baseline px-2">
                   <p class="text-secondary mb-0">原價 <del>{{ item.price | currency }}</del></p>
                   <p class="ml-auto h5 text-danger">NT {{ item.origin_price | currency }}</p>
@@ -161,8 +161,12 @@
 
 <script>
 import $ from 'jquery';
+import contentLength from '@/filters/stringlenght';
 
 export default {
+  filters: {
+    contentLength,
+  },
   data() {
     return {
       Products: [],
