@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
     <div class="h4 text-center mb-3">填 寫 訂 單 資 料</div>
     <div class="my-5 row justify-content-center">
       <ValidationObserver ref="form">
@@ -82,12 +85,25 @@ export default {
   },
   data() {
     return {
+      Carts: {},
       form: {
         user: {},
       },
+      isLoading: false,
     };
   },
   methods: {
+    getCart() {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
+      vm.isLoading = true;
+      vm.$http.get(url).then((response) => {
+        if (response.data.success) {
+          vm.Carts = response.data.data;
+          vm.isLoading = false;
+        }
+      });
+    },
     createdOrder() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order`;
@@ -109,6 +125,9 @@ export default {
         }
       });
     },
+  },
+  created() {
+    this.getCart();
   },
 };
 </script>
