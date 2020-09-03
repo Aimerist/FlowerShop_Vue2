@@ -24,3 +24,41 @@ a {
   box-shadow: inset 0 -8px 0px #EEDEA6;
   text-decoration: none;
 }
+
+.f-size75 {
+  font-size: 0.75rem;
+}
+
+@media (max-width:767px) {
+  .md-dis-none {
+    display: none;
+  }
+}
+
+.btn-submit {
+  background-color: #D1A813;
+  border: 3px solid #D1A813;
+  text-align: center;
+  color: #fff;
+
+  &:hover {
+    background-color: #B69418;
+    border: 3px solid #B69418;
+    text-decoration: none;
+    color: #fff;
+  }
+}
+
+.btn-back {
+  background-color: #efe5dc;
+  border: 3px solid #efe5dc;
+  text-align: center;
+  color: #343a40;
+
+  &:hover {
+    background-color: #EEDEA6;
+    border: 3px solid #EEDEA6;
+    text-decoration: none;
+    color: #343a40;
+  }
+}
