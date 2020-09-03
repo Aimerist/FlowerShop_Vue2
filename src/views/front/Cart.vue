@@ -24,13 +24,15 @@
     <div class="row colorE">
       <!-- 購物車清單-->
       <div class="col-md-7">
-        <!-- <div class="jumbotron text-center bg-brownlight rounded-0">
+        <div class="jumbotron text-center bg-brownlight rounded-0"
+          v-if="Carts.carts.length===0">
           <div class="h4 mb-5">購物車內無商品</div>
           <router-link class="btn btn-lg btn-goshoping py-1 mt-4 rounded-0"
             :to="{ name: 'Products'}" >
             繼續購物</router-link>
-        </div> -->
-        <div class="p-3 bg-brownlight mb-4 md-dis-none">
+        </div>
+        <div class="p-3 bg-brownlight mb-4 md-dis-none"
+          v-if="Carts.carts.length!==0">
           <h4 class="text-center mb-0">購物車清單</h4>
         </div>
         <div class="cart-body" style="">
@@ -65,14 +67,16 @@
           </div>
         </div>
         <router-link class="btn-block btn-back py-1 my-4 text-dark md-dis-none"
-          :to="{ name: 'Products'}">
+          :to="{ name: 'Products'}"
+          v-if="Carts.carts.length!==0">
           <i class="fas  fa-arrow-left"></i>
           繼續購物</router-link>
       </div>
       <!-- 購物車合計-折價券-->
       <div class="col-md-5 my-md-0 my-2">
         <div class="border p-3 shadow">
-          <span class="badge badge-pill badge-danger float-right bg-primary">3</span>
+          <span class="badge badge-pill badge-danger float-right bg-primary">
+            {{ Carts.carts.length }}</span>
           <div class="h5 text-center border-bottom pb-3">購 物 車 合 計</div>
           <div class="d-flex px-3 py-2">
             <h5>總計</h5>
@@ -97,7 +101,8 @@
           </small>
           <div class="p-2">
             <router-link :to="{ name: 'ConsumerForm' }"
-              class="btn btn-block btn-submit py-3 h5 rounded-0">
+              class="btn btn-block btn-submit py-3 h5 rounded-0"
+              :class="{'disabled': Carts.carts.length===0}">
               送出訂單
               <i class="fas  fa-arrow-right"></i>
             </router-link>
@@ -112,7 +117,9 @@
 export default {
   data() {
     return {
-      Carts: {},
+      Carts: {
+        carts: [],
+      },
       couponCode: '',
       isLoading: false,
     };
