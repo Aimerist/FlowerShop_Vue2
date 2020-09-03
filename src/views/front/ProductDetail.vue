@@ -62,7 +62,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <router-link to="/checkorder" class="btn btn-outline-danger d-block mb-2"
+                <router-link to="/cart" class="btn btn-outline-danger d-block mb-2"
                   v-if="Carts.length">
                   <i class="fas fa-cart-arrow-down"></i> 結帳去
                 </router-link>
