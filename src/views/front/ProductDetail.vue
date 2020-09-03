@@ -1,122 +1,145 @@
 <template>
-  <div class="container">
+  <div class="container gap-setting">
     <div class="vld-parent">
       <loading :active.sync="isLoading"></loading>
     </div>
-<!-- 購物車內容 -->
-    <div class="btn-group" :class="{'show': isShowCart}">
-      <button type="button" class="btn" data-toggle="dropdown">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="badge badge-pill badge-danger">{{Carts.length}}</span>
-      </button>
-      <div class="dropdown-menu dropdown-menu-right" :class="{'show': isShowCart}">
-        <div class="p-2 px-sm-3">
-          <h5 class="text-center">購物車清單</h5>
-          <table class="table mb-2 table-hover" style="min-width:270px">
-            <tbody>
-              <tr v-for="cart in Carts" :key="cart.id" class="clicktable-row"
-                @click.prevent="getProduct(cart.product_id)">
-                <td class="px-1">
-                  <a href="#" class="text-danger"
-                    @click.stop.prevent="removeProductToCart(cart.id)">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </td>
-                <td class="px-1">{{ cart.product.title }}</td>
-                <td class="px-1">{{ cart.qty }} {{ cart.product.unit }}</td>
-                <td class="text-right px-1">{{ cart.total | currency }}</td>
-              </tr>
-              <tr>
-                <td class="text-center" v-if="Carts.length===0">去購物吧!</td>
-              </tr>
-            </tbody>
-          </table>
-          <router-link to="/checkorder" class="btn btn-outline-danger d-block mb-2"
-            v-if="Carts.length">
-            <i class="fas fa-cart-arrow-down"></i> 結帳去
-          </router-link>
-        </div>
-      </div>
-    </div>
-<!-- 收藏內容 -->
-    <div class="btn-group">
-      <button type="button" class="btn" data-toggle="dropdown">
-        <i class="fas fa-heart fa-lg"></i>
-        <span class="badge badge-pill badge-danger">{{Favorites.length}}</span>
-      </button>
-      <div class="dropdown-menu dropdown-menu-right">
-        <div class="p-2 px-sm-3">
-          <h5 class="text-center">收藏清單</h5>
-          <table class="table mb-2 table-hover" style="min-width:270px">
-            <tbody>
-              <tr v-for="favorite in Favorites" :key="favorite.id" class="clicktable-row"
-                @click="getProduct(favorite.id)">
-                <td class="px-1">
-                  <a class="text-danger"
-                    @click.stop.prevent="removeFavorite(favorite.id)">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </td>
-                <td class="px-1">{{ favorite.title }}</td>
-                <td class="text-right px-1">{{ favorite.price | currency}}</td>
-              </tr>
-              <tr>
-                <td class="text-center" v-if="Favorites.length===0">快去加入收藏吧!</td>
-              </tr>
-            </tbody>
-          </table>
-          <button class="btn btn-outline-danger btn-block"
-            v-if="Favorites.length!==0"
-            data-toggle="modal" data-target="#delFavoriteModal">
-            刪除全部</button>
-        </div>
-      </div>
-    </div>
+
 <!-- 商品內容 -->
-    <div style="max-width: 500px; margin: 0 auto;">
-      <table class="table">
-        <tr>
-          <th>加入收藏：</th>
-          <td v-if="!isFavorite(Product.id)">
-            <button class="btn p-0"
-              @click="addFavorite(Product.id, Product.title, Product.origin_price)">
-              <i class="far fa-heart"></i> 收藏商品
+    <div class="row">
+      <!-- 商品圖片 section-->
+      <div class="col-md-7 mb-5">
+        <img class="img-fluid img-cover"
+          :src="Product.imageUrl">
+      </div>
+      <!-- 商品資訊 section-->
+      <div class="col-md-5">
+        <div class="px-4">
+          <div class="favorite p-1 float-right text-danger">
+            <a v-if="!isFavorite(Product.id)"
+              @click.prevent="addFavorite(Product.id, Product.title, Product.origin_price)">
+              <i class="far fa-heart fa-lg"></i>
+            </a>
+            <a v-if="isFavorite(Product.id)"
+              @click.prevent="removeFavorite(Product.id)">
+              <i class="fas fa-heart fa-lg"></i>
+            </a>
+          </div>
+          <h2 class="mb-2 text-primary font-weight-bold">{{ Product.title }}
+            <span class="h5 text-muted">| {{ Product.category }}</span></h2>
+          <div class="p-2 text-brown" v-if="Product.content">
+            <h6>【商品介紹】</h6>
+            <p class="pl-2"> {{ Product.content }} </p>
+          </div>
+          <div class="p-2 text-brown" v-if="Product.description">
+            <h6>【商品描述】</h6>
+            <p class="pl-2"> {{ Product.description }} </p>
+          </div>
+          <!-- 購物車內容 -->
+          <div class="btn-group" :class="{'show': isShowCart}">
+            <button type="button" class="btn" data-toggle="dropdown">
+              <i class="fas fa-shopping-cart fa-lg"></i>
+              <span class="badge badge-pill badge-danger">{{Carts.length}}</span>
             </button>
-          </td>
-          <td v-if="isFavorite(Product.id)">
-            <button class="btn p-0"
-              @click="removeFavorite(Product.id)">
-              <i class="fas fa-heart"></i> 取消收藏
+            <div class="dropdown-menu dropdown-menu-right" :class="{'show': isShowCart}">
+              <div class="p-2 px-sm-3">
+                <h5 class="text-center">購物車清單</h5>
+                <table class="table mb-2 table-hover" style="min-width:270px">
+                  <tbody>
+                    <tr v-for="cart in Carts" :key="cart.id" class="clicktable-row"
+                      @click.prevent="getProduct(cart.product_id)">
+                      <td class="px-1">
+                        <a href="#" class="text-danger"
+                          @click.stop.prevent="removeProductToCart(cart.id)">
+                          <i class="fas fa-trash-alt"></i>
+                        </a>
+                      </td>
+                      <td class="px-1">{{ cart.product.title }}</td>
+                      <td class="px-1">{{ cart.qty }} {{ cart.product.unit }}</td>
+                      <td class="text-right px-1">{{ cart.total | currency }}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-center" v-if="Carts.length===0">去購物吧!</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <router-link to="/checkorder" class="btn btn-outline-danger d-block mb-2"
+                  v-if="Carts.length">
+                  <i class="fas fa-cart-arrow-down"></i> 結帳去
+                </router-link>
+              </div>
+            </div>
+          </div>
+          <!-- 收藏內容 -->
+          <div class="btn-group">
+            <button type="button" class="btn" data-toggle="dropdown">
+              <i class="fas fa-heart fa-lg"></i>
+              <span class="badge badge-pill badge-danger">{{Favorites.length}}</span>
             </button>
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <label for="qty"></label>加入購物車：</th>
-          <td>
-            <select name="qty" id="qty" v-model="qty">
-              <option value="0"  disabled >請選擇數量</option>
-              <option :value="num" v-for="num in 10" :key="num">{{num}} {{Product.unit}}</option>
-            </select>
-          </td>
-          <td>
-            <button type="button" class="btn btn-primary"
-              @click="addProductToCart(Product.id, qty)">加到購物車</button>
-          </td>
-        </tr>
-        <tr><th>編號：</th><td>{{Product.id}}</td></tr>
-        <tr><th>名稱：</th><td>{{Product.title}}</td></tr>
-        <tr><th>分類：</th><td>{{Product.category}}</td></tr>
-        <tr><th>內容：</th><td>{{Product.content}}</td></tr>
-        <tr><th>描述：</th><td>{{Product.description}}</td></tr>
-        <tr><th>售價：</th><td>{{Product.origin_price | currency }}</td></tr>
-        <tr><th>原價：</th><td>{{Product.price | currency}}</td></tr>
-        <tr><th>單位：</th><td>{{Product.unit}}</td></tr>
-        <tr><th>是否啟用</th><td>{{Product.is_enabled}}</td></tr>
-        <tr><th>圖片</th><td>
-          <img style="height: 150px; background-size: cover; background-position: center"
-            :src="Product.imageUrl" alt=""></td></tr>
-      </table>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="p-2 px-sm-3">
+                <h5 class="text-center">收藏清單</h5>
+                <table class="table mb-2 table-hover" style="min-width:270px">
+                  <tbody>
+                    <tr v-for="favorite in Favorites" :key="favorite.id" class="clicktable-row"
+                      @click="getProduct(favorite.id)">
+                      <td class="px-1">
+                        <a class="text-danger"
+                          @click.stop.prevent="removeFavorite(favorite.id)">
+                          <i class="fas fa-trash-alt"></i>
+                        </a>
+                      </td>
+                      <td class="px-1">{{ favorite.title }}</td>
+                      <td class="text-right px-1">{{ favorite.price | currency}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-center" v-if="Favorites.length===0">快去加入收藏吧!</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="btn btn-outline-danger btn-block"
+                  v-if="Favorites.length!==0"
+                  data-toggle="modal" data-target="#delFavoriteModal">
+                  刪除全部</button>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="d-flex align-items-baseline px-2 pb-3">
+            <p class="text-gray mb-0">原價 <del>{{ Product.origin_price | currency }}</del></p>
+            <p class="ml-auto h3 text-dark">NT {{ Product.price | currency }}</p>
+          </div>
+          <div class="row mx-0 no-gutters">
+            <div class="col-lg-5 mr-auto mb-3">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <a href="#" class="btn btn-outline-graylight"
+                    :class="{'disabled':qty ===1}"
+                    @click.prevent="qty = qty - 1">−</a>
+                </div>
+                <input type="number" min="1" max="15" class="form-control text-center"
+                  v-model.number="qty"/>
+                <div class="input-group-append">
+                  <a href="#" class="btn btn-outline-graylight"
+                    :class="{'disabled':qty ===15}"
+                    @click.prevent="qty = qty + 1">+</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <button class="btn btn-block btn-add py-2 text-secondary"
+                @click="addProductToCart(Product.id, qty)">
+                加到購物車<i class="fas fa-shopping-cart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 相關商品 -->
+      <div class="col-12 similar">
+        <div class="similar-line">
+          <span class="similar-titlet">相關商品</span>
+        </div>
+      </div>
     </div>
 <!-- delFavoriteModal -->
     <div class="modal fade" id="delFavoriteModal" tabindex="-1" role="dialog"
@@ -155,7 +178,7 @@ export default {
       Product: {},
       Carts: {},
       Favorites: [],
-      qty: '',
+      qty: 1,
       isLoading: false,
       isShowCart: false,
     };
@@ -252,3 +275,47 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+
+.img-cover {
+  width: 100vw;
+  max-height: 450px;
+  padding: 0 2rem;
+}
+
+.btn-add {
+  background-color: #EFE5DC;
+  text-align: center;
+  &:hover {
+    background-color: #EEDEA6;
+  }
+}
+
+/* 相關商品的分隔線 */
+.similar-line {
+  position: relative;
+  text-align: center;
+  padding: 2rem 0;
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    border-top: 2px solid #F5EED7;
+    width: 100%;
+    z-index: -1;
+  }
+  .similar-titlet {
+    z-index: 1;
+    background-color: #FFF;
+    padding: 0 1.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 2rem;
+    border-inline-start: 10px solid #EEDEA6;
+    border-inline-end: 10px solid #EEDEA6;
+  }
+}
+</style>
