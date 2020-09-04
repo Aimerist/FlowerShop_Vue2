@@ -29,6 +29,14 @@ a {
   font-size: 0.75rem;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.f-size125 {
+  font-size: 1.25rem;
+}
+
 @media (max-width:767px) {
   .md-dis-none {
     display: none;
