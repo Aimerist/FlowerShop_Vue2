@@ -1,5 +1,8 @@
 <template>
   <div class="container gap-setting">
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
     <ul class="mb-4 step">
       <li class="bg-light">
         <strong>STEP</strong>
@@ -98,24 +101,29 @@ export default {
         user: { },
       },
       orderId: '',
+      isLoading: false,
     };
   },
   methods: {
     getOrder() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order/${vm.order.id}`;
+      vm.isLoading = true;
       vm.$http.get(url).then((response) => {
         if (response.data.success) {
           vm.order = response.data.order;
+          vm.isLoading = false;
         }
       });
     },
     payOrder() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/pay/${vm.order.id}`;
+      vm.isLoading = true;
       vm.$http.post(url).then((response) => {
         if (response.data.success) {
           vm.getOrder();
+          vm.isLoading = false;
           vm.$bus.$emit('message:push', response.data.message, 'success');
         }
       });
