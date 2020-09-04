@@ -94,8 +94,8 @@
           <div class="card-columns">
             <div class="card mb-4 rounded"
               v-for="item in filterData" :key="item.id">
-              <div class="card-img rounded-0" style="height: 200px; background-size:cover;"
-                :style="`background: url(${ item.imageUrl }) center center no-repeat`">
+              <div class="card-img"
+                :style="`background: url(${ item.imageUrl }) center center no-repeat;`">
               </div>
               <div class="favorite p-1">
                 <a class="text-white" v-if="!isFavorite(item.id)"
@@ -321,10 +321,11 @@ export default {
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
   }
   .card-img{
-    max-height: 200px;
+    min-height: 200px;
     width: auto;
-    background-size: cover;
+    background-size: cover !important;
     object-fit:cover;
+    border-radius: 5px 5px 0px 0px;
   }
   .card-body {
     min-height: 145px;
