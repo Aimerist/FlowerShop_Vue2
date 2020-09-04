@@ -10,20 +10,22 @@
       <div class="col-md-7 mb-5">
         <img class="img-fluid img-cover"
           :src="Product.imageUrl">
-      </div>
-      <!-- 商品資訊 section-->
-      <div class="col-md-5">
-        <div class="px-4">
-          <div class="favorite p-1 float-right text-danger">
-            <a v-if="!isFavorite(Product.id)"
+          <div class="favorite">
+            <a class="text-white f-size125 cursor-pointer"
+              v-if="!isFavorite(Product.id)"
               @click.prevent="addFavorite(Product.id, Product.title, Product.origin_price)">
               <i class="far fa-heart fa-lg"></i>
             </a>
-            <a v-if="isFavorite(Product.id)"
+            <a class="text-danger f-size125 cursor-pointer"
+              v-if="isFavorite(Product.id)"
               @click.prevent="removeFavorite(Product.id)">
               <i class="fas fa-heart fa-lg"></i>
             </a>
           </div>
+      </div>
+      <!-- 商品資訊 section-->
+      <div class="col-md-5">
+        <div class="px-4">
           <h2 class="mb-2 text-primary font-weight-bold">{{ Product.title }}
             <span class="h5 text-muted">| {{ Product.category }}</span></h2>
           <div class="p-2 text-brown" v-if="Product.content">
@@ -277,6 +279,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.favorite {
+  position: absolute;
+  top: 8px;
+  right: 58px;
+}
 
 .img-cover {
   width: 100vw;

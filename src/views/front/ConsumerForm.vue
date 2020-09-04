@@ -83,7 +83,7 @@
                 <thead>
                   <tr>
                     <td>商品</td>
-                    <td  class="text-right" width="140">總計</td>
+                    <td  class="text-right" width="135">總計</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -110,7 +110,7 @@
                 </tfoot>
               </table>
               <div class="p-2">
-                <button class="btn btn-block btn-submit mt-4 py-3 rounded-0">
+                <button class="btn btn-block btn-submit mt-4 py-3 rounded-0 f-size125">
                   送出訂單
                   <i class="fas  fa-arrow-right"></i>
                 </button>

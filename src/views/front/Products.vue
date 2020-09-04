@@ -119,13 +119,13 @@
                 <div class="px-2 pb-1"
                   style="color: #555;">{{ item.content | contentLength }}</div>
                 <div class="d-flex align-items-baseline px-2">
-                  <p class="text-secondary mb-0">原價 <del>{{ item.price | currency }}</del></p>
+                  <p class="text-gray mb-0">原價 <del>{{ item.price | currency }}</del></p>
                   <p class="ml-auto h5 text-danger">NT {{ item.origin_price | currency }}</p>
                 </div>
               </div>
-              <div class="card-footer">
-                <a href="#"
-                  @click.prevent="addProductToCart(item.id)">加入購物車</a>
+              <div class="card-footer cursor-pointer"
+                @click.prevent="addProductToCart(item.id)">
+                <a href="#">加入購物車</a>
               </div>
             </div>
           </div>

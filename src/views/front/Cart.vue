@@ -101,9 +101,9 @@
           </small>
           <div class="p-2">
             <router-link :to="{ name: 'ConsumerForm' }"
-              class="btn btn-block btn-submit py-3 h5 rounded-0"
+              class="btn btn-block btn-submit py-3 h5 rounded-0 f-size125"
               :class="{'disabled': Carts.carts.length===0}">
-              送出訂單
+              確認商品
               <i class="fas  fa-arrow-right"></i>
             </router-link>
           </div>
