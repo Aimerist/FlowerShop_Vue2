@@ -80,24 +80,88 @@
               </div>
               <!-- 收藏夾 -->
               <div class="btn-group">
-                <button type="button" class="btn text-dark" data-toggle="dropdown">
+                <a type="button" class="btn colorE" data-toggle="dropdown">
                   <i class="fas fa-heart fa-lg"></i>
-                  <span class="badge badge-pill badge-danger">3</span>
-                </button>
+                  <span class="badge badge-pill badge-danger">{{ Favorites.length }}</span>
+                </a>
+                <div class="dropdown-menu favorite shadow">
+                  <div class="p-2 px-sm-3">
+                    <h5 class="text-center">收藏夾</h5>
+                    <table class="table mb-2 table-hover" style="min-width:200px">
+                      <tbody>
+                        <tr class="cursor-pointer"
+                          v-for="favorite in Favorites" :key="favorite.id"
+                          @click="productLink(favorite.id)">
+                          <td class="align-middle px-1">
+                            <div class="bg-cover"
+                              :style="`background-image:url(${ favorite.imageUrl })`"></div>
+                          </td>
+                          <td class="align-middle px-1">{{ favorite.title }}</td>
+                          <td class="align-middle px-1 text-right">
+                            <a class="btn-del text-danger pr-1"
+                              @click.stop.prevent="removeFavorite(false, favorite.id)">
+                              <i class="fas fa-trash-alt"></i>
+                            </a>
+                          </td>
+                        </tr>
+                        <td class="text-center p-0 m-0"
+                          v-if="Favorites.length===0">
+                          <div class="text-center bg-brownlight m-0 p-4">
+                            <div>沒有任何收藏商品唷!!</div>
+                            <router-link :to="{ name: 'Products'}"
+                              class="btn btn-md btn-primary py-1 mt-3 h5 text-white">
+                              前往商店</router-link>
+                          </div>
+                        </td>
+                      </tbody>
+                    </table>
+                    <button class="btn btn-outline-danger btn-block"
+                      data-toggle="modal" data-target="#delFavoriteModal"
+                      v-if="Favorites.length !== 0">
+                      刪除全部</button>
+                  </div>
+                </div>
               </div>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    <div class="modal fade" id="delFavoriteModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog justify-content-center d-flex" role="document">
+        <div class="modal-content border-0 w-75">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <span>刪除商品 </span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            是否刪除 <strong class="text-danger">全部收藏</strong> 商品。
+            <em class="text-gray f-size75">(刪除後將無法恢復 )</em>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger"
+              @click="removeFavorite(true)">確認刪除</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import $ from 'jquery';
+
 export default {
   data() {
     return {
       Carts: {},
+      Favorites: [],
     };
   },
   methods: {
@@ -121,9 +185,24 @@ export default {
         vm.$bus.$emit('message:push', response.data.message, 'warning');
       });
     },
+    getFavorite() {
+      this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];
+    },
+    removeFavorite(isAll, id) {
+      if (isAll) {
+        localStorage.removeItem('favoriteData');
+        $('#delFavoriteModal').modal('hide');
+        this.getFavorite();
+      } else {
+        this.Favorites.splice(this.Favorites.indexOf(id), 1);
+        localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
+      }
+      this.$bus.$emit('message:push', '已刪除收藏', 'warning');
+    },
   },
   created() {
     this.getCart();
+    this.getFavorite();
   },
 };
 </script>
@@ -165,6 +244,10 @@ export default {
   left: -248px;
   width: 300px;
   border-color: #e9eaec;
+  &.favorite {
+    left: -196px;
+    width: 240px;
+  }
   &:before {
     position: absolute;
     content: "";
