@@ -99,7 +99,7 @@
               </div>
               <div class="favorite p-1">
                 <a class="text-white" v-if="!isFavorite(item.id)"
-                  @click.prevent="addFavorite(item.id, item.title, item.price)">
+                  @click.prevent="addFavorite(item.id, item.title, item.price, item.imageUrl)">
                   <i class="far fa-heart fa-lg"></i>
                 </a>
                 <a class="text-danger" v-if="isFavorite(item.id)"
@@ -238,9 +238,12 @@ export default {
     getFavorite() {
       this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];
     },
-    addFavorite(id, title, price) {
+    addFavorite(id, title, price, imageUrl) {
       if (!this.isFavorite(id)) {
-        this.Favorites.push({ id, title, price });
+        const data = {
+          id, title, price, imageUrl,
+        };
+        this.Favorites.push(data);
         localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
         this.$bus.$emit('message:push', '已加入收藏夾', 'success');
       } else {

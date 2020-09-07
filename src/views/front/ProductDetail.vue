@@ -13,7 +13,8 @@
           <div class="favorite">
             <a class="text-white f-size125 cursor-pointer"
               v-if="!isFavorite(Product.id)"
-              @click.prevent="addFavorite(Product.id, Product.title, Product.origin_price)">
+              @click.prevent="
+                addFavorite(Product.id, Product.title, Product.origin_price, Product.imageUrl)">
               <i class="far fa-heart fa-lg"></i>
             </a>
             <a class="text-danger f-size125 cursor-pointer"
@@ -238,9 +239,12 @@ export default {
     getFavorite() {
       this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];
     },
-    addFavorite(id, title, price) {
+    addFavorite(id, title, price, imageUrl) {
       if (!this.isFavorite(id)) {
-        this.Favorites.push({ id, title, price });
+        const data = {
+          id, title, price, imageUrl,
+        };
+        this.Favorites.push(data);
         localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
         this.$bus.$emit('message:push', '已加入收藏夾', 'success');
       } else {
