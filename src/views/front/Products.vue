@@ -14,80 +14,11 @@
               @click="nowCategoryStatus=''">
               ALL</li>
             <li class="list-group-item"
-              :class="{active: nowCategoryStatus === `${category}`}"
-              @click="nowCategoryStatus=`${category}`"
+              :class="{active: nowCategoryStatus === `${ category }`}"
+              @click="nowCategoryStatus=`${ category }`"
               v-for="category in Categories" :key="category">
               {{ category }}</li>
           </ul>
-          <!-- 購物車內容 -->
-          <div class="btn-group" :class="{'show': isShowCart}">
-            <button type="button" class="btn" data-toggle="dropdown">
-              <i class="fas fa-shopping-cart fa-lg"></i>
-              <span class="badge badge-pill badge-danger">{{Carts.length}}</span>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" :class="{'show': isShowCart}">
-              <div class="p-2 px-sm-3">
-                <h5 class="text-center">購物車清單</h5>
-                <table class="table mb-2 table-hover" style="min-width:270px">
-                  <tbody>
-                    <tr v-for="cart in Carts" :key="cart.id" class="clicktable-row"
-                      @click="productLink(cart.product_id)">
-                      <td class="px-1">
-                        <a href="#" class="text-danger"
-                          @click.stop.prevent="removeProductToCart(cart.id)">
-                          <i class="fas fa-trash-alt"></i>
-                        </a>
-                      </td>
-                      <td class="px-1">{{ cart.product.title }}</td>
-                      <td class="px-1">{{ cart.qty }} {{ cart.product.unit }}</td>
-                      <td class="text-right px-1">{{ cart.total | currency }}</td>
-                    </tr>
-                    <tr>
-                      <td class="text-center" v-if="Carts.length===0">去購物吧!</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <router-link to="/cart" class="btn btn-outline-danger d-block mb-2"
-                  v-if="Carts.length">
-                  <i class="fas fa-cart-arrow-down"></i> 結帳去
-                </router-link>
-              </div>
-            </div>
-          </div>
-          <!-- 收藏內容 -->
-          <div class="btn-group">
-            <button type="button" class="btn" data-toggle="dropdown">
-              <i class="fas fa-heart fa-lg"></i>
-              <span class="badge badge-pill badge-danger">{{Favorites.length}}</span>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <div class="p-2 px-sm-3">
-                <h5 class="text-center">收藏清單</h5>
-                <table class="table mb-2 table-hover" style="min-width:270px">
-                  <tbody>
-                    <tr v-for="favorite in Favorites" :key="favorite.id" class="clicktable-row"
-                      @click="productLink(favorite.id)">
-                      <td class="px-1">
-                        <a class="text-danger"
-                          @click.stop.prevent="removeFavorite(favorite.id)">
-                          <i class="fas fa-trash-alt"></i>
-                        </a>
-                      </td>
-                      <td class="px-1">{{ favorite.title }}</td>
-                      <td class="text-right px-1">{{ favorite.price | currency }}</td>
-                    </tr>
-                    <tr>
-                      <td class="text-center" v-if="Favorites.length===0">快去加入收藏吧!</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <button class="btn btn-outline-danger btn-block"
-                  v-if="Favorites.length!==0"
-                  data-toggle="modal" data-target="#delFavoriteModal">
-                  刪除全部</button>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- 列表 -->
         <div class="col-lg-10 col-md-9">
@@ -108,7 +39,7 @@
                 </a>
               </div>
               <div class="card-body rounded pb-2">
-                <span class="float-right category">
+                <span class="float-right text-important">
                   <i class="fas fa-tag btn-sm"></i>
                   {{ item.category }}</span>
                 <h5 class="card-title mb-2">
@@ -132,35 +63,10 @@
         </div>
       </div>
     </div>
-<!-- delFavoriteModal -->
-    <div class="modal fade" id="delFavoriteModal" tabindex="-1" role="dialog"
-      aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content border-0">
-          <div class="modal-header bg-danger text-white">
-            <h5 class="modal-title" id="exampleModalLabel">
-              <span>刪除產品</span>
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            是否刪除 <strong class="text-danger">全部收藏</strong> 商品(刪除後將無法恢復)。
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-danger"
-              @click="deletAllFavorite">確認刪除</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import $ from 'jquery';
 import contentLength from '@/filters/stringlenght';
 
 export default {
@@ -170,7 +76,6 @@ export default {
   data() {
     return {
       Products: [],
-      Carts: {},
       Favorites: [],
       Categories: [],
       nowCategoryStatus: '',
@@ -194,9 +99,6 @@ export default {
         }
       });
     },
-    productLink(id) {
-      this.$router.push({ name: 'ProductDetail', params: { productId: id } });
-    },
     addProductToCart(id, qty = 1) {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
@@ -216,23 +118,6 @@ export default {
         setTimeout(() => {
           vm.isShowCart = false;
         }, 3000);
-      });
-    },
-    removeProductToCart(id) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart/${id}`;
-      this.$http.delete(url).then((response) => {
-        vm.getCart();
-        vm.$bus.$emit('message:push', response.data.message, 'warning');
-      });
-    },
-    getCart() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Carts = JSON.parse(JSON.stringify(response.data.data.carts));
-        }
       });
     },
     getFavorite() {
@@ -265,16 +150,9 @@ export default {
         this.$bus.$emit('message:push', '目前並被沒有收藏唷', 'danger');
       }
     },
-    deletAllFavorite() {
-      localStorage.removeItem('favoriteData');
-      this.getFavorite();
-      $('#delFavoriteModal').modal('hide');
-      this.$bus.$emit('message:push', '已全部刪除', 'warning');
-    },
   },
   created() {
     this.getProducts();
-    this.getCart();
     this.getFavorite();
   },
   computed: {
@@ -290,10 +168,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.clicktable-row {
-  cursor: pointer;
-}
-
 .category-menu {
   .list-group-item {
     color: #555;
@@ -353,10 +227,6 @@ export default {
       color: #6B460F;
     }
   }
-}
-
-.category {
-  color: #B69418;
 }
 
 .favorite {
