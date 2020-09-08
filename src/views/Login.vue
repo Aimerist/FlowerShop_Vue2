@@ -1,8 +1,8 @@
 <template>
   <div class="container gap-setting">
     <form class="form-signin" @submit.prevent="signin">
-      <img class="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg"
-        alt="" width="72" height="72">
+      <div class="text-center text-brown" style="line-height:5rem; font-size:4rem">
+        <i class="fas fa-users"></i></div>
       <h1 class="h3 mb-3 font-weight-bold text-brown text-center">管理者登入</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" id="inputEmail" class="form-control"
