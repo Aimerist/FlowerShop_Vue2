@@ -175,17 +175,26 @@ export default {
         if (valid) {
           vm.$http.post(url, { data: vm.form }).then((response) => {
             if (response.data.success) {
-              vm.$bus.$emit('message:push', response.data.message, 'success');
+              vm.$store.dispatch(
+                'alertMessageModules/updateMessage',
+                { message: response.data.message, status: 'success' },
+              );
               vm.$router.push({
                 name: 'ConsumerOrder',
                 params: { orderId: response.data.orderId },
               });
             } else {
-              vm.$bus.$emit('message:push', response.data.message, 'danger');
+              vm.$store.dispatch(
+                'alertMessageModules/updateMessage',
+                { message: response.data.message, status: 'danger' },
+              );
             }
           });
         } else {
-          vm.$bus.$emit('message:push', '欄位填寫不完整', 'danger');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: '欄位填寫不完整', status: 'danger' },
+          );
         }
       });
     },

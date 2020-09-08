@@ -125,6 +125,10 @@ export default {
           vm.getOrder();
           vm.isLoading = false;
           vm.$bus.$emit('message:push', response.data.message, 'success');
+          this.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'success' },
+          );
         }
       });
     },

@@ -182,7 +182,10 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart/${id}`;
       this.$http.delete(url).then((response) => {
         vm.getCart();
-        vm.$bus.$emit('message:push', response.data.message, 'warning');
+        this.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: response.data.message, status: 'warning' },
+        );
       });
     },
     getFavorite() {
@@ -197,7 +200,10 @@ export default {
         this.Favorites.splice(this.Favorites.indexOf(id), 1);
         localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
       }
-      this.$bus.$emit('message:push', '已刪除收藏', 'warning');
+      this.$store.dispatch(
+        'alertMessageModules/updateMessage',
+        { message: '已刪除收藏', status: 'warning' },
+      );
     },
   },
   created() {

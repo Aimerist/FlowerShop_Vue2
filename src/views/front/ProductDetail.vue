@@ -113,8 +113,10 @@ export default {
       vm.$http.post(url, { data: product }).then((response) => {
         if (response.data.success) {
           vm.isLoading = false;
-          vm.getCart();
-          vm.$bus.$emit('message:push', '已加入購物車', 'success');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'success' },
+          );
         }
       }).then(() => {
         vm.isShowCart = true;
@@ -133,9 +135,15 @@ export default {
         };
         this.Favorites.push(data);
         localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
-        this.$bus.$emit('message:push', '已加入收藏夾', 'success');
+        this.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: '已加入收藏夾', status: 'success' },
+        );
       } else {
-        this.$bus.$emit('message:push', '已經加入過收藏夾了唷', 'danger');
+        this.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: '已經加入過收藏了', status: 'danger' },
+        );
       }
     },
     isFavorite(id) {
@@ -148,9 +156,15 @@ export default {
       if (this.isFavorite(id)) {
         this.Favorites.splice(this.Favorites.indexOf(id), 1);
         localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
-        this.$bus.$emit('message:push', '已刪除', 'warning');
+        this.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: '已刪除收藏', status: 'warning' },
+        );
       } else {
-        this.$bus.$emit('message:push', '目前並被沒有收藏唷', 'danger');
+        this.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: '目前並被沒有收藏唷', status: 'danger' },
+        );
       }
     },
   },

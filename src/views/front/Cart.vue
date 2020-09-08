@@ -142,7 +142,10 @@ export default {
       vm.isLoading = true;
       this.$http.delete(url).then((response) => {
         vm.getCart();
-        vm.$bus.$emit('message:push', response.data.message, 'warning');
+        vm.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: response.data.message, status: 'warning' },
+        );
       });
     },
     addCouponCode() {
@@ -154,9 +157,15 @@ export default {
       this.$http.post(url, { data: coupon }).then((response) => {
         if (response.data.success) {
           vm.getCart();
-          vm.$bus.$emit('message:push', response.data.message, 'success');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'success' },
+          );
         } else {
-          vm.$bus.$emit('message:push', response.data.message, 'danger');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'danger' },
+          );
         }
       });
     },
