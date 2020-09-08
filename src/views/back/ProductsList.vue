@@ -219,7 +219,10 @@ export default {
       vm.$http[apiMethod](apiUrl, { data: vm.tempProduct }).then((response) => {
         if (response.data.success) {
           vm.getProductsList();
-          vm.$bus.$emit('message:push', response.data.message, 'success');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'success' },
+          );
         }
         $('#productModal').modal('hide');
       });
@@ -234,9 +237,15 @@ export default {
       vm.$http.delete(url).then((response) => {
         if (response.data.success) {
           vm.getProductsList();
-          vm.$bus.$emit('message:push', response.data.message, 'success');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'success' },
+          );
         } else {
-          vm.$bus.$emit('message:push', response.data.message, 'danger');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'danger' },
+          );
         }
         $('#delProductModal').modal('hide');
       });
@@ -254,9 +263,15 @@ export default {
       }).then((response) => {
         if (response.data.success) {
           vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);
-          vm.$bus.$emit('message:push', '圖片上傳成功', 'success');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: '圖片上傳成功', status: 'success' },
+          );
         } else {
-          vm.$bus.$emit('message:push', response.data.message, 'danger');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'danger' },
+          );
         }
       });
     },

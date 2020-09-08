@@ -187,7 +187,10 @@ export default {
       vm.$http[apiMethd](url, { data: vm.tempCoupon }).then((response) => {
         if (response.data.success) {
           vm.getCoupons();
-          vm.$bus.$emit('message:push', response.data.message, 'success');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'success' },
+          );
         }
         $('#addCouponModal').modal('hide');
       });
@@ -198,9 +201,15 @@ export default {
       vm.$http.delete(url).then((response) => {
         if (response.data.success) {
           vm.getCoupons();
-          vm.$bus.$emit('message:push', response.data.message, 'success');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'success' },
+          );
         } else {
-          vm.$bus.$emit('message:push', response.data.message, 'danger');
+          vm.$store.dispatch(
+            'alertMessageModules/updateMessage',
+            { message: response.data.message, status: 'danger' },
+          );
         }
         $('#delCouponModal').modal('hide');
       });
