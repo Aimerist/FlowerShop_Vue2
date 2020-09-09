@@ -28,19 +28,20 @@
               <div class="btn-group">
                 <a type="button" class="btn text-dark" data-toggle="dropdown">
                   <i class="fas fa-shopping-cart fa-lg"></i>
-                  <span class="badge badge-pill badge-danger">{{ Carts.length }}</span>
+                  <span class="badge badge-pill badge-danger">{{ cartLength }}</span>
                 </a>
-                <div class="dropdown-menu shadow">
+                <div class="dropdown-menu shadow"
+                  :class="{'show': isShowCart}">
                   <div class="p-2 px-sm-3">
                     <h5 class="text-center">購物車</h5>
                     <table class="table mb-2 table-hover" style="min-width:270px">
                       <tbody>
                         <tr class="cursor-pointer"
-                          v-for="cart in Carts" :key="cart.id"
+                          v-for="cart in carts.carts" :key="cart.id"
                           @click="productLink(cart.product_id)">
                           <td class="align-middle px-2">
                             <a class="btn-del text-danger"
-                              @click.stop.prevent="removeCartItem(cart.id)">
+                              @click.stop.prevent="removeCart(cart.id)">
                               <i class="fas fa-trash-alt"></i>
                             </a>
                           </td>
@@ -59,7 +60,7 @@
                             {{ cart.total | currency }}</td>
                         </tr>
                         <tr>
-                          <td class="text-center p-0 m-0" v-if="Carts.length===0">
+                          <td class="text-center p-0 m-0" v-if="cartLength === 0">
                             <div class="text-center bg-brownlight m-0 p-4">
                               <div>購物車內沒有任何商品唷!!</div>
                               <router-link :to="{ name: 'Products'}"
@@ -72,7 +73,7 @@
                     </table>
                     <router-link class="btn btn-block btn-important text-white"
                       :to="{ name: 'Cart' }"
-                      v-if="Carts.length !== 0">
+                      v-if="cartLength !== 0">
                       <i class="fas fa-cart-arrow-down"></i>
                       結帳去</router-link>
                   </div>
@@ -155,38 +156,24 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import $ from 'jquery';
 
 export default {
   data() {
     return {
-      Carts: {},
       Favorites: [],
     };
   },
+  computed: {
+    ...mapGetters('cartModules', ['carts', 'cartLength', 'isShowCart']),
+  },
   methods: {
-    getCart() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Carts = response.data.data.carts;
-        }
-      });
+    removeCart(id) {
+      this.$store.dispatch('cartModules/removeCart', id);
     },
     productLink(id) {
       this.$router.push({ name: 'ProductDetail', params: { productId: id } });
-    },
-    removeCartItem(id) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart/${id}`;
-      this.$http.delete(url).then((response) => {
-        vm.getCart();
-        this.$store.dispatch(
-          'alertMessageModules/updateMessage',
-          { message: response.data.message, status: 'warning' },
-        );
-      });
     },
     getFavorite() {
       this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];
@@ -207,7 +194,7 @@ export default {
     },
   },
   created() {
-    this.getCart();
+    this.$store.dispatch('cartModules/getCart');
     this.getFavorite();
   },
 };
