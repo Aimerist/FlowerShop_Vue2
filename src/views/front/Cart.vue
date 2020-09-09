@@ -25,18 +25,18 @@
       <!-- 購物車清單-->
       <div class="col-md-7">
         <div class="jumbotron text-center bg-brownlight rounded-0"
-          v-if="Carts.carts.length===0">
+          v-if="cartLength === 0">
           <div class="h4 mb-5">購物車內無商品</div>
           <router-link class="btn btn-lg btn-goshoping py-1 mt-4 rounded-0"
             :to="{ name: 'Products'}" >
             繼續購物</router-link>
         </div>
         <div class="p-3 bg-brownlight mb-4 md-dis-none"
-          v-if="Carts.carts.length!==0">
+          v-if="cartLength !== 0">
           <h4 class="text-center mb-0">購物車清單</h4>
         </div>
         <div class="cart-body" style="">
-          <div v-for="cart in Carts.carts" :key="cart.id">
+          <div v-for="cart in carts.carts" :key="cart.id">
             <div class="d-flex align-items-center">
               <img class="img-fluid mr-4" width="100" height="100"
                 :src="`${cart.product.imageUrl}`" alt="">
@@ -59,7 +59,7 @@
                   {{ cart.final_total | currency }}</h4>
               </div>
               <button class="btn btn-outline-danger mr-4 ml-auto"
-                @click.prevent="removeProductToCart(cart.id)">
+                @click.prevent="removeCart(cart.id)">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </div>
@@ -68,7 +68,7 @@
         </div>
         <router-link class="btn-block btn-back py-1 my-4 text-dark md-dis-none"
           :to="{ name: 'Products'}"
-          v-if="Carts.carts.length!==0">
+          v-if="cartLength !== 0">
           <i class="fas  fa-arrow-left"></i>
           繼續購物</router-link>
       </div>
@@ -76,17 +76,17 @@
       <div class="col-md-5 my-md-0 my-2">
         <div class="border p-3 shadow">
           <span class="badge badge-pill badge-danger float-right bg-primary">
-            {{ Carts.carts.length }}</span>
+            {{ cartLength }}</span>
           <div class="h5 text-center border-bottom pb-3">購 物 車 合 計</div>
           <div class="d-flex px-3 py-2">
             <h5>總計</h5>
-            <span class="ml-auto h5">{{ Carts.total | currency }}</span>
+            <span class="ml-auto h5">{{ carts.total | currency }}</span>
           </div>
           <div class="d-flex px-3 py-2"
-            v-if="Carts.total!==Carts.final_total">
+            v-if="carts.total!==carts.final_total">
             <h6 clas="mt-2">折扣價</h6>
             <span class="text-success f-size75 mx-2">(已套用優惠券)</span>
-            <h3 class="ml-auto text-success">{{ Carts.final_total | currency }}</h3>
+            <h3 class="ml-auto text-success">{{ carts.final_total | currency }}</h3>
           </div>
           <div class="input-group px-3">
             <input type="text" class="form-control f-size75 py-3"
@@ -102,7 +102,7 @@
           <div class="p-2">
             <router-link :to="{ name: 'ConsumerForm' }"
               class="btn btn-block btn-submit py-3 h5 rounded-0 f-size125"
-              :class="{'disabled': Carts.carts.length===0}">
+              :class="{'disabled': cartLength === 0}">
               確認商品
               <i class="fas  fa-arrow-right"></i>
             </router-link>
@@ -114,39 +114,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
-      Carts: {
-        carts: [],
-      },
       couponCode: '',
       isLoading: false,
     };
   },
+  computed: {
+    ...mapGetters('cartModules', ['carts', 'cartLength']),
+  },
   methods: {
-    getCart() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
-      vm.isLoading = true;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Carts = response.data.data;
-          vm.isLoading = false;
-        }
-      });
-    },
-    removeProductToCart(id) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart/${id}`;
-      vm.isLoading = true;
-      this.$http.delete(url).then((response) => {
-        vm.getCart();
-        vm.$store.dispatch(
-          'alertMessageModules/updateMessage',
-          { message: response.data.message, status: 'warning' },
-        );
-      });
+    removeCart(id) {
+      this.$store.dispatch('cartModules/removeCart', id);
     },
     addCouponCode() {
       const vm = this;
@@ -156,7 +138,7 @@ export default {
       };
       this.$http.post(url, { data: coupon }).then((response) => {
         if (response.data.success) {
-          vm.getCart();
+          this.$store.dispatch('cartModules/getCart');
           vm.$store.dispatch(
             'alertMessageModules/updateMessage',
             { message: response.data.message, status: 'success' },
@@ -171,7 +153,7 @@ export default {
     },
   },
   created() {
-    this.getCart();
+    this.$store.dispatch('cartModules/getCart');
   },
 };
 </script>

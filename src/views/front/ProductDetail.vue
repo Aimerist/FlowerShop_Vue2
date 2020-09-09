@@ -61,7 +61,7 @@
             </div>
             <div class="col-lg-5">
               <button class="btn btn-block btn-add py-2 text-secondary"
-                @click="addProductToCart(Product.id, qty)">
+                @click="addCart(Product.id, qty)">
                 加到購物車<i class="fas fa-shopping-cart"></i>
               </button>
             </div>
@@ -87,7 +87,6 @@ export default {
       Favorites: [],
       qty: 1,
       isLoading: false,
-      isShowCart: false,
     };
   },
   methods: {
@@ -102,28 +101,8 @@ export default {
         }
       });
     },
-    addProductToCart(id, qty = 1) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
-      const product = {
-        product_id: id,
-        qty,
-      };
-      vm.isLoading = true;
-      vm.$http.post(url, { data: product }).then((response) => {
-        if (response.data.success) {
-          vm.isLoading = false;
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
-          );
-        }
-      }).then(() => {
-        vm.isShowCart = true;
-        setTimeout(() => {
-          vm.isShowCart = false;
-        }, 3000);
-      });
+    addCart(id, qty = 1) {
+      this.$store.dispatch('cartModules/addCart', { id, qty });
     },
     getFavorite() {
       this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];

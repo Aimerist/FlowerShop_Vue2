@@ -55,7 +55,7 @@
                 </div>
               </div>
               <div class="card-footer cursor-pointer"
-                @click.prevent="addProductToCart(item.id)">
+                @click.prevent="addCart(item.id)">
                 <a href="#">加入購物車</a>
               </div>
             </div>
@@ -80,7 +80,6 @@ export default {
       Categories: [],
       nowCategoryStatus: '',
       isLoading: false,
-      isShowCart: false,
     };
   },
   methods: {
@@ -99,33 +98,8 @@ export default {
         }
       });
     },
-    addProductToCart(id, qty = 1) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
-      const product = {
-        product_id: id,
-        qty,
-      };
-      vm.isLoading = true;
-      vm.$http.post(url, { data: product }).then((response) => {
-        if (response.data.success) {
-          vm.isLoading = false;
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
-          );
-        } else {
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'danger' },
-          );
-        }
-      }).then(() => {
-        vm.isShowCart = true;
-        setTimeout(() => {
-          vm.isShowCart = false;
-        }, 3000);
-      });
+    addCart(id) {
+      this.$store.dispatch('cartModules/addCart', { id });
     },
     getFavorite() {
       this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];

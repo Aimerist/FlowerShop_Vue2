@@ -77,7 +77,7 @@
           <div class="col-md-5 my-md-0 my-2">
             <div class="border p-3 shadow">
               <span class="badge badge-pill badge-danger float-right bg-primary">
-                {{ Carts.carts.length }}</span>
+                {{ cartLength }}</span>
               <div class="h5 text-center pb-2">訂 單 內 容</div>
               <table class="table m-0 teble-order">
                 <thead>
@@ -87,7 +87,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="cart in Carts.carts" :key="cart.id">
+                  <tr v-for="cart in carts.carts" :key="cart.id">
                     <td>{{ cart.product.title }} Ｘ {{ cart.qty }}</td>
                     <td class="text-right">{{ cart.product.price | currency }}</td>
                   </tr>
@@ -96,16 +96,16 @@
                   <tr class="">
                     <th>總計</th>
                     <td class="text-right h4 font-weight-bold h5 text-primary"
-                      :class="{'text-secondary': Carts.total===Carts.final_total }">
-                      {{ Carts.total | currency }}</td>
+                      :class="{'text-secondary': carts.total===carts.final_total }">
+                      {{ carts.total | currency }}</td>
                   </tr>
-                  <tr v-if="Carts.total!==Carts.final_total">
+                  <tr v-if="carts.total!==carts.final_total">
                     <th>
                       折扣價
                       <small class="text-success">(已套用優惠券)</small>
                     </th>
                     <td class="text-right h4 font-weight-bold text-secondary">
-                      {{ Carts.final_total | currency }}</td>
+                      {{ carts.final_total | currency }}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -130,6 +130,7 @@ import {
   extend,
 } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
+import { mapGetters } from 'vuex';
 
 extend('required', {
   ...required,
@@ -147,27 +148,16 @@ export default {
   },
   data() {
     return {
-      Carts: {
-        carts: [],
-      },
       form: {
         user: {},
       },
       isLoading: false,
     };
   },
+  computed: {
+    ...mapGetters('cartModules', ['carts', 'cartLength']),
+  },
   methods: {
-    getCart() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
-      vm.isLoading = true;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Carts = response.data.data;
-          vm.isLoading = false;
-        }
-      });
-    },
     createdOrder() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order`;
@@ -200,7 +190,7 @@ export default {
     },
   },
   created() {
-    this.getCart();
+    this.$store.dispatch('cartModules/getCart');
   },
 };
 </script>
