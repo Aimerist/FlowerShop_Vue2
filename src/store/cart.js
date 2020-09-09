@@ -12,7 +12,7 @@ export default ({
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart`;
       axios.get(url).then((response) => {
         if (response.data.success) {
-          context.commit('CART', response.data.data.carts);
+          context.commit('CART', response.data.data);
           context.commit('CART_LENGTH', response.data.data.carts.length);
         }
       });
@@ -36,7 +36,6 @@ export default ({
             { message: response.data.message, status: 'success' },
             { root: true });
         }
-        // vm.isLoading = false;
       });
     },
     removeCart(context, id) {
