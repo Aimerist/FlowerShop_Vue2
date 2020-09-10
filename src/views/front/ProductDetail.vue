@@ -9,17 +9,17 @@
       <!-- 商品圖片 -->
       <div class="col-md-7 mb-5">
         <img class="img-fluid img-cover"
-          :src="Product.imageUrl">
+          :src="product.imageUrl">
           <div class="favorite">
             <a class="text-white f-size125 cursor-pointer"
-              v-if="!isFavorite(Product.id)"
+              v-if="!isFavorite(product.id)"
               @click.prevent="
-                addFavorite(Product.id, Product.title, Product.origin_price, Product.imageUrl)">
+                addFavorite(product.id, product.title, product.origin_price, product.imageUrl)">
               <i class="far fa-heart fa-lg"></i>
             </a>
             <a class="text-danger f-size125 cursor-pointer"
-              v-if="isFavorite(Product.id)"
-              @click.prevent="removeFavorite(Product.id)">
+              v-if="isFavorite(product.id)"
+              @click.prevent="removeFavorite(product.id)">
               <i class="fas fa-heart fa-lg"></i>
             </a>
           </div>
@@ -27,20 +27,20 @@
       <!-- 商品資訊 -->
       <div class="col-md-5">
         <div class="px-4">
-          <h2 class="mb-2 text-primary font-weight-bold">{{ Product.title }}
-            <span class="h5 text-muted">| {{ Product.category }}</span></h2>
-          <div class="p-2 text-brown" v-if="Product.content">
+          <h2 class="mb-2 text-primary font-weight-bold">{{ product.title }}
+            <span class="h5 text-muted">| {{ product.category }}</span></h2>
+          <div class="p-2 text-brown" v-if="product.content">
             <h6>【商品介紹】</h6>
-            <p class="pl-2"> {{ Product.content }} </p>
+            <p class="pl-2"> {{ product.content }} </p>
           </div>
-          <div class="p-2 text-brown" v-if="Product.description">
+          <div class="p-2 text-brown" v-if="product.description">
             <h6>【商品描述】</h6>
-            <p class="pl-2"> {{ Product.description }} </p>
+            <p class="pl-2"> {{ product.description }} </p>
           </div>
           <hr>
           <div class="d-flex align-items-baseline px-2 pb-3">
-            <p class="text-gray mb-0">原價 <del>{{ Product.origin_price | currency }}</del></p>
-            <p class="ml-auto h3 text-dark">NT {{ Product.price | currency }}</p>
+            <p class="text-gray mb-0">原價 <del>{{ product.origin_price | currency }}</del></p>
+            <p class="ml-auto h3 text-dark">NT {{ product.price | currency }}</p>
           </div>
           <div class="row mx-0 no-gutters">
             <div class="col-lg-5 mr-auto mb-3">
@@ -61,7 +61,7 @@
             </div>
             <div class="col-lg-5">
               <button class="btn btn-block btn-add py-2 text-secondary"
-                @click="addCart(Product.id, qty)">
+                @click="addCart(product.id, qty)">
                 加到購物車<i class="fas fa-shopping-cart"></i>
               </button>
             </div>
@@ -79,28 +79,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       productId: '',
-      Product: {},
       Favorites: [],
       qty: 1,
       isLoading: false,
     };
   },
+  computed: {
+    ...mapGetters('productModules', ['product']),
+  },
   methods: {
-    getProduct(id = this.productId) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/product/${id}`;
-      vm.isLoading = true;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Product = JSON.parse(JSON.stringify(response.data.product));
-          vm.isLoading = false;
-        }
-      });
-    },
     addCart(id, qty = 1) {
       this.$store.dispatch('cartModules/addCart', { id, qty });
     },
@@ -149,7 +142,7 @@ export default {
   },
   created() {
     this.productId = this.$route.params.productId;
-    this.getProduct();
+    this.$store.dispatch('productModules/getProduct', this.productId);
     this.getFavorite();
   },
 };

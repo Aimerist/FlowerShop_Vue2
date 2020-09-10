@@ -11,12 +11,12 @@
             <li class="list-group-item category-title disabled">CATEGORY</li>
             <li class="list-group-item"
               :class="{active: nowCategoryStatus === ''}"
-              @click="nowCategoryStatus=''">
+              @click="switchCategoryStatus(''); nowCategoryStatus=''">
               ALL</li>
             <li class="list-group-item"
               :class="{active: nowCategoryStatus === `${ category }`}"
-              @click="nowCategoryStatus=`${ category }`"
-              v-for="category in Categories" :key="category">
+              @click="switchCategoryStatus(category); nowCategoryStatus = category"
+              v-for="category in categories" :key="category">
               {{ category }}</li>
           </ul>
         </div>
@@ -24,7 +24,7 @@
         <div class="col-lg-10 col-md-9">
           <div class="card-columns">
             <div class="card mb-4 rounded"
-              v-for="item in filterData" :key="item.id">
+              v-for="item in filterProducts" :key="item.id">
               <div class="card-img"
                 :style="`background: url(${ item.imageUrl }) center center no-repeat;`">
               </div>
@@ -68,6 +68,7 @@
 
 <script>
 import contentLength from '@/filters/stringlenght';
+import { mapGetters } from 'vuex';
 
 export default {
   filters: {
@@ -75,28 +76,17 @@ export default {
   },
   data() {
     return {
-      Products: [],
       Favorites: [],
-      Categories: [],
       nowCategoryStatus: '',
       isLoading: false,
     };
   },
+  computed: {
+    ...mapGetters('productModules', ['filterProducts', 'categories']),
+  },
   methods: {
-    getProducts() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/products/all`;
-      vm.isLoading = true;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Products = JSON.parse(JSON.stringify(response.data.products))
-            .filter((item) => item.is_enabled);
-          vm.Categories = vm.Products
-            .map((item) => item.category)
-            .filter((item, index, arr) => arr.indexOf(item) === index);
-          vm.isLoading = false;
-        }
-      });
+    switchCategoryStatus(CategoryName) {
+      this.$store.dispatch('productModules/switchCategoryStatus', CategoryName);
     },
     addCart(id) {
       this.$store.dispatch('cartModules/addCart', { id });
@@ -145,17 +135,8 @@ export default {
     },
   },
   created() {
-    this.getProducts();
+    this.$store.dispatch('productModules/getProductList', { isFront: true });
     this.getFavorite();
-  },
-  computed: {
-    filterData() {
-      const vm = this;
-      if (vm.nowCategoryStatus) {
-        return vm.Products.filter((item) => item.category === vm.nowCategoryStatus);
-      }
-      return vm.Products;
-    },
   },
 };
 </script>
