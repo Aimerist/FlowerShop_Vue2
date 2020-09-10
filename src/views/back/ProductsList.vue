@@ -4,7 +4,7 @@
       align-items-center pt-3 pb-2">
       <h3 class="h3">產品列表</h3>
       <button class="btn btn-success mr-5"
-        @click="openProductModal(false)">新增產品</button>
+        @click="openModal(false)">新增產品</button>
     </div>
     <table class="table table-hover">
       <thead>
@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in Products" :key="item.id">
+        <tr v-for="item in productList" :key="item.id">
           <td scope="row" class="d-md-table-cell d-none align-middle">
             {{item.category}}</td>
           <td class="d-lg-table-cell d-none align-middle">
@@ -36,17 +36,17 @@
             <span v-else class="text-secondary">未啟動</span></td>
           <th class="d-md-table-cell d-none align-middle">
             <button class="btn btn-outline-info btn-sm mr-1"
-              @click="openProductModal(true, item)">編輯</button>
+              @click="openModal(true, item)">編輯</button>
             <button class="btn btn-outline-danger btn-sm"
-              @click="openDelProductModal(item)">刪除</button>
+              @click="openModal(false ,item, true)">刪除</button>
           </th>
         </tr>
       </tbody>
     </table>
-    <Pagination :page="Page" @ChanePageKey="getProductsList"></Pagination>
+    <Pagination :page="page" @ChanePageKey="getProductsList"></Pagination>
 <!-- Modal -->
-    <!-- product -->
-    <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
+    <!-- updataModal -->
+    <div class="modal fade" id="updataModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content border-0">
@@ -139,13 +139,14 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" @click="updataProduct">確認</button>
+            <button type="button" class="btn btn-primary"
+              @click="updataProduct(isEdit, tempProduct)">確認</button>
           </div>
         </div>
       </div>
     </div>
-    <!-- delProduct -->
-    <div class="modal fade" id="delProductModal" tabindex="-1" role="dialog"
+    <!-- delModal -->
+    <div class="modal fade" id="delModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content border-0">
@@ -174,6 +175,7 @@
 <script>
 import $ from 'jquery';
 import Pagination from '@/components/Pagination.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -181,74 +183,34 @@ export default {
   },
   data() {
     return {
-      Products: {},
-      tempProduct: {},
-      Page: {},
       productId: '',
       isEdit: false,
     };
   },
+  computed: {
+    ...mapGetters('productModules', ['productList', 'page', 'tempProduct']),
+  },
   methods: {
-    getProductsList(page = 1) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/products?page=${page}`;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Products = response.data.products;
-          vm.Page = response.data.pagination;
-        }
-      });
+    ...mapActions('productModules', ['delProduct']),
+    getProductsList(page) {
+      this.$store.dispatch('productModules/getProductList', { isFront: false, page });
     },
-    openProductModal(isEdit, product) {
-      this.isEdit = isEdit;
-      if (isEdit) {
-        this.tempProduct = JSON.parse(JSON.stringify(product));
+    updataProduct(isEdit) {
+      this.$store.dispatch('productModules/updataProduct', isEdit);
+    },
+    openModal(isEdit, product, isDelete = false) {
+      if (isDelete) {
+        this.$store.state.productModules.tempProduct = { ...product };
+        $('#delModal').modal('show');
       } else {
-        this.tempProduct = {};
-      }
-      $('#productModal').modal('show');
-    },
-    updataProduct() {
-      const vm = this;
-      let apiMethod = 'post';
-      let apiUrl = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/product`;
-      if (vm.isEdit) {
-        apiMethod = 'put';
-        apiUrl = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/product/${vm.tempProduct.id}`;
-      }
-      vm.$http[apiMethod](apiUrl, { data: vm.tempProduct }).then((response) => {
-        if (response.data.success) {
-          vm.getProductsList();
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
-          );
-        }
-        $('#productModal').modal('hide');
-      });
-    },
-    openDelProductModal(item) {
-      this.tempProduct = item;
-      $('#delProductModal').modal('show');
-    },
-    delProduct() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/product/${vm.tempProduct.id}`;
-      vm.$http.delete(url).then((response) => {
-        if (response.data.success) {
-          vm.getProductsList();
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
-          );
+        this.isEdit = isEdit;
+        if (isEdit) {
+          this.$store.state.productModules.tempProduct = { ...product };
         } else {
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'danger' },
-          );
+          this.$store.state.productModules.tempProduct = {};
         }
-        $('#delProductModal').modal('hide');
-      });
+        $('#updataModal').modal('show');
+      }
     },
     uploadFile() {
       const vm = this;
