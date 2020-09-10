@@ -49,8 +49,8 @@
                             <div class="bg-cover"
                               :style="`background-image:url(${ cart.product.imageUrl });`"></div>
                           </td>
-                          <td class="py-1 px-0">
-                            <div class="align-middle px-0 f-size75">
+                          <td class="align-middle py-1 px-0">
+                            <div class="px-0 f-size75">
                               <div class="text-dark">{{ cart.product.title }}</div>
                               <div class="text-secondary">
                                 {{ cart.qty }}/{{ cart.product.unit }}</div>
@@ -83,7 +83,7 @@
               <div class="btn-group">
                 <a type="button" class="btn colorE" data-toggle="dropdown">
                   <i class="fas fa-heart fa-lg"></i>
-                  <span class="badge badge-pill badge-danger">{{ Favorites.length }}</span>
+                  <span class="badge badge-pill badge-danger">{{ favoriteLength }}</span>
                 </a>
                 <div class="dropdown-menu favorite shadow">
                   <div class="p-2 px-sm-3">
@@ -91,7 +91,7 @@
                     <table class="table mb-2 table-hover" style="min-width:200px">
                       <tbody>
                         <tr class="cursor-pointer"
-                          v-for="favorite in Favorites" :key="favorite.id"
+                          v-for="favorite in favorites" :key="favorite.id"
                           @click="productLink(favorite.id)">
                           <td class="align-middle px-1">
                             <div class="bg-cover"
@@ -106,7 +106,7 @@
                           </td>
                         </tr>
                         <td class="text-center p-0 m-0"
-                          v-if="Favorites.length===0">
+                          v-if="favoriteLength === 0">
                           <div class="text-center bg-brownlight m-0 p-4">
                             <div>沒有任何收藏商品唷!!</div>
                             <router-link :to="{ name: 'Products'}"
@@ -118,7 +118,7 @@
                     </table>
                     <button class="btn btn-outline-danger btn-block"
                       data-toggle="modal" data-target="#delFavoriteModal"
-                      v-if="Favorites.length !== 0">
+                      v-if="favoriteLength !== 0">
                       刪除全部</button>
                   </div>
                 </div>
@@ -157,16 +157,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import $ from 'jquery';
 
 export default {
-  data() {
-    return {
-      Favorites: [],
-    };
-  },
   computed: {
     ...mapGetters('cartModules', ['carts', 'cartLength', 'isShowCart']),
+    ...mapGetters('favoriteModules', ['favorites', 'favoriteLength']),
   },
   methods: {
     removeCart(id) {
@@ -175,27 +170,13 @@ export default {
     productLink(id) {
       this.$router.push({ name: 'ProductDetail', params: { productId: id } });
     },
-    getFavorite() {
-      this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];
-    },
-    removeFavorite(isAll, id) {
-      if (isAll) {
-        localStorage.removeItem('favoriteData');
-        $('#delFavoriteModal').modal('hide');
-        this.getFavorite();
-      } else {
-        this.Favorites.splice(this.Favorites.indexOf(id), 1);
-        localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
-      }
-      this.$store.dispatch(
-        'alertMessageModules/updateMessage',
-        { message: '已刪除收藏', status: 'warning' },
-      );
+    removeFavorite(isDeleteAll, id) {
+      this.$store.dispatch('favoriteModules/removeFavorite', { id, isDeleteAll });
     },
   },
   created() {
     this.$store.dispatch('cartModules/getCart');
-    this.getFavorite();
+    this.$store.dispatch('favoriteModules/getFavorite');
   },
 };
 </script>
