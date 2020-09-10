@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import alertMessageModules from './alertMessage';
 import cartModules from './cart';
 import productModules from './product';
+import favoriteModules from './favorite';
 
 Vue.use(Vuex);
 
@@ -18,5 +19,6 @@ export default new Vuex.Store({
     alertMessageModules,
     cartModules,
     productModules,
+    favoriteModules,
   },
 });
