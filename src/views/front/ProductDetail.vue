@@ -3,8 +3,7 @@
     <div class="vld-parent">
       <loading :active.sync="isLoading"></loading>
     </div>
-
-<!-- 商品內容 -->
+    <!-- 商品內容 -->
     <div class="row">
       <!-- 商品圖片 -->
       <div class="col-md-7 mb-5">
@@ -85,7 +84,6 @@ export default {
   data() {
     return {
       productId: '',
-      Favorites: [],
       qty: 1,
       isLoading: false,
     };
@@ -97,53 +95,24 @@ export default {
     addCart(id, qty = 1) {
       this.$store.dispatch('cartModules/addCart', { id, qty });
     },
-    getFavorite() {
-      this.Favorites = JSON.parse(localStorage.getItem('favoriteData')) || [];
-    },
     addFavorite(id, title, price, imageUrl) {
-      if (!this.isFavorite(id)) {
-        const data = {
-          id, title, price, imageUrl,
-        };
-        this.Favorites.push(data);
-        localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
-        this.$store.dispatch(
-          'alertMessageModules/updateMessage',
-          { message: '已加入收藏夾', status: 'success' },
-        );
-      } else {
-        this.$store.dispatch(
-          'alertMessageModules/updateMessage',
-          { message: '已經加入過收藏了', status: 'danger' },
-        );
-      }
-    },
-    isFavorite(id) {
-      if (this.Favorites.some((item) => item.id === id)) {
-        return true;
-      }
-      return false;
+      const data = {
+        id, title, price, imageUrl,
+      };
+      this.$store.dispatch('favoriteModules/addFavorite', data);
     },
     removeFavorite(id) {
-      if (this.isFavorite(id)) {
-        this.Favorites.splice(this.Favorites.indexOf(id), 1);
-        localStorage.setItem('favoriteData', JSON.stringify(this.Favorites));
-        this.$store.dispatch(
-          'alertMessageModules/updateMessage',
-          { message: '已刪除收藏', status: 'warning' },
-        );
-      } else {
-        this.$store.dispatch(
-          'alertMessageModules/updateMessage',
-          { message: '目前並被沒有收藏唷', status: 'danger' },
-        );
-      }
+      this.$store.dispatch('favoriteModules/removeFavorite', { id });
+    },
+    isFavorite(id) {
+      return this.$store.state.favoriteModules.favorites
+        .map((item) => item.id)
+        .some((item) => item === id);
     },
   },
   created() {
     this.productId = this.$route.params.productId;
     this.$store.dispatch('productModules/getProduct', this.productId);
-    this.getFavorite();
   },
 };
 </script>
