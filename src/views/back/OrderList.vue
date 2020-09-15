@@ -50,7 +50,8 @@ export default {
     Pagination,
   },
   computed: {
-    ...mapGetters('orderModules', ['orders', 'page']),
+    ...mapGetters(['page']),
+    ...mapGetters('orderModules', ['orders']),
   },
   methods: {
     getOrderList(page) {

@@ -188,7 +188,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('productModules', ['productList', 'page', 'tempProduct']),
+    ...mapGetters(['page']),
+    ...mapGetters('productModules', ['productList', 'tempProduct']),
   },
   methods: {
     ...mapActions('productModules', ['delProduct']),

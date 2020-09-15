@@ -149,7 +149,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('couponModules', ['coupons', 'tempCoupon', 'page']),
+    ...mapGetters(['page']),
+    ...mapGetters('couponModules', ['coupons', 'tempCoupon']),
   },
   methods: {
     ...mapActions('couponModules', ['delCoupon']),
