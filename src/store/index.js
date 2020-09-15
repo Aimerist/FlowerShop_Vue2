@@ -12,10 +12,17 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-  },
-  mutations: {
+    page: {},
   },
   actions: {
+  },
+  mutations: {
+    PAGE(state, payload) {
+      state.page = payload;
+    },
+  },
+  getters: {
+    page: (state) => state.page,
   },
   modules: {
     alertMessageModules,

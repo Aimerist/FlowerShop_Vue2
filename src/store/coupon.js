@@ -7,7 +7,6 @@ export default ({
     coupons: [],
     tempCoupon: {},
     couponCode: '',
-    page: {},
   },
   actions: {
     getCoupons(context, page = 1) {
@@ -15,7 +14,7 @@ export default ({
       axios.get(url).then((response) => {
         if (response.data.success) {
           context.commit('COUPONS', response.data.coupons);
-          context.commit('PAGE', response.data.pagination);
+          context.commit('PAGE', response.data.pagination, { root: true });
         }
       });
     },
@@ -82,9 +81,6 @@ export default ({
     COUPONS(state, payload) {
       state.coupons = payload;
     },
-    PAGE(state, payload) {
-      state.page = payload;
-    },
     COUPON_CODE(state, payload) {
       state.couponCode = payload;
     },
@@ -92,7 +88,6 @@ export default ({
   getters: {
     coupons: (state) => state.coupons,
     tempCoupon: (state) => state.tempCoupon,
-    page: (state) => state.page,
     couponCode: (state) => state.couponCode,
   },
 });

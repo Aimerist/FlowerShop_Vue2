@@ -9,7 +9,6 @@ export default ({
     tempProduct: {},
     filterProducts: {},
     categories: {},
-    page: {},
   },
   actions: {
     getProductList(context, { isFront, page = 1 }) {
@@ -25,7 +24,7 @@ export default ({
             context.commit('CATEGORIES');
             context.commit('FILTER_PRODUCTS');
           } else {
-            context.commit('PAGE', response.data.pagination);
+            context.commit('PAGE', response.data.pagination, { root: true });
           }
           // vm.isLoading = false;
         }
@@ -104,16 +103,12 @@ export default ({
         state.filterProducts = Data;
       }
     },
-    PAGE(state, payload) {
-      state.page = payload;
-    },
   },
   getters: {
     product: (state) => state.product,
     productList: (state) => state.productList,
     categories: (state) => state.categories,
     filterProducts: (state) => state.filterProducts,
-    page: (state) => state.page,
     tempProduct: (state) => state.tempProduct,
   },
 });

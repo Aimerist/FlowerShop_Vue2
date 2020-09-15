@@ -8,7 +8,7 @@ export default ({
     },
     orders: [],
     orderId: '-MFmztApDdotRm6X5wOh',
-    page: {},
+    // page: {},
   },
   actions: {
     getOrderList(context, page = 1) {
@@ -16,7 +16,7 @@ export default ({
       axios.get(url).then((response) => {
         if (response.data.success) {
           context.commit('ORDERS', response.data.orders);
-          context.commit('PAGE', response.data.pagination);
+          context.commit('PAGE', response.data.pagination, { root: true });
         } else {
           context.dispatch('alertMessageModules/updateMessage',
             { message: response.data.message, status: 'success' },
@@ -60,14 +60,14 @@ export default ({
     ORDER_ID(state, payload) {
       state.orderId = payload;
     },
-    PAGE(state, payload) {
-      state.page = payload;
-    },
+    // PAGE(state, payload) {
+    //   state.page = payload;
+    // },
   },
   getters: {
     order: (state) => state.order,
     orders: (state) => state.orders,
     orderId: (state) => state.orderId,
-    page: (state) => state.page,
+    // page: (state) => state.page,
   },
 });
