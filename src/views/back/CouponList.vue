@@ -4,7 +4,7 @@
       align-items-center pt-3 pb-2">
       <h3 class="h3">折價卷列表</h3>
       <button class="btn btn-success mr-5"
-        @click="openCouponModal(true)">新增折價卷</button>
+        @click="openModal(true)">新增折價卷</button>
     </div>
     <table class="table table-hover">
       <thead>
@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in Coupons" :key="item.id">
+        <tr v-for="item in coupons" :key="item.id">
           <td scope="row" class="align-middle">
             {{item.title}}</td>
           <td class="d-lg-table-cell d-none align-middle">
@@ -32,16 +32,16 @@
             <span v-else class="text-secondary">未啟動</span></td>
           <th class="align-middle">
             <button class="btn btn-outline-info btn-sm mr-1"
-              @click="openCouponModal(false, item)">編輯</button>
+              @click="openModal(false, item)">編輯</button>
             <button class="btn btn-outline-danger btn-sm"
-              @click="openDelCouponModal(item)">刪除</button>
+              @click="openModal(false, item, true)">刪除</button>
           </th>
         </tr>
       </tbody>
     </table>
-    <Pagination :page="Page" @ChanePageKey="getCoupons"></Pagination>
+    <Pagination :page="page" @ChanePageKey="getCoupons"></Pagination>
     <!-- Coupon Modal -->
-    <div class="modal fade" id="addCouponModal" tabindex="-1" role="dialog"
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content border-0">
@@ -104,7 +104,7 @@
       </div>
     </div>
     <!-- Del Coupon Modal -->
-    <div class="modal fade" id="delCouponModal" tabindex="-1" role="dialog"
+    <div class="modal fade" id="delModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content border-0">
@@ -134,6 +134,7 @@
 import $ from 'jquery';
 import Pagination from '@/components/Pagination.vue';
 import percentage from '@/filters/percentage';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -144,75 +145,34 @@ export default {
   },
   data() {
     return {
-      Coupons: [],
-      tempCoupon: {},
       isCreate: true,
-      Page: {},
     };
   },
+  computed: {
+    ...mapGetters('couponModules', ['coupons', 'tempCoupon', 'page']),
+  },
   methods: {
-    getCoupons(page = 1) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/coupons?page=${page}`;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Coupons = response.data.coupons;
-          vm.Page = response.data.pagination;
-        }
-      });
+    ...mapActions('couponModules', ['delCoupon']),
+    getCoupons(page) {
+      this.$store.dispatch('couponModules/getCoupons', page);
     },
-    openCouponModal(isCreate, item) {
-      if (isCreate) {
-        this.isCreate = true;
-        this.tempCoupon = {};
+    openModal(isCreate, coupon, isDelete = false) {
+      if (isDelete) {
+        $('#delModal').modal('show');
+        this.$store.state.couponModules.tempCoupon = { ...coupon };
       } else {
-        this.isCreate = false;
-        this.tempCoupon = item;
+        if (isCreate) {
+          this.isCreate = true;
+          this.$store.state.couponModules.tempCoupon = {};
+        } else {
+          this.isCreate = false;
+          this.$store.state.couponModules.tempCoupon = { ...coupon };
+        }
+        $('#addModal').modal('show');
       }
-      $('#addCouponModal').modal('show');
-    },
-    openDelCouponModal(item) {
-      $('#delCouponModal').modal('show');
-      this.tempCoupon = item;
     },
     updataCoupon() {
-      const vm = this;
-      let url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/coupon`;
-      let apiMethd = 'post';
-      if (!vm.isCreate) {
-        url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
-        apiMethd = 'put';
-      }
-      vm.tempCoupon.due_date = Math.floor(new Date(vm.tempCoupon.due_date) / 1000);
-      vm.$http[apiMethd](url, { data: vm.tempCoupon }).then((response) => {
-        if (response.data.success) {
-          vm.getCoupons();
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
-          );
-        }
-        $('#addCouponModal').modal('hide');
-      });
-    },
-    delCoupon(id) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/coupon/${id}`;
-      vm.$http.delete(url).then((response) => {
-        if (response.data.success) {
-          vm.getCoupons();
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
-          );
-        } else {
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'danger' },
-          );
-        }
-        $('#delCouponModal').modal('hide');
-      });
+      this.$store.dispatch('couponModules/updataCoupon', this.isCreate);
     },
   },
   created() {
