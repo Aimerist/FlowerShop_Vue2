@@ -119,37 +119,26 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      couponCode: '',
       isLoading: false,
     };
   },
   computed: {
     ...mapGetters('cartModules', ['carts', 'cartLength']),
+    couponCode: {
+      get() {
+        return this.$store.state.couponModules.couponCode;
+      },
+      set(value) {
+        this.$store.commit('couponModules/COUPON_CODE', value);
+      },
+    },
   },
   methods: {
     removeCart(id) {
       this.$store.dispatch('cartModules/removeCart', id);
     },
     addCouponCode() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/coupon`;
-      const coupon = {
-        code: vm.couponCode,
-      };
-      this.$http.post(url, { data: coupon }).then((response) => {
-        if (response.data.success) {
-          this.$store.dispatch('cartModules/getCart');
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
-          );
-        } else {
-          vm.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'danger' },
-          );
-        }
-      });
+      this.$store.dispatch('couponModules/useCouponCode');
     },
   },
   created() {
