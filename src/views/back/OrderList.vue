@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in Orders" :key="item.id">
+        <tr v-for="item in orders" :key="item.id">
           <td scope="row" class="align-middle">
             <span v-if="item.is_paid" class="text-success">付款</span>
             <span v-else class="text-danger">未付款</span>
@@ -37,33 +37,24 @@
         </tr>
       </tbody>
     </table>
-    <Pagination :page="Page" @ChanePageKey="getOrderList"></Pagination>
+    <Pagination :page="page" @ChanePageKey="getOrderList"></Pagination>
   </div>
 </template>
 
 <script>
 import Pagination from '@/components/Pagination.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
     Pagination,
   },
-  data() {
-    return {
-      Orders: {},
-      Page: {},
-    };
+  computed: {
+    ...mapGetters('orderModules', ['orders', 'page']),
   },
   methods: {
-    getOrderList(page = 1) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/orders?page=${page}`;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.Orders = response.data.orders;
-          vm.Page = response.data.pagination;
-        }
-      });
+    getOrderList(page) {
+      this.$store.dispatch('orderModules/getOrderList', page);
     },
   },
   created() {
