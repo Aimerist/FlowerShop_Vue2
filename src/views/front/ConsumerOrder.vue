@@ -80,13 +80,14 @@
           <div class="col-md-5 pb-3">
             <a href="#" class="btn-block btn-submit mt-0 py-2 h5 rounded"
               v-if="!order.is_paid"
-              @click="payOrder">確認付款去</a>
+              @click.prevent="payOrder">確認付款去</a>
           </div>
         </div>
         <div class="btn-block text-center font-weight-bold">
-          <a class="link-line text-brown" href="/detail.html">
+          <router-link class="link-line text-brown"
+            :to="{ name: 'Products' }">
             <i class="fas  fa-arrow-left"></i>
-            回到 Flower Shop 購物去</a>
+            回到 Flower Shop 購物去</router-link>
         </div>
       </div>
     </div>
@@ -94,48 +95,23 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
-      order: {
-        user: { },
-      },
-      orderId: '',
       isLoading: false,
     };
   },
+  computed: {
+    ...mapGetters('orderModules', ['order', 'orderId']),
+  },
   methods: {
-    getOrder() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order/${vm.order.id}`;
-      vm.isLoading = true;
-      vm.$http.get(url).then((response) => {
-        if (response.data.success) {
-          vm.order = response.data.order;
-          vm.isLoading = false;
-        }
-      });
-    },
-    payOrder() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/pay/${vm.order.id}`;
-      vm.isLoading = true;
-      vm.$http.post(url).then((response) => {
-        if (response.data.success) {
-          vm.getOrder();
-          vm.isLoading = false;
-          vm.$bus.$emit('message:push', response.data.message, 'success');
-          this.$store.dispatch(
-            'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
-          );
-        }
-      });
-    },
+    ...mapActions('orderModules', ['getOrder', 'payOrder']),
   },
   created() {
-    this.order.id = this.$route.params.orderId;
-    this.getOrder();
+    this.$store.commit('orderModules/ORDER_ID', this.$route.params.orderId);
+    this.$store.dispatch('orderModules/getOrder');
   },
 };
 </script>
