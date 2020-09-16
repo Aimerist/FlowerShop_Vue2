@@ -2,39 +2,40 @@
   <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap
       align-items-center pt-3 pb-2">
-      <h3 class="h3">產品列表</h3>
+      <h3 class="h2 ml-5 my-2 font-weight-bold text-primary">產品列表</h3>
       <button class="btn btn-success mr-5"
         @click="openModal(false)">新增產品</button>
     </div>
-    <table class="table table-hover">
+    <table class="table table-hover text-center">
       <thead>
-        <tr>
-          <th scope="col">分類</th>
-          <th scope="col">縮圖</th>
-          <th scope="col">名稱</th>
-          <th scope="col">原價</th>
-          <th scope="col">售價</th>
-          <th scope="col">是否啟用</th>
+        <tr class="text-gray">
+          <th scope="col" class="d-sm-table-cell d-none">是否啟用</th>
+          <th scope="col" class="d-md-table-cell d-none">分類</th>
+          <th scope="col" class="d-lg-table-cell d-none">縮圖</th>
+          <th scope="col" class="text-left">名稱</th>
+          <th scope="col" class="d-md-table-cell d-none text-right">原價</th>
+          <th scope="col" class="text-right">售價</th>
           <th scope="col">編輯</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in productList" :key="item.id">
+        <tr class="text-dark"
+          v-for="item in productList" :key="item.id">
+          <td class="d-sm-table-cell d-none align-middle">
+            <span v-if="item.is_enabled" class="text-success">啟動</span>
+            <span v-else class="text-gray">未啟動</span></td>
           <td scope="row" class="d-md-table-cell d-none align-middle">
             {{item.category}}</td>
           <td class="d-lg-table-cell d-none align-middle">
             <img :src="item.imageUrl" alt="" style="height: 80px;width: 80px; border-style: none">
           </td>
-          <td class="d-md-table-cell d-none align-middle">
+          <td class="align-middle text-left">
             {{item.title}}</td>
-          <td class="d-md-table-cell d-none align-middle">
+          <td class="d-md-table-cell d-none align-middle text-right">
             {{item.origin_price | currency}}</td>
-          <td class="d-md-table-cell d-none align-middle">
+          <td class="align-middle text-right">
             {{item.price | currency}}</td>
-          <td class="d-md-table-cell d-none align-middle">
-            <span v-if="item.is_enabled" class="text-success">啟動</span>
-            <span v-else class="text-secondary">未啟動</span></td>
-          <th class="d-md-table-cell d-none align-middle">
+          <th class="align-middle">
             <button class="btn btn-outline-info btn-sm mr-1"
               @click="openModal(true, item)">編輯</button>
             <button class="btn btn-outline-danger btn-sm"
@@ -50,9 +51,11 @@
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content border-0">
-          <div class="modal-header bg-dark text-white">
+          <div class="modal-header bg-success text-white"
+            :class="{ 'bg-info': isEdit }">
             <h5 class="modal-title" id="exampleModalLabel">
-              <span>新增產品</span>
+              <span v-if="!isEdit">新增產品</span>
+              <span v-else>編輯產品</span>
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -83,13 +86,13 @@
                     v-model="tempProduct.title">
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-6">
                     <label for="category">分類</label>
                     <input type="text" class="form-control" id="category"
                       placeholder="請輸入分類"
                       v-model="tempProduct.category">
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-6">
                     <label for="price">單位</label>
                     <input type="unit" class="form-control" id="unit"
                       placeholder="請輸入單位"
@@ -97,13 +100,13 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-6">
                   <label for="origin_price">原價</label>
                     <input type="number" class="form-control" id="origin_price"
                       placeholder="請輸入原價"
                       v-model="tempProduct.origin_price">
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-6">
                     <label for="price">售價</label>
                     <input type="number" class="form-control" id="price"
                       placeholder="請輸入售價"
@@ -138,9 +141,11 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary"
-              @click="updataProduct(isEdit, tempProduct)">確認</button>
+            <button type="button" class="btn btn-outline-gray" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-success"  v-if="!isEdit"
+              @click="updataProduct(isEdit, tempProduct)">確認新增</button>
+            <button type="button" class="btn btn-info" v-else
+              @click="updataProduct(isEdit, tempProduct)">確認編輯</button>
           </div>
         </div>
       </div>
