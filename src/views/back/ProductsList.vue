@@ -8,7 +8,7 @@
     </div>
     <table class="table table-hover text-center">
       <thead>
-        <tr class="text-gray">
+        <tr>
           <th scope="col" class="d-sm-table-cell d-none">是否啟用</th>
           <th scope="col" class="d-md-table-cell d-none">分類</th>
           <th scope="col" class="d-lg-table-cell d-none">縮圖</th>
@@ -23,7 +23,7 @@
           v-for="item in productList" :key="item.id">
           <td class="d-sm-table-cell d-none align-middle">
             <span v-if="item.is_enabled" class="text-success">啟動</span>
-            <span v-else class="text-gray">未啟動</span></td>
+            <span v-else class="text-danger">未啟動</span></td>
           <td scope="row" class="d-md-table-cell d-none align-middle">
             {{item.category}}</td>
           <td class="d-lg-table-cell d-none align-middle">
@@ -164,10 +164,11 @@
             </button>
           </div>
           <div class="modal-body">
-            是否刪除 <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
+            是否刪除 <strong class="text-danger">{{ tempProduct.title }}</strong> 商品。
+            <em class="text-gray f-size75">(刪除後將無法恢復 )</em>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-outline-gray" data-dismiss="modal">取消</button>
             <button type="button" class="btn btn-danger"
               @click="delProduct">確認刪除</button>
           </div>
