@@ -23,7 +23,7 @@ export default ({
         product_id: id,
         qty,
       };
-      // vm.isLoading = true;
+      context.commit('ITEM_LOADING_ID', id, { root: true });
       axios.post(url, { data: product }).then((response) => {
         if (response.data.success) {
           context.dispatch('getCart');
@@ -36,18 +36,19 @@ export default ({
             { message: response.data.message, status: 'success' },
             { root: true });
         }
+        context.commit('ITEM_LOADING_ID', '', { root: true });
       });
     },
     removeCart(context, id) {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/cart/${id}`;
-      // vm.isLoading = true;
+      context.commit('ITEM_LOADING_ID', id, { root: true });
       axios.delete(url).then((response) => {
         context.dispatch('getCart');
         context.dispatch('alertMessageModules/updateMessage',
           { message: response.data.message, status: 'warning' },
           { root: true });
+        context.commit('ITEM_LOADING_ID', '', { root: true });
       });
-      // vm.isLoading = false;
     },
     showCart(context) {
       context.commit('IS_SHOW_CART', true);

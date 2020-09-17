@@ -61,7 +61,10 @@
             <div class="col-lg-5">
               <button class="btn btn-block btn-add py-2 text-secondary"
                 @click="addCart(product.id, qty)">
-                加到購物車<i class="fas fa-shopping-cart"></i>
+                  加到購物車
+                <i class="fas fa-spinner fa-spin mx-1"
+                  v-if="status.itemLodingId === product.id"></i>
+                <i class="fas fa-shopping-cart" v-else></i>
               </button>
             </div>
           </div>
@@ -89,6 +92,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['status']),
     ...mapGetters('productModules', ['product']),
   },
   methods: {

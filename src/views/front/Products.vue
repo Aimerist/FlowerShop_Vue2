@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
-    </div>
     <div class="gap-setting">
       <div class="row">
         <!-- 選單 -->
@@ -54,8 +51,9 @@
                   <p class="ml-auto h5 text-danger">NT {{ item.origin_price | currency }}</p>
                 </div>
               </div>
-              <div class="card-footer cursor-pointer"
+              <div class="card-footer cursor-pointer text-brown"
                 @click.prevent="addCart(item.id)">
+                <i class="fas fa-spinner fa-spin mx-1" v-if="status.itemLodingId === item.id"></i>
                 <a href="#">加入購物車</a>
               </div>
             </div>
@@ -77,10 +75,10 @@ export default {
   data() {
     return {
       nowCategoryStatus: '',
-      isLoading: false,
     };
   },
   computed: {
+    ...mapGetters(['status']),
     ...mapGetters('productModules', ['filterProducts', 'categories']),
   },
   methods: {

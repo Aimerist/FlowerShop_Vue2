@@ -60,7 +60,9 @@
               </div>
               <button class="btn btn-outline-danger mr-4 ml-auto"
                 @click.prevent="removeCart(cart.id)">
-                <i class="fas fa-trash-alt"></i>
+                <i class="fas fa-spinner fa-spin"
+                  v-if="status.itemLodingId === cart.id"></i>
+                <i class="fas fa-trash-alt" v-else></i>
               </button>
             </div>
             <hr>
@@ -123,6 +125,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['status']),
     ...mapGetters('cartModules', ['carts', 'cartLength']),
     couponCode: {
       get() {

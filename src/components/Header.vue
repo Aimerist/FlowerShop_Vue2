@@ -42,7 +42,9 @@
                           <td class="align-middle px-2">
                             <a class="btn-del text-danger"
                               @click.stop.prevent="removeCart(cart.id)">
-                              <i class="fas fa-trash-alt"></i>
+                              <i class="fas fa-spinner fa-spin"
+                                v-if="status.itemLodingId === cart.id"></i>
+                              <i class="fas fa-trash-alt" v-else></i>
                             </a>
                           </td>
                           <td class="align-middle px-1">
@@ -160,6 +162,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
+    ...mapGetters(['status']),
     ...mapGetters('cartModules', ['carts', 'cartLength', 'isShowCart']),
     ...mapGetters('favoriteModules', ['favorites', 'favoriteLength']),
   },
