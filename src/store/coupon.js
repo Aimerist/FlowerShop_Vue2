@@ -28,6 +28,7 @@ export default ({
         url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/coupon/${couponData.id}`;
         apiMethd = 'put';
       }
+      context.commit('ITEM_LOADING_ID', true, { root: true });
       couponData.due_date = Math.floor(new Date(couponData.due_date) / 1000);
       axios[apiMethd](url, { data: couponData }).then((response) => {
         if (response.data.success) {
