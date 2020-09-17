@@ -42,15 +42,12 @@ export default {
       vm.$http.post(url, vm.user).then((response) => {
         if (response.data.success) {
           vm.$router.push({ name: 'ProductsList' });
+        } else {
           vm.$store.dispatch(
             'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'success' },
+            { message: response.data.message, status: 'danger' },
           );
         }
-        vm.$store.dispatch(
-          'alertMessageModules/updateMessage',
-          { message: response.data.message, status: 'danger' },
-        );
       });
     },
   },
