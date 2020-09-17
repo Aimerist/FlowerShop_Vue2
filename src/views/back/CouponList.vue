@@ -43,7 +43,7 @@
     <!-- Coupon Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-md" role="document">
         <div class="modal-content border-0">
           <div class="modal-header bg-success text-white"
             :class="{ 'bg-info': !isCreate }">
@@ -99,9 +99,15 @@
           <div class="modal-footer">
             <button type="button" class="btn btn btn-outline-gray" data-dismiss="modal">取消</button>
             <button type="button" class="btn btn-success" v-if="isCreate"
-              @click="updataCoupon">確認新增</button>
+              @click="updataCoupon">
+              <i class="fas fa-spinner fa-spin mx-1"
+                v-if="status.itemLodingId === true"></i>
+                確認新增</button>
             <button type="button" class="btn btn-info" v-else
-              @click="updataCoupon">確認編輯</button>
+              @click="updataCoupon">
+              <i class="fas fa-spinner fa-spin mx-1"
+                v-if="status.itemLodingId === true"></i>
+                確認編輯</button>
           </div>
         </div>
       </div>
@@ -126,7 +132,10 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-gray" data-dismiss="modal">取消</button>
             <button type="button" class="btn btn-danger"
-              @click="delCoupon(tempCoupon.id)">確認刪除</button>
+              @click="delCoupon(tempCoupon.id)">
+              <i class="fas fa-spinner fa-spin mx-1"
+                v-if="status.itemLodingId === true"></i>
+                確認刪除</button>
           </div>
         </div>
       </div>
@@ -153,7 +162,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['page']),
+    ...mapGetters(['page', 'status']),
     ...mapGetters('couponModules', ['coupons', 'tempCoupon']),
   },
   methods: {

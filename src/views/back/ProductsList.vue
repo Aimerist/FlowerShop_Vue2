@@ -71,7 +71,8 @@
                 </div>
                 <div class="form-group">
                   <label for="customFile">或 上傳圖片
-                    <i class="fas fa-spinner fa-spin"></i>
+                  <i class="fas fa-spinner fa-spin mx-1"
+                    v-if="status.itemLodingId === 'change'"></i>
                   </label>
                   <input type="file" id="customFile" class="form-control"
                     ref="files" @change="uploadFile">
@@ -143,9 +144,15 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-gray" data-dismiss="modal">取消</button>
             <button type="button" class="btn btn-success"  v-if="!isEdit"
-              @click="updataProduct(isEdit, tempProduct)">確認新增</button>
+              @click="updataProduct(isEdit, tempProduct)">
+              <i class="fas fa-spinner fa-spin mx-1"
+                v-if="status.itemLodingId === true"></i>
+                確認新增</button>
             <button type="button" class="btn btn-info" v-else
-              @click="updataProduct(isEdit, tempProduct)">確認編輯</button>
+              @click="updataProduct(isEdit, tempProduct)">
+              <i class="fas fa-spinner fa-spin mx-1"
+                v-if="status.itemLodingId === true"></i>
+                確認編輯</button>
           </div>
         </div>
       </div>
@@ -170,7 +177,10 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-gray" data-dismiss="modal">取消</button>
             <button type="button" class="btn btn-danger"
-              @click="delProduct">確認刪除</button>
+              @click="delProduct">
+              <i class="fas fa-spinner fa-spin mx-1"
+                v-if="status.itemLodingId === true"></i>
+                確認刪除</button>
           </div>
         </div>
       </div>
@@ -194,7 +204,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['page']),
+    ...mapGetters(['page', 'status']),
     ...mapGetters('productModules', ['productList', 'tempProduct']),
   },
   methods: {
@@ -225,6 +235,7 @@ export default {
       const formData = new FormData();
       formData.append('file-to-upload', uploadedFile);
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/upload`;
+      vm.$store.commit('ITEM_LOADING_ID', 'change');
       vm.$http.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -242,6 +253,7 @@ export default {
             { message: response.data.message, status: 'danger' },
           );
         }
+        vm.$store.commit('ITEM_LOADING_ID', '');
       });
     },
   },

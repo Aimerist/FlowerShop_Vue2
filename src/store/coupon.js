@@ -40,12 +40,14 @@ export default ({
             { message: response.data.message, status: 'success' },
             { root: true });
         }
+        context.commit('ITEM_LOADING_ID', '', { root: true });
         $('#addModal').modal('hide');
       });
     },
     delCoupon(context) {
       const couponId = context.state.tempCoupon.id;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/coupon/${couponId}`;
+      context.commit('ITEM_LOADING_ID', true, { root: true });
       axios.delete(url).then((response) => {
         if (response.data.success) {
           context.dispatch('getCoupons');
@@ -57,6 +59,7 @@ export default ({
             { message: response.data.message, status: 'danger' },
             { root: true });
         }
+        context.commit('ITEM_LOADING_ID', '', { root: true });
         $('#delModal').modal('hide');
       });
     },

@@ -48,6 +48,7 @@ export default ({
         apiMethod = 'put';
         apiUrl = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/product/${data.id}`;
       }
+      context.commit('ITEM_LOADING_ID', true, { root: true });
       axios[apiMethod](apiUrl, { data }).then((response) => {
         if (response.data.success) {
           context.dispatch('getProductList', { isFront: false });
@@ -59,12 +60,14 @@ export default ({
             { message: response.data.message, status: 'danger' },
             { root: true });
         }
+        context.commit('ITEM_LOADING_ID', '', { root: true });
         $('#updataModal').modal('hide');
       });
     },
     delProduct(context) {
       const productId = context.state.tempProduct.id;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/product/${productId}`;
+      context.commit('ITEM_LOADING_ID', true, { root: true });
       axios.delete(url).then((response) => {
         if (response.data.success) {
           context.dispatch('getProductList', { isFront: false });
@@ -76,6 +79,7 @@ export default ({
             { message: response.data.message, status: 'danger' },
             { root: true });
         }
+        context.commit('ITEM_LOADING_ID', '', { root: true });
         $('#delModal').modal('hide');
       });
     },
