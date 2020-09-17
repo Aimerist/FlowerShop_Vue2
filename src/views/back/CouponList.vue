@@ -2,34 +2,34 @@
   <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap
       align-items-center pt-3 pb-2">
-      <h3 class="h3">折價卷列表</h3>
+      <h2 class="ml-4 my-2 font-weight-bold text-primary">折價卷列表</h2>
       <button class="btn btn-success mr-5"
         @click="openModal(true)">新增折價卷</button>
     </div>
-    <table class="table table-hover">
+    <table class="table table-hover text-center">
       <thead>
         <tr>
-          <th scope="col">名稱</th>
-          <th scope="col" class="d-lg-table-cell d-none">優惠碼</th>
-          <th scope="col" class="d-sm-table-cell d-none">折扣百分比</th>
-          <th scope="col" class="d-md-table-cell d-none">到期日期</th>
           <th scope="col" class="d-sm-table-cell d-none">是否啟用</th>
+          <th scope="col" class="text-left">名稱</th>
+          <th scope="col" class="d-lg-table-cell d-none text-left">優惠碼</th>
+          <th scope="col">折扣 %</th>
+          <th scope="col" class="d-md-table-cell d-none">到期日期</th>
           <th scope="col">編輯</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="text-dark">
         <tr v-for="item in coupons" :key="item.id">
-          <td scope="row" class="align-middle">
-            {{item.title}}</td>
-          <td class="d-lg-table-cell d-none align-middle">
-            {{item.code}}</td>
           <td class="d-sm-table-cell d-none align-middle">
+            <span v-if="item.is_enabled" class="text-success">啟動</span>
+            <span v-else class="text-danger">未啟動</span></td>
+          <td scope="row" class="align-middle text-left">
+            {{item.title}}</td>
+          <td class="d-lg-table-cell d-none align-middle text-left">
+            {{item.code}}</td>
+          <td class="align-middle">
             {{item.percent | percentage}}</td>
           <td class="d-md-table-cell d-none align-middle">
             {{item.due_date | date}}</td>
-          <td class="d-sm-table-cell d-none align-middle">
-            <span v-if="item.is_enabled" class="text-success">啟動</span>
-            <span v-else class="text-secondary">未啟動</span></td>
           <th class="align-middle">
             <button class="btn btn-outline-info btn-sm mr-1"
               @click="openModal(false, item)">編輯</button>
@@ -45,7 +45,8 @@
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content border-0">
-          <div class="modal-header bg-dark text-white">
+          <div class="modal-header bg-success text-white"
+            :class="{ 'bg-info': !isCreate }">
             <h5 class="modal-title" id="exampleModalLabel">
               <span v-if="isCreate">新增優惠券</span>
               <span v-else>編輯優惠券</span>
@@ -96,9 +97,11 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary"
-              @click="updataCoupon">確認</button>
+            <button type="button" class="btn btn btn-outline-gray" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-success" v-if="isCreate"
+              @click="updataCoupon">確認新增</button>
+            <button type="button" class="btn btn-info" v-else
+              @click="updataCoupon">確認編輯</button>
           </div>
         </div>
       </div>
@@ -117,10 +120,11 @@
             </button>
           </div>
           <div class="modal-body">
-            是否刪除 <strong class="text-danger">{{ tempCoupon.title }}</strong> 優惠卷(刪除後將無法恢復)。
+            是否刪除 <strong class="text-danger">{{ tempCoupon.title }}</strong> 優惠卷。
+            <em class="text-gray f-size75">(刪除後將無法恢復 )</em>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-outline-gray" data-dismiss="modal">取消</button>
             <button type="button" class="btn btn-danger"
               @click="delCoupon(tempCoupon.id)">確認刪除</button>
           </div>
