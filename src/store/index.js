@@ -13,6 +13,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     page: {},
+    status: {
+      isLoading: false,
+      itemLodingId: '',
+    },
   },
   actions: {
   },
@@ -20,9 +24,16 @@ export default new Vuex.Store({
     PAGE(state, payload) {
       state.page = payload;
     },
+    IS_LOADING(state, payload) {
+      state.status.isLoading = payload;
+    },
+    ITEM_LOADING_ID(state, payload) {
+      state.status.itemLodingId = payload;
+    },
   },
   getters: {
     page: (state) => state.page,
+    status: (state) => state.status,
   },
   modules: {
     alertMessageModules,
