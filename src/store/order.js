@@ -7,12 +7,12 @@ export default ({
       user: {},
     },
     orders: [],
-    orderId: '-MFmztApDdotRm6X5wOh',
-    // page: {},
+    orderId: '',
   },
   actions: {
     getOrderList(context, page = 1) {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/orders?page=${page}`;
+      context.commit('IS_LOADING', true, { root: true });
       axios.get(url).then((response) => {
         if (response.data.success) {
           context.commit('ORDERS', response.data.orders);
@@ -22,27 +22,28 @@ export default ({
             { message: response.data.message, status: 'success' },
             { root: true });
         }
+        context.commit('IS_LOADING', false, { root: true });
       });
     },
     getOrder(context) {
       const Id = context.state.orderId;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order/${Id}`;
-      // vm.isLoading = true;
+      context.commit('IS_LOADING', true, { root: true });
       axios.get(url).then((response) => {
         if (response.data.success) {
           context.commit('ORDER', response.data.order);
-          // vm.isLoading = false;
+          context.commit('IS_LOADING', false, { root: true });
         }
       });
     },
     payOrder(context) {
       const Id = context.state.order.id;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/pay/${Id}`;
-      // vm.isLoading = true;
+      context.commit('IS_LOADING', true, { root: true });
       axios.post(url).then((response) => {
         if (response.data.success) {
           context.dispatch('getOrder');
-          // vm.isLoading = false;
+          context.commit('IS_LOADING', false, { root: true });
           context.dispatch('alertMessageModules/updateMessage',
             { message: response.data.message, status: 'success' },
             { root: true });
@@ -60,14 +61,10 @@ export default ({
     ORDER_ID(state, payload) {
       state.orderId = payload;
     },
-    // PAGE(state, payload) {
-    //   state.page = payload;
-    // },
   },
   getters: {
     order: (state) => state.order,
     orders: (state) => state.orders,
     orderId: (state) => state.orderId,
-    // page: (state) => state.page,
   },
 });

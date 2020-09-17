@@ -16,7 +16,7 @@ export default ({
       if (isFront) {
         url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/products/all`;
       }
-      // vm.isLoading = true;
+      context.commit('IS_LOADING', true, { root: true });
       axios.get(url).then((response) => {
         if (response.data.success) {
           context.commit('PRODUCT_LIST', response.data.products);
@@ -26,17 +26,17 @@ export default ({
           } else {
             context.commit('PAGE', response.data.pagination, { root: true });
           }
-          // vm.isLoading = false;
+          context.commit('IS_LOADING', false, { root: true });
         }
       });
     },
     getProduct(context, id) {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/product/${id}`;
-      // vm.isLoading = true;
+      context.commit('IS_LOADING', true, { root: true });
       axios.get(url).then((response) => {
         if (response.data.success) {
           context.commit('PRODUCT', response.data.product);
-          // vm.isLoading = false;
+          context.commit('IS_LOADING', false, { root: true });
         }
       });
     },

@@ -11,10 +11,12 @@ export default ({
   actions: {
     getCoupons(context, page = 1) {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/coupons?page=${page}`;
+      context.commit('IS_LOADING', true, { root: true });
       axios.get(url).then((response) => {
         if (response.data.success) {
           context.commit('COUPONS', response.data.coupons);
           context.commit('PAGE', response.data.pagination, { root: true });
+          context.commit('IS_LOADING', false, { root: true });
         }
       });
     },
