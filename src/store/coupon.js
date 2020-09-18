@@ -90,6 +90,13 @@ export default ({
     COUPON_CODE(state, payload) {
       state.couponCode = payload;
     },
+    DUE_DATE_FORMAT(state, timestamp) {
+      const dates = new Date(timestamp * 1000);
+      const year = dates.getFullYear();
+      const month = dates.getMonth() < 10 ? `0${dates.getMonth() + 1}` : dates.getMonth() + 1;
+      const date = dates.getDate() < 10 ? `0${dates.getDate()}` : dates.getDate();
+      state.tempCoupon.due_date = `${year}-${month}-${date}`;
+    },
   },
   getters: {
     coupons: (state) => state.coupons,

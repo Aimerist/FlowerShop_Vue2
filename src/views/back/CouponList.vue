@@ -181,6 +181,7 @@ export default {
         } else {
           this.isCreate = false;
           this.$store.state.couponModules.tempCoupon = { ...coupon };
+          this.$store.commit('couponModules/DUE_DATE_FORMAT', coupon.due_date);
         }
         $('#addModal').modal('show');
       }
