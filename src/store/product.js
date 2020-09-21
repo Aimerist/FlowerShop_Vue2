@@ -5,6 +5,7 @@ export default ({
   namespaced: true,
   state: {
     product: {},
+    productId: '',
     productList: {},
     tempProduct: {},
     filterProducts: {},
@@ -30,8 +31,9 @@ export default ({
         }
       });
     },
-    getProduct(context, id) {
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/product/${id}`;
+    getProduct(context) {
+      const prouctId = context.state.productId;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/product/${prouctId}`;
       context.commit('IS_LOADING', true, { root: true });
       axios.get(url).then((response) => {
         if (response.data.success) {
@@ -107,6 +109,9 @@ export default ({
         state.filterProducts = Data;
       }
     },
+    PRODUCT_ID(state, payload) {
+      state.productId = payload;
+    },
   },
   getters: {
     product: (state) => state.product,
@@ -114,5 +119,6 @@ export default ({
     categories: (state) => state.categories,
     filterProducts: (state) => state.filterProducts,
     tempProduct: (state) => state.tempProduct,
+    productId: (state) => state.productId,
   },
 });

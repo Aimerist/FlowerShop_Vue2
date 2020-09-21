@@ -171,7 +171,14 @@ export default {
       this.$store.dispatch('cartModules/removeCart', id);
     },
     productLink(id) {
-      this.$router.push({ name: 'ProductDetail', params: { productId: id } });
+      if (this.$route.params.productId !== id) {
+        this.$router.push({ name: 'ProductDetail', params: { productId: id } });
+      } else {
+        this.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: '您已在本頁', status: 'warning' },
+        );
+      }
     },
     removeFavorite(isDeleteAll, id) {
       this.$store.dispatch('favoriteModules/removeFavorite', { id, isDeleteAll });

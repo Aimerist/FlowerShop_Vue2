@@ -86,14 +86,13 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      productId: '',
       qty: 1,
       isLoading: false,
     };
   },
   computed: {
     ...mapGetters(['status']),
-    ...mapGetters('productModules', ['product']),
+    ...mapGetters('productModules', ['product', 'productId']),
   },
   methods: {
     addCart(id, qty = 1) {
@@ -114,9 +113,15 @@ export default {
         .some((item) => item === id);
     },
   },
+  watch: {
+    $route() {
+      this.$store.commit('productModules/PRODUCT_ID', this.$route.params.productId);
+      this.$store.dispatch('productModules/getProduct');
+    },
+  },
   created() {
-    this.productId = this.$route.params.productId;
-    this.$store.dispatch('productModules/getProduct', this.productId);
+    this.$store.commit('productModules/PRODUCT_ID', this.$route.params.productId);
+    this.$store.dispatch('productModules/getProduct');
   },
 };
 </script>
