@@ -19,42 +19,44 @@
         </div>
         <!-- 列表 -->
         <div class="col-lg-10 col-md-9">
-          <div class="card-columns">
-            <div class="card mb-4 rounded"
+          <div class="row align-items-stretch">
+            <div class="col-md-12 col-lg-6 col-xl-4 mb-4 rounded"
               v-for="item in filterProducts" :key="item.id">
-              <div class="card-img"
-                :style="`background: url(${ item.imageUrl }) center center no-repeat;`">
-              </div>
-              <div class="favorite p-1">
-                <a class="text-white" v-if="!isFavorite(item.id)"
-                  @click.prevent="addFavorite(item.id, item.title, item.price, item.imageUrl)">
-                  <i class="far fa-heart fa-lg"></i>
-                </a>
-                <a class="text-danger" v-if="isFavorite(item.id)"
-                  @click.prevent="removeFavorite(item.id)">
-                  <i class="fas fa-heart fa-lg"></i>
-                </a>
-              </div>
-              <div class="card-body rounded pb-2">
-                <span class="float-right text-important">
-                  <i class="fas fa-tag btn-sm"></i>
-                  {{ item.category }}</span>
-                <h5 class="card-title mb-2">
-                  <router-link class="link-line"
-                    :to="{ name: 'ProductDetail', params: { productId: `${item.id}` }}">
-                    {{ item.title }}</router-link>
-                </h5>
-                <div class="px-2 pb-1"
-                  style="color: #555;">{{ item.content | contentLength(26) }}</div>
-                <div class="d-flex align-items-baseline px-2">
-                  <p class="text-gray mb-0">原價 <del>{{ item.origin_price | currency }}</del></p>
-                  <p class="ml-auto h5 text-danger">NT {{ item.price | currency }}</p>
+              <div class="card">
+                <div class="card-img"
+                  :style="`background: url(${ item.imageUrl }) center center no-repeat;`">
                 </div>
-              </div>
-              <div class="card-footer cursor-pointer text-brown"
-                @click.prevent="addCart(item.id)">
-                <i class="fas fa-spinner fa-spin mx-1" v-if="status.itemLodingId === item.id"></i>
-                <a href="#">加入購物車</a>
+                <div class="favorite p-1">
+                  <a class="text-white" v-if="!isFavorite(item.id)"
+                    @click.prevent="addFavorite(item.id, item.title, item.price, item.imageUrl)">
+                    <i class="far fa-heart fa-lg"></i>
+                  </a>
+                  <a class="text-danger" v-if="isFavorite(item.id)"
+                    @click.prevent="removeFavorite(item.id)">
+                    <i class="fas fa-heart fa-lg"></i>
+                  </a>
+                </div>
+                <div class="card-body rounded pb-2">
+                  <span class="float-right text-important">
+                    <i class="fas fa-tag btn-sm"></i>
+                    {{ item.category }}</span>
+                  <h5 class="card-title mb-2">
+                    <router-link class="link-line"
+                      :to="{ name: 'ProductDetail', params: { productId: `${item.id}` }}">
+                      {{ item.title }}</router-link>
+                  </h5>
+                  <div class="px-2 pb-1"
+                    style="color: #555;">{{ item.content | contentLength(26) }}</div>
+                  <div class="d-flex align-items-baseline px-2">
+                    <p class="text-gray mb-0">原價 <del>{{ item.origin_price | currency }}</del></p>
+                    <p class="ml-auto h5 text-danger">NT {{ item.price | currency }}</p>
+                  </div>
+                </div>
+                <div class="card-footer cursor-pointer text-brown"
+                  @click.prevent="addCart(item.id)">
+                  <i class="fas fa-spinner fa-spin mx-1" v-if="status.itemLodingId === item.id"></i>
+                  <a href="#">加入購物車</a>
+                </div>
               </div>
             </div>
           </div>
@@ -180,17 +182,4 @@ export default {
     font-size: 1rem;
   }
 }
-
-@media (max-width: 991px) {
-  .card-columns {
-    column-count: 2;
-  }
-}
-
-@media (max-width: 767px) {
-  .card-columns {
-    column-count: 1;
-  }
-}
-
 </style>
