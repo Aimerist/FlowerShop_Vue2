@@ -6,7 +6,7 @@
     <!-- 商品內容 -->
     <div class="row">
       <!-- 商品圖片 -->
-      <div class="col-md-7 mb-5">
+      <div class="col-md-7 mb-3">
         <img class="img-fluid img-cover"
           :src="product.imageUrl">
           <div class="favorite">
@@ -71,9 +71,21 @@
         </div>
       </div>
       <!-- 相關商品 -->
-      <div class="col-12 similar">
+      <div class="col-12 similar" v-if="similarProducts.length !== 0">
         <div class="similar-line">
           <span class="similar-titlet">相關商品</span>
+        </div>
+        <div class="row mx-3 text-center">
+          <div class="col-lg-3 col-sm-6 mb-4"
+            v-for="item in similarProducts" :key="item.id">
+            <a class="similar-conent" href="#">
+              <img class="img-fluid similar-img"
+                :src="item.imageUrl" alt="">
+            </a>
+            <div class="similar-text rounded my-0">
+              <span class="rounded">{{ item.title }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -92,7 +104,7 @@ export default {
   },
   computed: {
     ...mapGetters(['status']),
-    ...mapGetters('productModules', ['product', 'productId']),
+    ...mapGetters('productModules', ['product', 'productId', 'similarProducts']),
   },
   methods: {
     addCart(id, qty = 1) {
@@ -172,6 +184,36 @@ export default {
     line-height: 2rem;
     border-inline-start: 10px solid #EEDEA6;
     border-inline-end: 10px solid #EEDEA6;
+  }
+}
+
+.similar-conent {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  .similar-img {
+    height: 150px;
+    width: 100vw;
+    object-fit:cover;
+    margin-bottom: 0;
+    transition: .3s all ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.similar-text {
+  position: absolute;
+  z-index: 2;
+  bottom: -0.5rem;
+  width: 90%;
+  text-align: center;
+  span {
+    border: 1px solid #D1A813;
+    padding: 0.5rem 1rem;
+    background: rgba(#343a40, .9);
+    color: #f5eed7;
   }
 }
 </style>

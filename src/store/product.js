@@ -10,6 +10,7 @@ export default ({
     tempProduct: {},
     filterProducts: {},
     categories: {},
+    similarProducts: {},
   },
   actions: {
     getProductList(context, { isFront, page = 1 }) {
@@ -39,6 +40,10 @@ export default ({
         if (response.data.success) {
           context.commit('PRODUCT', response.data.product);
           context.commit('IS_LOADING', false, { root: true });
+          context.dispatch('getProductList', { isFront: true });
+          setTimeout(() => {
+            context.commit('SIMILAR_PRODUCTS', response.data.product.category);
+          }, 500);
         }
       });
     },
@@ -112,6 +117,11 @@ export default ({
     PRODUCT_ID(state, payload) {
       state.productId = payload;
     },
+    SIMILAR_PRODUCTS(state, payload) {
+      const Data = state.productList.filter((item) => item.is_enabled);
+      state.similarProducts = Data
+        .filter((item) => (item.category === payload) && (item.id !== state.productId));
+    },
   },
   getters: {
     product: (state) => state.product,
@@ -120,5 +130,6 @@ export default ({
     filterProducts: (state) => state.filterProducts,
     tempProduct: (state) => state.tempProduct,
     productId: (state) => state.productId,
+    similarProducts: (state) => state.similarProducts,
   },
 });
