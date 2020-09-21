@@ -98,10 +98,7 @@
                 @click="addCouponCode">套用優惠碼</button>
             </div>
           </div>
-          <small class="ml-auto py-1 d-block mb-3 px-3 text-gray">
-            <span>現在輸入OPEN50OFF即可享有折扣價喔!</span>
-          </small>
-          <div class="p-2">
+          <div class="p-2 mt-3 mx-2">
             <router-link :to="{ name: 'ConsumerForm' }"
               class="btn btn-block btn-submit py-3 h5 rounded-0 f-size125"
               :class="{'disabled': cartLength === 0}">
