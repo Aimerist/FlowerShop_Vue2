@@ -47,8 +47,8 @@
                 <div class="px-2 pb-1"
                   style="color: #555;">{{ item.content | contentLength(26) }}</div>
                 <div class="d-flex align-items-baseline px-2">
-                  <p class="text-gray mb-0">原價 <del>{{ item.price | currency }}</del></p>
-                  <p class="ml-auto h5 text-danger">NT {{ item.origin_price | currency }}</p>
+                  <p class="text-gray mb-0">原價 <del>{{ item.origin_price | currency }}</del></p>
+                  <p class="ml-auto h5 text-danger">NT {{ item.price | currency }}</p>
                 </div>
               </div>
               <div class="card-footer cursor-pointer text-brown"
