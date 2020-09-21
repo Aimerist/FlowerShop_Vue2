@@ -22,6 +22,12 @@
               <i class="fas fa-heart fa-lg"></i>
             </a>
           </div>
+          <div class="back">
+            <router-link class="btn-back py-1 px-2 mt-4 text-dark md-dis-none mx-5"
+              :to="{ name: 'Products'}">
+              <i class="fas  fa-arrow-left"></i>
+              BACK</router-link>
+          </div>
       </div>
       <!-- 商品資訊 -->
       <div class="col-md-5">
@@ -150,6 +156,12 @@ export default {
   width: 100vw;
   max-height: 450px;
   padding: 0 2rem;
+}
+
+.back {
+  position: absolute;
+  bottom: 16px;
+  left: -16px;
 }
 
 .btn-add {
