@@ -16,14 +16,14 @@
                 :to="{ name: 'Products' }">Product
                 <span class="sr-only">(current)</span></router-link></li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Coupon</a></li>
-            <li class="nav-item">
               <router-link class="nav-link"
-                to="/about">About</router-link></li>
-            <li class="nav-item">
+                :to="{ name: 'Cart' }">Cart</router-link></li>
+            <li class="nav-item ml-lg-auto">
               <router-link class="nav-link"
-                :to="{ name: 'Login' }">Login</router-link></li>
-            <li class="nav-item ml-auto">
+                :to="{ name: 'ProductsList' }">
+                <i class="fas fa-user-circle fa-lg"></i>
+              </router-link></li>
+            <li class="nav-item">
               <!-- 購物車 -->
               <div class="btn-group">
                 <a type="button" class="btn text-dark" data-toggle="dropdown">
