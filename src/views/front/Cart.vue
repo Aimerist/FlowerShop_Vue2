@@ -38,7 +38,8 @@
         <div class="cart-body" style="">
           <div v-for="cart in carts.carts" :key="cart.id">
             <div class="d-flex align-items-center">
-              <img class="img-fluid mr-4" width="100" height="100"
+              <img class="mr-4 img-cover" width="100" height="100"
+                :style="`background-image:url(${ cart.product.imageUrl })`"
                 :src="`${cart.product.imageUrl}`" alt="">
               <div>
                 <h4>{{ cart.product.title }}

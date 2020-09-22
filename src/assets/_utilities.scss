@@ -37,6 +37,10 @@ a {
   font-size: 1.25rem;
 }
 
+.img-cover {
+  object-fit: cover;
+}
+
 @media (max-width:767px) {
   .md-dis-none {
     display: none;

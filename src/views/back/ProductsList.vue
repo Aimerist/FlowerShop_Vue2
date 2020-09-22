@@ -27,7 +27,7 @@
           <td scope="row" class="d-md-table-cell d-none align-middle">
             {{item.category}}</td>
           <td class="d-lg-table-cell d-none align-middle">
-            <img :src="item.imageUrl" alt="" style="height: 80px;width: 80px; border-style: none">
+            <img :src="item.imageUrl" alt="" class="img-cover" height="80vh" width="80vw">
           </td>
           <td class="align-middle text-left">
             {{item.title}}</td>
