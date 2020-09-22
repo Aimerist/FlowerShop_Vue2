@@ -109,6 +109,12 @@ export default {
   methods: {
     ...mapActions('orderModules', ['getOrder', 'payOrder']),
   },
+  watch: {
+    $route() {
+      this.$store.commit('orderModules/ORDER_ID', this.$route.params.orderId);
+      this.$store.dispatch('orderModules/getOrder');
+    },
+  },
   created() {
     this.$store.commit('orderModules/ORDER_ID', this.$route.params.orderId);
     this.$store.dispatch('orderModules/getOrder');
