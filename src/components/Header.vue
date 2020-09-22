@@ -225,18 +225,18 @@ export default {
 
 .dropdown-menu {
   position: absolute;
-  left: -248px;
+  left: -122px;
   width: 300px;
   border-color: #e9eaec;
   &.favorite {
-    left: -196px;
+    left: -96px;
     width: 240px;
   }
   &:before {
     position: absolute;
     content: "";
     top: -20px;
-    left: 92%;
+    left: 50%;
     transform: translateX(-50%);
     border-width: 10px;
     border-style: solid;
@@ -246,7 +246,7 @@ export default {
     position: absolute;
     content: "";
     top: -18px;
-    left: 92%;
+    left: 50%;
     transform: translateX(-50%);
     border-width: 10px;
     border-style: solid;
