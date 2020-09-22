@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
@@ -11,21 +10,6 @@ const routes = [
     children: [
       {
         path: '/',
-        name: 'Home',
-        component: Home,
-      },
-      {
-        path: '/about',
-        name: 'About',
-        component: () => import('../views/About.vue'),
-      },
-      {
-        path: '/login',
-        name: 'Login',
-        component: () => import('../views/Login.vue'),
-      },
-      {
-        path: '/products',
         name: 'Products',
         component: () => import('../views/front/Products.vue'),
       },
@@ -48,6 +32,11 @@ const routes = [
         path: '/consumerorder/:orderId',
         name: 'ConsumerOrder',
         component: () => import('../views/front/ConsumerOrder.vue'),
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/front/Login.vue'),
       },
     ],
   },
