@@ -23,7 +23,7 @@
     </ul>
     <div class="row colorE">
       <!-- 購物車清單-->
-      <div class="col-md-7">
+      <div class="col-lg-7">
         <div class="jumbotron text-center bg-brownlight rounded-0"
           v-if="cartLength === 0">
           <div class="h4 mb-5">購物車內無商品</div>
@@ -38,28 +38,27 @@
         <div class="cart-body" style="">
           <div v-for="cart in carts.carts" :key="cart.id">
             <div class="d-flex align-items-center">
-              <img class="mr-4 img-cover" width="100" height="100"
+              <img class="img-cover"
                 :style="`background-image:url(${ cart.product.imageUrl })`"
                 :src="`${cart.product.imageUrl}`" alt="">
               <div>
-                <h4>{{ cart.product.title }}
-                  <span class="text-success f-size75 mx-2"
+                <h4 class="m-0">{{ cart.product.title }}</h4>
+                <span class="text-success f-size75 "
                     v-if="cart.total!==cart.final_total">(已套用優惠券)</span>
-                </h4>
-                <div clASS="d-flex h6 mb-0 text-gray">
-                  <div class="mr-4">{{ cart.product.price | currency }}</div>
-                  <span class="mr-4">x</span>
-                  <div class="mr-4">{{ cart.qty }} {{ cart.product.unit }}</div>
+                <div clASS="d-flex h6 mt-2 mb-0 text-gray">
+                  <div class="qty">{{ cart.product.price | currency }}</div>
+                  <span class="qty">x</span>
+                  <div class="qty">{{ cart.qty }} {{ cart.product.unit }}</div>
                 </div>
               </div>
               <div class="ml-auto h4 text-right">
-                <del class="f-size75 ml-5 text-gray"
+                <del class="f-size75 text-gray"
                   v-if="cart.total!==cart.final_total">
                   {{ cart.total | currency }}</del>
                 <h4 class="ml-auto text-important font-weight-bold">
                   {{ cart.final_total | currency }}</h4>
               </div>
-              <button class="btn btn-outline-danger mr-4 ml-auto"
+              <button class="btn btn-outline-danger mr-2 ml-auto"
                 @click.prevent="removeCart(cart.id)">
                 <i class="fas fa-spinner fa-spin"
                   v-if="status.itemLodingId === cart.id"></i>
@@ -76,7 +75,7 @@
           繼續購物</router-link>
       </div>
       <!-- 購物車合計-折價券-->
-      <div class="col-md-5 my-md-0 my-2">
+      <div class="col-lg-5 my-md-0 my-2">
         <div class="border p-3 shadow">
           <span class="badge badge-pill badge-danger float-right bg-primary">
             {{ cartLength }}</span>
@@ -100,7 +99,7 @@
             </div>
           </div>
           <small class="py-1 d-block mb-3 px-3 text-brown">
-            <em><span>現在輸入『 OPEN80OFF 』即可享有折扣價喔!</span></em>
+            <em><span>現在輸入『 OPEN80OFF 』即可享有折扣價喔 !</span></em>
           </small>
           <div class="p-2 mt-3 mx-2">
             <router-link :to="{ name: 'ConsumerForm' }"
@@ -195,8 +194,28 @@ export default {
 }
 
 .cart-body {
-  @media (min-width:768px) {
-    min-height: 210px
+  .img-cover {
+    width: 100px;
+    height: 100px;
+    margin-right: 1.5rem;
+  }
+  .qty {
+    margin-right: 1.5rem;
+  }
+}
+@media (max-width:768px) {
+  .cart-body {
+    .img-cover {
+      width: 70px;
+      height: 70px;
+      margin-right: 0.75rem;
+    }
+    h4 {
+      font-size: 1.25rem;
+    }
+    .qty {
+      margin-right: 0.25rem;
+    }
   }
 }
 
