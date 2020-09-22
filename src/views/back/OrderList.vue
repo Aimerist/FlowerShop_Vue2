@@ -13,7 +13,6 @@
           <th class="d-sm-table-cell d-none text-right" scope="col">應付金額</th>
           <th class="d-lg-table-cell d-none" scope="col">購買時間</th>
           <th class="d-xl-table-cell d-none" scope="col">留言</th>
-          <th class="" scope="col">編輯</th>
         </tr>
       </thead>
       <tbody>
@@ -33,9 +32,6 @@
           <td scope="row" class="d-lg-table-cell d-none align-middle">{{item.create_at | date}}</td>
           <td scope="row" class="d-xl-table-cell d-none align-middle">
             {{item.message | contentLength(6)}}</td>
-          <td scope="row" class="align-middle">
-            <button class="btn btn-outline-info btn-sm">修改</button>
-          </td>
         </tr>
       </tbody>
     </table>
