@@ -98,6 +98,9 @@
                 @click="addCouponCode">套用優惠碼</button>
             </div>
           </div>
+          <small class="py-1 d-block mb-3 px-3 text-brown">
+            <em><span>現在輸入『 OPEN80OFF 』即可享有折扣價喔!</span></em>
+          </small>
           <div class="p-2 mt-3 mx-2">
             <router-link :to="{ name: 'ConsumerForm' }"
               class="btn btn-block btn-submit py-3 h5 rounded-0 f-size125"
