@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: './'
-}
+  publicPath: '/FlowerShop_VueCLI3/dist/',
+};
