@@ -84,12 +84,13 @@
         <div class="row mx-3 text-center">
           <div class="col-lg-3 col-sm-6 mb-4"
             v-for="item in similarProducts" :key="item.id">
-            <a class="similar-conent" href="#">
+            <router-link  class="similar-conent"
+              :to="{ name:'ProductDetail', params: { productId: item.id } }">
               <img class="img-fluid similar-img"
                 :src="item.imageUrl" alt="">
-            </a>
-            <div class="similar-text rounded my-0">
-              <span class="rounded">{{ item.title }}</span>
+            </router-link>
+            <div class="similar-text my-0">
+              <span class="">{{ item.title }}</span>
             </div>
           </div>
         </div>
@@ -148,20 +149,19 @@ export default {
 
 .favorite {
   position: absolute;
-  top: 8px;
-  right: 58px;
+  top: 10px;
+  right: 28px;
 }
 
 .img-cover {
   width: 100vw;
-  max-height: 450px;
-  padding: 0 2rem;
+  max-height: 550px;
 }
 
 .back {
   position: absolute;
   bottom: 16px;
-  left: -16px;
+  left: -56px;
 }
 
 .btn-add {
