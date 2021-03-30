@@ -1,0 +1,18 @@
+.table {
+  &-img {
+    @include media-breakpoint-up(xs) {
+      width: 2.5rem;
+      img {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+    @include media-breakpoint-up(md) {
+      width: 6rem;
+      img {
+        width: 5rem;
+        height: 5rem;
+      }
+    }
+  }
+}

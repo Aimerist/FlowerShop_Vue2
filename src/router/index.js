@@ -10,6 +10,16 @@ const routes = [
     children: [
       {
         path: '/',
+        name: 'Home',
+        component: () => import('../views/front/Home.vue'),
+      },
+      {
+        path: 'about',
+        name: 'About',
+        component: () => import('../views/front/About.vue'),
+      },
+      {
+        path: 'products',
         name: 'Products',
         component: () => import('../views/front/Products.vue'),
       },
@@ -45,22 +55,22 @@ const routes = [
     component: () => import('../views/Dashobard.vue'),
     children: [
       {
-        path: '',
+        path: 'productsList',
         name: 'ProductsList',
         meta: { requiresAuth: true },
-        component: () => import('../views/back/ProductsList.vue'),
+        component: () => import('../views/admin/ProductsList.vue'),
       },
       {
         path: 'orders',
         name: 'OrderList',
         meta: { requiresAuth: true },
-        component: () => import('../views/back/OrderList.vue'),
+        component: () => import('../views/admin/OrderList.vue'),
       },
       {
         path: 'coupons',
         name: 'CouponList',
         meta: { requiresAuth: true },
-        component: () => import('../views/back/CouponList.vue'),
+        component: () => import('../views/admin/CouponList.vue'),
       },
     ],
   },
@@ -68,6 +78,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  linkActiveClass: 'active',
 });
 
 export default router;

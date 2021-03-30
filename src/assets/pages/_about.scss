@@ -1,0 +1,32 @@
+.access {
+  &__inner {
+    position: relative;
+    &::after {
+      position: absolute;
+      top: -0px;
+      left: 20%;
+      content: "";
+      width: 100%;
+      height: 165%;
+      border: 2px solid #D1A813;
+      z-index: -1;
+      @media (min-width:576px) {
+        height: 138%;
+      }
+      @media (min-width:768px) {
+        height: 130%;
+      }
+    }
+  }
+}
+.banner {
+  &__img {
+    height: 240px;
+    @media (min-width: 768px) {
+      height: 300px;
+    }
+    @media (min-width: 992px) {
+      height: 380px;
+    }
+  }
+}

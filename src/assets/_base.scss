@@ -1,0 +1,36 @@
+ol,
+ul,
+dl,
+p {
+  margin-bottom: 0;
+}
+
+a,
+button {
+  transition: all 0.5s;
+}
+i {
+  vertical-align: middle;
+}
+.grid-setting {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  min-height: calc(100vh - 179px);
+  @include media-breakpoint-up(xs) {
+    min-height: calc(100vh - 187px);
+  }
+  @include media-breakpoint-up(md) {
+    min-height: calc(100vh - 195px);
+  }
+}
+.back-grid-setting {
+  min-height: calc(100vh - 56px);
+  @include media-breakpoint-up(md) {
+    margin-top: -56px;
+    min-height: 100vh;
+    margin-left: 200px;
+  }
+  @include media-breakpoint-up(lg) {
+    margin-left: 240px;
+  }
+}

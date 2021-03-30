@@ -1,0 +1,32 @@
+.hover--shadowLine {
+  &:hover {
+    box-shadow: inset 0 -8px 0px $primary-300;
+    text-decoration: none;
+  }
+}
+.hover--colorPrimary {
+  &:hover,
+  &:focus {
+    color: $primary !important;
+  }
+}
+.hover--shadow {
+  transition: all .3s ease-in-out;
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 .75rem rgba($black, .2);
+  }
+}
+.hover--enlarge {
+  transition: all .3s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+// animation
+.hover--doublePulse {
+  &:hover {
+    @include animation(1.3s, both);
+    animation-name: doublePulse;
+  }
+}

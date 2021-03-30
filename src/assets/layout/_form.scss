@@ -1,0 +1,7 @@
+.form {
+  &-group {
+    @include media-breakpoint-up(md) {
+      margin-bottom: 1rem;
+    }
+  }
+}

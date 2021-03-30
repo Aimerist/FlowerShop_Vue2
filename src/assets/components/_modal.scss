@@ -1,0 +1,39 @@
+.modal {
+  &-title {
+    color:$gray-300;
+  }
+  &-btn {
+    transition: all .3s;
+    background: $dark;
+    color: $gray-100;
+    font-weight: 700;
+    &:hover,
+    &:focus {
+      background: $gray-400;
+    }
+  }
+  &-header,
+  &-footer {
+    font-family: $font-family-raleway;
+  }
+  .close.position-absolute {
+    right: .5rem;
+    top: .25rem;
+    @include media-breakpoint-up(sm) {
+      right: 1rem;
+      top: .7rem;
+    }
+  }
+  img.img-cover {
+    width: 100%;
+    max-height: 180px;
+  }
+}
+.modal-body {
+  tr {
+    border: 1px solid $warning;
+  }
+  th {
+    border-left: 1px solid $warning;
+  }
+}

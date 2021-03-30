@@ -1,6 +1,36 @@
 @import "~bootstrap/scss/functions";
 @import "./helpers/variables";
+
+// vendors
 @import "~bootstrap/scss/bootstrap";
+@import "./helpers/swiper";
+
+// base
+@import "./base";
+
+// components
+@import "./components/dropdown";
+@import "./components/carousel";
+@import "./components/card";
+@import "./components/list-group";
+@import "./components/table";
+@import "./components/modal";
+
+// utilities
+@import "./utilities/text";
+@import "./utilities/utilities";
+@import "./utilities/animation";
+@import "./utilities/hover";
 
 
-@import "./utilities";
+// layout
+@import "./layout/header";
+@import "./layout/footer";
+@import "./layout/sidebar";
+@import "./layout/pagination";
+@import "./layout/form";
+
+// pages
+@import "./pages/home";
+@import "./pages/productDetail";
+@import "./pages/about";

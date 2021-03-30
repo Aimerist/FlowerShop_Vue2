@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import AlertMessage from '../components/AlertMessage.vue';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
@@ -22,6 +23,9 @@ export default {
     return {
       isLongin: false,
     };
+  },
+  computed: {
+    ...mapGetters('productModules', ['filterProducts']),
   },
   methods: {
     Loginstatus() {
@@ -38,6 +42,7 @@ export default {
   },
   created() {
     this.Loginstatus();
+    this.$store.dispatch('productModules/getProductList', { isFront: true });
   },
 };
 </script>

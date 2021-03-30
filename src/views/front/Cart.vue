@@ -1,114 +1,150 @@
 <template>
-  <div class="container gap-setting">
+  <div class="container-fluid container-lg grid-setting">
     <div class="vld-parent">
       <loading :active.sync="isLoading"></loading>
     </div>
     <!-- 流程 -->
-    <ul class="mb-4 step">
-      <li class="active">
-        <strong>STEP</strong>
-        <h3><strong>01</strong></h3>
-        <p class="h6">確認購物清單</p>
+    <ol class="row justify-content-center list-unstyled mb-4 mb-md-6">
+      <li class="col-md-3 col-lg-2 text-center
+        py-1 py-md-3 mx-4 mx-md-2 bg-primary-300"
+        data-aos="zoom-in">
+        <span class="font-sm font-h6-md text-brown d-block font-weight-bold">STOP</span>
+        <span class="h5 font-h4-md text-brown d-block py-md-1 font-family-roboto">01</span>
+        <p class="font-sm font-h6-md text-brown">確認清單內容</p>
       </li>
-      <li class="bg-light">
-        <strong>STEP</strong>
-        <h3><strong>02</strong></h3>
-        <p class="h6">填寫訂購資料</p>
+      <li class="col-3 col-lg-2 text-center d-none d-md-block py-3 mx-2 bg-gray-100"
+        data-aos="zoom-in" data-aos-delay="150">
+        <span class="h6 text-secondary d-block">STOP</span>
+        <span class="h4 text-secondary d-block py-md-1 font-family-roboto">02</span>
+        <p class="text-secondary">填寫訂購資料</p>
       </li>
-      <li class="bg-light">
-        <strong>STEP</strong>
-        <h3><strong>03</strong></h3>
-        <p class="h6">付款/完成訂單</p>
+      <li class="col-3 col-lg-2 text-center d-none d-md-block py-3 mx-2 bg-gray-100"
+        data-aos="zoom-in" data-aos-delay="300">
+        <span class="h6 text-secondary d-block">STOP</span>
+        <span class="h4 text-secondary d-block py-md-1 font-family-roboto">03</span>
+        <p class="text-secondary">付款/完成訂單</p>
       </li>
-    </ul>
-    <div class="row colorE">
+    </ol>
+    <div class="row justify-content-center">
       <!-- 購物車清單-->
-      <div class="col-lg-7">
-        <div class="jumbotron text-center bg-brownlight rounded-0"
+      <div class="col-md-7" data-aos="fade-up" data-aos-delay="150">
+        <!-- 沒有商品 -->
+        <div class="jumbotron text-center rounded-0 mb-6"
           v-if="cartLength === 0">
-          <div class="h4 mb-5">購物車內無商品</div>
-          <router-link class="btn btn-lg btn-goshoping py-1 mt-4 rounded-0"
+          <div class="h4 text-base mb-5">購物車內無商品</div>
+          <router-link class="btn btn-lg btn-primary py-1 mt-4 rounded-0"
             :to="{ name: 'Products'}" >
-            繼續購物</router-link>
+            前往購物</router-link>
         </div>
-        <div class="p-3 bg-brownlight mb-4 md-dis-none"
+        <h2 class="h4 text-base bg-light text-center py-4 rounded-top"
+          v-if="cartLength !== 0">購物清單</h2>
+        <table class="table border border-light mb-6 table-hoverShadow"
           v-if="cartLength !== 0">
-          <h4 class="text-center mb-0">購物車清單</h4>
-        </div>
-        <div class="cart-body" style="">
-          <div v-for="cart in carts.carts" :key="cart.id">
-            <div class="d-flex align-items-center">
-              <img class="img-cover"
-                :style="`background-image:url(${ cart.product.imageUrl })`"
-                :src="`${cart.product.imageUrl}`" alt="">
-              <div>
-                <h4 class="m-0">{{ cart.product.title }}</h4>
-                <span class="text-success f-size75 "
-                    v-if="cart.total!==cart.final_total">(已套用優惠券)</span>
-                <div clASS="d-flex h6 mt-2 mb-0 text-gray">
-                  <div class="qty">{{ cart.product.price | currency }}</div>
-                  <span class="qty">x</span>
-                  <div class="qty">{{ cart.qty }} {{ cart.product.unit }}</div>
-                </div>
-              </div>
-              <div class="ml-auto h4 text-right">
-                <del class="f-size75 text-gray"
+          <thead>
+            <tr>
+              <th class="text-center d-none d-xs-table-cell" scope="col"></th>
+              <th class="text-left" scope="col">品名</th>
+              <th class="text-center" scope="col">數量</th>
+              <th class="text-center" scope="col">價格</th>
+              <th class="text-right" scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cursor-pointer hover--shadow"
+              v-for="cart in carts.carts" :key="cart.id"
+              @click="productLink(cart.product_id)">
+              <td class="table-img align-middle d-none d-xs-table-cell">
+                <img class="img-cover"
+                  :src="`${ cart.product.imageUrl }`"
+                  :alt="`${ cart.product.title }`">
+                  </td>
+              <td class="align-middle">
+                <span class="text-success line-height-1 d-none d-md-block font-sm"
                   v-if="cart.total!==cart.final_total">
-                  {{ cart.total | currency }}</del>
-                <h4 class="ml-auto text-important font-weight-bold">
-                  {{ cart.final_total | currency }}</h4>
-              </div>
-              <button class="btn btn-outline-danger mr-2 ml-auto"
-                @click.prevent="removeCart(cart.id)">
-                <i class="fas fa-spinner fa-spin"
+                  (已折價)</span>
+                <h3 class="h6 font-h5-sm text-base">
+                  {{ cart.product.title }}
+                  <span class="text-success d-none d-sm-inline d-md-none font-xs"
+                    v-if="cart.total!==cart.final_total">(已折價)</span>
+                </h3>
+              </td>
+              <td class="align-middle text-center
+                font-xs font-sm-sm font-h6-md">{{ cart.qty }}/{{ cart.product.unit }}
+              </td>
+              <td class="align-middle text-center text-dark
+                h6 font-h5-sm font-family-roboto">
+                {{ cart.final_total | currency }}
+              </td>
+              <td class="align-middle text-center" width="20">
+                <a class="btn text-danger btn-del pl-1"
+                  @click.stop.prevent="removeCart(cart.id)">
+                  <i class="fas fa-spinner fa-spin"
                   v-if="status.itemLodingId === cart.id"></i>
-                <i class="fas fa-trash-alt" v-else></i>
-              </button>
-            </div>
-            <hr>
-          </div>
-        </div>
-        <router-link class="btn-block btn-back py-1 my-4 text-dark md-dis-none"
+                  <i class="fas fa-trash-alt" v-else></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <router-link class="btn-light text-center text-decoration-none
+          d-none d-md-block py-2 my-6"
           :to="{ name: 'Products'}"
           v-if="cartLength !== 0">
-          <i class="fas  fa-arrow-left"></i>
-          繼續購物</router-link>
+          <i class="fas fa-arrow-left"></i>
+           返回商店</router-link>
       </div>
       <!-- 購物車合計-折價券-->
-      <div class="col-lg-5 my-md-0 my-2">
-        <div class="border p-3 shadow">
-          <span class="badge badge-pill badge-danger float-right bg-primary">
-            {{ cartLength }}</span>
-          <div class="h5 text-center border-bottom pb-3">購 物 車 合 計</div>
-          <div class="d-flex px-3 py-2">
-            <h5>總計</h5>
-            <span class="ml-auto h5">{{ carts.total | currency }}</span>
-          </div>
-          <div class="d-flex px-3 py-2"
-            v-if="carts.total!==carts.final_total">
-            <h6 clas="mt-2">折扣價</h6>
-            <span class="text-success f-size75 mx-2">(已套用優惠券)</span>
-            <h3 class="ml-auto text-success">{{ carts.final_total | currency }}</h3>
-          </div>
-          <div class="input-group px-3">
-            <input type="text" class="form-control f-size75 py-3"
-              v-model="couponCode" placeholder="請輸入優惠碼">
-            <div class="input-group-append">
-              <button class="btn btn-sm btn-outline-gray" type="button"
-                @click="addCouponCode">套用優惠碼</button>
+      <div class="col-md-5" data-aos="fade-down" data-aos-delay="150">
+        <div class="card p-4 shadow mb-6">
+          <h4 class="h5 text-base text-center border-bottom
+            d-flex justify-content-center pb-4">購 物 車 合 計
+            <span class="badge badge-pill badge-warning text-white ml-2">
+              {{ cartLength }}</span>
+          </h4>
+          <div class="card-body">
+            <div class="d-flex mb-3">
+              <h5 class="text-base">總計</h5>
+              <span class="h5 ml-auto text-dark font-family-roboto">
+                {{ carts.total | currency }}</span>
             </div>
-          </div>
-          <small class="py-1 d-block mb-3 px-3 text-brown">
-            <em><span>現在輸入『 OPEN80OFF 』即可享有折扣價喔 !</span></em>
-          </small>
-          <div class="p-2 mt-3 mx-2">
-            <router-link :to="{ name: 'ConsumerForm' }"
-              class="btn btn-block btn-submit py-3 h5 rounded-0 f-size125"
+            <div class="d-flex align-items-end mb-4 text-nowrap"
+              v-if="carts.total!==carts.final_total">
+              <p class="text-base line-height-1">折扣價
+                <span class="text-success d-block font-xs">
+                  使用『 OPEN80OFF 』優惠</span>
+              </p>
+              <h4 class="h3 ml-auto text-success font-family-roboto">
+                {{ carts.final_total | currency }}</h4>
+            </div>
+            <div class="input-group mb-1">
+              <input type="text" class="form-control"
+                placeholder="請輸入優惠序號"
+                aria-label="add Coupon Code"
+                v-model="couponCode">
+              <div class="input-group-append">
+                <a class="btn btn-outline-secondary py-2" type="button" href="#"
+                  @click="addCouponCode"
+                  :class="{'disabled': cartLength === 0}">使用優惠</a>
+              </div>
+            </div>
+            <p class="text-info line-height-1 mb-5 font-xs">
+              現在輸入『 OPEN80OFF 』即可享有全館 8 折優惠喔 !
+            </p>
+            <router-link class="btn btn-sm-sm btn-block btn-warning btn-lg rounded-0 text-white"
+              :to="{ name: 'ConsumerForm' }"
               :class="{'disabled': cartLength === 0}">
               確認商品
               <i class="fas  fa-arrow-right"></i>
             </router-link>
           </div>
+        </div>
+        <div class="px-8 my-6">
+          <router-link class="d-block btn-light py-2 text-center
+            text-decoration-none d-md-none"
+            :to="{ name: 'Products'}"
+            v-if="cartLength !== 0">
+            <i class="fas fa-arrow-left"></i>
+             返回商店</router-link>
         </div>
       </div>
     </div>
@@ -143,6 +179,16 @@ export default {
     addCouponCode() {
       this.$store.dispatch('couponModules/useCouponCode');
     },
+    productLink(id) {
+      if (this.$route.params.productId !== id) {
+        this.$router.push({ name: 'ProductDetail', params: { productId: id } });
+      } else {
+        this.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: '您已在本頁', status: 'warning' },
+        );
+      }
+    },
   },
   created() {
     this.$store.dispatch('cartModules/getCart');
@@ -151,80 +197,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.thumbnail {
-  margin: auto;
-  background-size: cover;
-  width: 80px;
-  height: 80px;
-}
-
-.customerorder-title {
-  @media (max-width:767px) {
-    display: none;
-  }
-}
-
-.step {
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  text-align: center;
-  color: #6c757d;
-  li {
-    padding: 0.25rem 3rem;
-    @media (max-width:767px) {
-      display: none;
-    }
-    &:not(:last-child) {
-      margin-right: 0.25rem;
-    }
-  }
-  li.active {
-    padding: 0.25rem 3rem;
-    background-color: #EEDEA6;
-    color: #6B460F;
-    @media (max-width:767px) {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      background-color: #efe5dc;
-      color: #343a40;
-    }
-  }
-}
-
-.cart-body {
-  .img-cover {
-    width: 100px;
-    height: 100px;
-    margin-right: 1.5rem;
-  }
-  .qty {
-    margin-right: 1.5rem;
-  }
-}
-@media (max-width:768px) {
-  .cart-body {
-    .img-cover {
-      width: 70px;
-      height: 70px;
-      margin-right: 0.75rem;
-    }
-    h4 {
-      font-size: 1.25rem;
-    }
-    .qty {
-      margin-right: 0.25rem;
-    }
-  }
-}
-
-.btn-goshoping {
-  color: #efe5dc;
-  background-color: #B69418;
-  &:hover {
-    color: #efe5dc;
-    background-color: #D1A813;
+.btn-del {
+  padding-top: 0;
+  padding-bottom: 0;
+  &:hover,
+  &:focus {
+    padding-right: 9px;
+    font-size: 1.2rem;
   }
 }
 </style>

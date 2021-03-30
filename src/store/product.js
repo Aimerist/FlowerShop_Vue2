@@ -6,11 +6,11 @@ export default ({
   state: {
     product: {},
     productId: '',
-    productList: {},
+    productList: [],
     tempProduct: {},
-    filterProducts: {},
-    categories: {},
-    similarProducts: {},
+    filterProducts: [],
+    categories: [],
+    recommendProducts: [],
   },
   actions: {
     getProductList(context, { isFront, page = 1 }) {
@@ -36,22 +36,19 @@ export default ({
       const prouctId = context.state.productId;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/product/${prouctId}`;
       context.commit('IS_LOADING', true, { root: true });
-      axios.get(url).then((response) => {
+      axios.get(url).then(async (response) => {
         if (response.data.success) {
           context.commit('PRODUCT', response.data.product);
           context.commit('IS_LOADING', false, { root: true });
-          context.dispatch('getProductList', { isFront: true });
-          setTimeout(() => {
-            context.commit('SIMILAR_PRODUCTS', response.data.product.category);
-          }, 500);
+          context.commit('RECOMMEND_PRODUCTS', response.data.product.category);
         }
       });
     },
-    updataProduct(context, isEdit) {
+    updataProduct(context, isCreate) {
       const data = context.state.tempProduct;
       let apiMethod = 'post';
       let apiUrl = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/product`;
-      if (isEdit) {
+      if (!isCreate) {
         apiMethod = 'put';
         apiUrl = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/product/${data.id}`;
       }
@@ -90,9 +87,6 @@ export default ({
         $('#delModal').modal('hide');
       });
     },
-    switchCategoryStatus(context, CategoryName) {
-      context.commit('FILTER_PRODUCTS', CategoryName);
-    },
   },
   mutations: {
     PRODUCT(state, payload) {
@@ -106,20 +100,14 @@ export default ({
         .map((item) => item.category)
         .filter((item, index, arr) => arr.indexOf(item) === index);
     },
-    FILTER_PRODUCTS(state, payload) {
-      const Data = state.productList.filter((item) => item.is_enabled);
-      if (payload) {
-        state.filterProducts = Data.filter((item) => item.category === payload);
-      } else {
-        state.filterProducts = Data;
-      }
+    FILTER_PRODUCTS(state) {
+      state.filterProducts = state.productList.filter((item) => item.is_enabled);
     },
     PRODUCT_ID(state, payload) {
       state.productId = payload;
     },
-    SIMILAR_PRODUCTS(state, payload) {
-      const Data = state.productList.filter((item) => item.is_enabled);
-      state.similarProducts = Data
+    RECOMMEND_PRODUCTS(state, payload) {
+      state.recommendProducts = state.filterProducts
         .filter((item) => (item.category === payload) && (item.id !== state.productId));
     },
   },
@@ -130,6 +118,6 @@ export default ({
     filterProducts: (state) => state.filterProducts,
     tempProduct: (state) => state.tempProduct,
     productId: (state) => state.productId,
-    similarProducts: (state) => state.similarProducts,
+    recommendProducts: (state) => state.recommendProducts,
   },
 });

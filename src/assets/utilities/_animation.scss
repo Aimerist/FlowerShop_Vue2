@@ -1,0 +1,32 @@
+@mixin animation($duration, $fillMode) {
+  animation-duration: $duration;
+  animation-fill-mode: $fillMode;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes doublePulse {
+  0% {
+    transform: scale(1)
+  }
+  14% {
+    transform: scale(1.05)
+  }
+  28% {
+    transform: scale(1)
+  }
+  42% {
+    transform: scale(1.05)
+  }
+  70% {
+    transform: scale(1)
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0)
+  }
+  50% {
+    transform: translateX(70%)
+  }
+}

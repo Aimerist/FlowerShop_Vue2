@@ -1,28 +1,29 @@
 <template>
-  <div class="container gap-setting">
-    <form class="form-signin" @submit.prevent="signin">
-      <div class="text-center text-brown" style="line-height:5rem; font-size:4rem">
-        <i class="fas fa-users"></i></div>
-      <h1 class="h3 mb-3 font-weight-bold text-brown text-center">管理者登入</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control"
-        placeholder="Email address" required
-        v-model="user.username">
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control mb-3"
-        placeholder="Password" required
-        v-model="user.password">
-      <button class="btn btn-lg btn-primary btn-block text-white"
-        type="submit">登入</button>
-      <div class="btn-block text-center mt-4">
-        <router-link class="link-line text-brown font-weight-bold"
-          :to="{ name: 'Products' }">
-          <i class="fas  fa-arrow-left"></i>
-          回到 Flower Shop 購物去</router-link>
+  <main class="container grid-setting">
+    <div class="row justify-content-center pt-md-10">
+      <div class="col-10 col-md-6 col-lg-4 text-center">
+        <h2 class="d-flex flex-column  text-brown mb-5" data-aos="fade-up">
+          <i class="fas fa-users fa-2x mb-2"></i>
+          管理者登入</h2>
+        <form @submit.prevent="signin" data-aos="fade-up" data-aos-delay="100">
+          <input type="email" class="form-control"
+            id="inputEmail" placeholder="Email address"
+            v-model="user.username" required>
+          <input type="password" class="form-control mb-5"
+            id="inputPassword" placeholder="Passwords"
+            v-model="user.password" required>
+          <button class="btn btn-lg btn-primary btn-block text-white
+            font-weight-bold mb-5"
+            type="submit">LOGIN</button>
+        </form>
+        <router-link class="text-brown font-weight-bold hover--shadowLine"
+          :to="{ name: 'Products' }" data-aos="fade-up" data-aos-delay="200">
+          <i class="fas fa-arrow-left"></i>
+          回到 Flower Shop 購物
+        </router-link>
       </div>
-      <p class="mt-1 text-brown text-center">&copy; 2020</p>
-    </form>
-  </div>
+    </div>
+  </main>
 </template>
 
 <script>
@@ -55,31 +56,12 @@ export default {
 </script>
 
 <style scoped>
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
-.form-signin .checkbox {
-  font-weight: 400;
-}
-.form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
+input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-.form-signin input[type="password"] {
+input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;

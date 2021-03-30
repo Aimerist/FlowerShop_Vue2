@@ -1,0 +1,92 @@
+.swiper-slide {
+  &:hover {
+    .swiper-slide-img {
+      transform: scale(1.07);
+    }
+    .swiper-slide-text {
+      top: 50%;
+      opacity: 1;
+    }
+  }
+  &-link {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    &::after {
+      position: absolute;
+      top: .5rem;
+      left: .5rem;
+      content: "";
+      width: calc(100% - 1rem);
+      height: calc(100% - 1rem);
+      border: 1px solid $white;
+      z-index: 1;
+    }
+  }
+  &-img {
+    transition: all 0.5s ease-in-out;
+    height: calc(100vh / 4.5);
+  }
+  &-text {
+    position: absolute;
+    transition: all .5s ease-in-out;
+    top: 55%;
+    left: 50%;
+    max-width: calc(100% - 2rem);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    background: rgba($black, .5);
+  }
+}
+
+.swiper-container {
+  .swiper-button-prev,
+  .swiper-button-next {
+    top: 5rem;
+    width: 2.75rem;
+    margin-top: 0;
+    transition: 0.15s ease;
+    background-color: rgba($white, 0.5);
+    &:hover {
+      span {
+        opacity: 0.9;
+      }
+    }
+    &::after {
+      display: none;
+    }
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2rem;
+      height: 2rem;
+      color: $black;
+      opacity: 0.5;
+      transition: 0.5s ease;
+    }
+    &.swiper-button-disabled {
+      opacity: 0;
+    }
+  }
+  .swiper-button-prev,
+  .swiper-container-rtl .swiper-button-next {
+    left: 0px;
+  }
+  .swiper-button-next,
+  .swiper-container-rtl .swiper-button-prev {
+    right: 0px;
+  }
+  .swiper-pagination-bullet {
+    width: .75rem;
+    height: .75rem;
+    display: inline-block;
+    border-radius: 50%;
+    background: $warning;
+    opacity: 0.3;
+  }
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+  }
+}

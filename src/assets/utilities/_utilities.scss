@@ -1,0 +1,30 @@
+.img-cover {
+  object-fit: cover;
+  object-position: center;
+}
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.border-2 {
+  border-width: 2px !important;
+}
+.z-index-2 {
+  z-index: 2;
+}
+*.focus--outline-none {
+  &:hover,
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+.bg-gradual {
+  background: linear-gradient(180deg, $white, $primary-300);
+}
+.shadow-black-30 {
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+}

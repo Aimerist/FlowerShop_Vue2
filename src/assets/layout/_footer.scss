@@ -1,0 +1,23 @@
+footer {
+  nav {
+    top: -16px;
+    left: calc(50% - 135px);
+    &::before {
+      position: absolute;
+      top: -.3rem;
+      left: -.3rem;
+      content: "";
+      width: calc(100% + .6rem);
+      height: calc(100% + .6rem);
+      border: 1px solid $warning;
+    }
+    @include media-breakpoint-up(xs) {
+      top: -20px;
+      left: calc(50% - 167px);
+    }
+    @include media-breakpoint-up(md) {
+      top: -24px;
+      left: calc(50% - 191px);
+    }
+  }
+}

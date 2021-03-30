@@ -1,108 +1,210 @@
 <template>
-  <div class="container gap-setting">
+  <main class="grid-setting">
     <div class="vld-parent">
       <loading :active.sync="isLoading"></loading>
     </div>
-    <!-- 商品內容 -->
-    <div class="row">
-      <!-- 商品圖片 -->
-      <div class="col-md-7 mb-3">
-        <img class="img-fluid img-cover"
-          :src="product.imageUrl">
-          <div class="favorite">
-            <a class="text-white f-size125 cursor-pointer"
-              v-if="!isFavorite(product.id)"
-              @click.prevent="
-                addFavorite(product.id, product.title, product.origin_price, product.imageUrl)">
-              <i class="far fa-heart fa-lg"></i>
-            </a>
-            <a class="text-danger f-size125 cursor-pointer"
-              v-if="isFavorite(product.id)"
-              @click.prevent="removeFavorite(product.id)">
-              <i class="fas fa-heart fa-lg"></i>
-            </a>
-          </div>
-          <div class="back">
-            <router-link class="btn-back py-1 px-2 mt-4 text-dark md-dis-none mx-5"
-              :to="{ name: 'Products'}">
-              <i class="fas  fa-arrow-left"></i>
-              BACK</router-link>
-          </div>
-      </div>
-      <!-- 商品資訊 -->
-      <div class="col-md-5">
-        <div class="px-4">
-          <h2 class="mb-2 text-primary font-weight-bold">{{ product.title }}
-            <span class="h5 text-muted">| {{ product.category }}</span></h2>
-          <div class="p-2 text-brown" v-if="product.content">
-            <h6>【商品介紹】</h6>
-            <p class="pl-2"> {{ product.content }} </p>
-          </div>
-          <div class="p-2 text-brown" v-if="product.description">
-            <h6>【商品描述】</h6>
-            <p class="pl-2"> {{ product.description }} </p>
-          </div>
-          <hr>
-          <div class="d-flex align-items-baseline px-2 pb-3">
-            <p class="text-gray mb-0">原價 <del>{{ product.origin_price | currency }}</del></p>
-            <p class="ml-auto h3 text-dark">NT {{ product.price | currency }}</p>
-          </div>
-          <div class="row mx-0 no-gutters">
-            <div class="col-lg-5 mr-auto mb-3">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <a href="#" class="btn btn-outline-graylight"
-                    :class="{'disabled': qty === 1}"
-                    @click.prevent="qty = qty - 1">−</a>
-                </div>
-                <input type="number" min="1" max="15" class="form-control text-center"
-                  v-model.number="qty"/>
-                <div class="input-group-append">
-                  <a href="#" class="btn btn-outline-graylight"
-                    :class="{'disabled':qty === 15}"
-                    @click.prevent="qty = qty + 1">+</a>
-                </div>
+    <section class="container-fluid container-lg">
+      <!-- Introduction -->
+      <div class="row introduction mb-12">
+        <div class="col-sm-1 introduction__tab pr-0 position-absolute z-index-2
+          mt-2 mt-sm-3 mt-md-0" data-aos="fade-up">
+          <ul class="nav d-flex flex-column justify-content-center h-100"
+            id="tab" role="tablist">
+            <li class="text-md-right" role="presentation">
+              <a class="active" id="flower_1-tab" href="#flower_1" role="tab"
+                data-toggle="pill" aria-controls="flower_1" aria-selected="true">
+                <img class="introduction__tab__img img-cover ml-2 ml-sm-3 ml-md-0 mb-2 mb-md-3"
+                  :src="product.imageUrl" :alt="product.title">
+              </a>
+            </li>
+            <li class="text-md-right" role="presentation">
+              <a id="flower_2-tab" data-toggle="pill" href="#flower_2"
+                role="tab" aria-controls="flower_2" aria-selected="false">
+                <img class="introduction__tab__img img-cover ml-2 ml-sm-3 ml-md-0 mb-2 mb-md-3"
+                  src="https://storage.googleapis.com/vue-course-api.appspot.com/aimer%2F1600776218281.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&amp;Expires=1742169600&amp;Signature=bb4q9fCmnEvHyMjgLHiaTeqZre4En6qM34tmmA5nfu88fVPug8KKRjhwkDly%2FMOEij7xNXlFHlG5GJSZurRh%2FQiVHXtSo4kvS4ObZacje%2FlHyzfDltIIT6N%2Bhy9oGOiAw%2FSGLe5fqyiBbsIaM7bevfbXn4g8j9k%2B1Ql3oHul4cBk58YLojMELcX8CNqomYcLa0xNLFvFRXVtA74LLbn13DKVzJ89Kxch51PTDhhWSIxm7VxubLZ6VoUYlQC8b%2FABIDiwOTrBn9kMuo2KhSLLsh2wka1nO%2FVRMaSrUbn%2BWOuQe5eag6Ak2YAOQuG0mcWfAIUYKfqXP%2FLTOm3bv2FQ8A%3D%3D" alt="金輝玫瑰">
+              </a>
+            </li>
+            <li class="text-md-right" role="presentation">
+              <a id="flower_3-tab" data-toggle="pill" href="#flower_3"
+                role="tab" aria-controls="flower_3" aria-selected="false">
+                <img class="introduction__tab__img img-cover ml-2 ml-sm-3 ml-md-0 mb-2 mb-md-3"
+                  src="https://storage.googleapis.com/vue-course-api.appspot.com/aimer%2F1600770263193.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&amp;Expires=1742169600&amp;Signature=WQTPZ3lFtzjEboFhnBQenqE9X8Lh7Poc2aSiorro5lnax5Z2820b%2BgOYyWtZDhnUAq4g0XJzr0O2832DXG%2Bl9ua8I38T0Wln74F6M3lqFVcINZwq%2Bq86bAw894imNq%2BgHNEXLctbhE5HzvHRjbiT9iE265tqvh8dZLeqvDKI4yDjG62ydRWBP6fMSdVF4v7Dk0ddcQt1%2FGmbHIDvIa17K4LDtepMyrEi3aUxGLozvr3yTzTwZZIwmezEnHGQGJ3u4d0TRN4Z170JM%2BGo23SjX2PLqD%2FSaCKCrAE4QyhYgd8139Co8wKSGJHAAYFyO%2Bo%2Fi7aO9hO%2FFhF599fK%2FjJojw%3D%3D" alt="紅脣"></a>
+            </li>
+            <li class="text-md-right" role="presentation">
+              <a id="flower_4-tab" data-toggle="pill" href="#flower_4"
+                role="tab" aria-controls="flower_4" aria-selected="false">
+                <img class="introduction__tab__img img-cover ml-2 ml-sm-3 ml-md-0 mb-2 mb-md-3"
+                  src="https://storage.googleapis.com/vue-course-api.appspot.com/aimer%2F1600778499805.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&amp;Expires=1742169600&amp;Signature=Pb7%2B3SizYU160KVhzpwJfilCe6j0VKDYfz%2Ff%2FKq%2F%2FGe9NUZY6o6PWI74hiHL8rPsJzFozwWikzvbPtd6ovPobhslmxWddB%2Fq9%2B1Wigpe6Fj6U%2F2KYTlM0YQJvaaBUU3R9uiibh36DU62ofv6UOjLr1%2FuTfrMUvpEYrDiZtHE61bU0a4UC3Flk8tpErCbp9o67UFtQaWuzX7XGM3%2BsH2nSDcwEUiMI13dvqFG8AckhmgY2RnSX7TyyNZ6O25oEmDnV%2FgIA9XB8u64%2FLb%2BEyHRI8xy2E1H8bXXjf1cgYMS8NX1laTtkYfW7wonSFLAZFL4o5pmiyty0ITjOICD5s7XYg%3D%3D" alt="香檳玫瑰"></a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0" data-aos="fade-up">
+          <div class="tab-content position-relative" id="tabContent">
+            <div class="tab-pane fade show active" id="flower_1"
+              role="tabpanel" aria-labelledby="flower_1-tab">
+              <div class="introduction__img bg-cover"
+                :style="`background-image: url(${ product.imageUrl });`">
               </div>
             </div>
-            <div class="col-lg-5">
-              <button class="btn btn-block btn-add py-2 text-secondary"
+            <div class="tab-pane fade" id="flower_2" role="tabpanel"
+              aria-labelledby="flower_2-tab">
+              <div class="introduction__img bg-cover"
+                style="background-image: url(https://storage.googleapis.com/vue-course-api.appspot.com/aimer%2F1600776218281.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&amp;Expires=1742169600&amp;Signature=bb4q9fCmnEvHyMjgLHiaTeqZre4En6qM34tmmA5nfu88fVPug8KKRjhwkDly%2FMOEij7xNXlFHlG5GJSZurRh%2FQiVHXtSo4kvS4ObZacje%2FlHyzfDltIIT6N%2Bhy9oGOiAw%2FSGLe5fqyiBbsIaM7bevfbXn4g8j9k%2B1Ql3oHul4cBk58YLojMELcX8CNqomYcLa0xNLFvFRXVtA74LLbn13DKVzJ89Kxch51PTDhhWSIxm7VxubLZ6VoUYlQC8b%2FABIDiwOTrBn9kMuo2KhSLLsh2wka1nO%2FVRMaSrUbn%2BWOuQe5eag6Ak2YAOQuG0mcWfAIUYKfqXP%2FLTOm3bv2FQ8A%3D%3D);">
+              </div>
+            </div>
+            <div class="tab-pane fade" id="flower_3" role="tabpanel" aria-labelledby="flower_3-tab">
+              <div class="introduction__img bg-cover"
+                style="background-image: url(https://storage.googleapis.com/vue-course-api.appspot.com/aimer%2F1600770263193.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&amp;Expires=1742169600&amp;Signature=WQTPZ3lFtzjEboFhnBQenqE9X8Lh7Poc2aSiorro5lnax5Z2820b%2BgOYyWtZDhnUAq4g0XJzr0O2832DXG%2Bl9ua8I38T0Wln74F6M3lqFVcINZwq%2Bq86bAw894imNq%2BgHNEXLctbhE5HzvHRjbiT9iE265tqvh8dZLeqvDKI4yDjG62ydRWBP6fMSdVF4v7Dk0ddcQt1%2FGmbHIDvIa17K4LDtepMyrEi3aUxGLozvr3yTzTwZZIwmezEnHGQGJ3u4d0TRN4Z170JM%2BGo23SjX2PLqD%2FSaCKCrAE4QyhYgd8139Co8wKSGJHAAYFyO%2Bo%2Fi7aO9hO%2FFhF599fK%2FjJojw%3D%3D);">
+              </div>
+            </div>
+            <div class="tab-pane fade" id="flower_4" role="tabpanel" aria-labelledby="flower_4-tab">
+              <div class="introduction__img bg-cover"
+                style="background-image: url(https://storage.googleapis.com/vue-course-api.appspot.com/aimer%2F1600778499805.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&amp;Expires=1742169600&amp;Signature=Pb7%2B3SizYU160KVhzpwJfilCe6j0VKDYfz%2Ff%2FKq%2F%2FGe9NUZY6o6PWI74hiHL8rPsJzFozwWikzvbPtd6ovPobhslmxWddB%2Fq9%2B1Wigpe6Fj6U%2F2KYTlM0YQJvaaBUU3R9uiibh36DU62ofv6UOjLr1%2FuTfrMUvpEYrDiZtHE61bU0a4UC3Flk8tpErCbp9o67UFtQaWuzX7XGM3%2BsH2nSDcwEUiMI13dvqFG8AckhmgY2RnSX7TyyNZ6O25oEmDnV%2FgIA9XB8u64%2FLb%2BEyHRI8xy2E1H8bXXjf1cgYMS8NX1laTtkYfW7wonSFLAZFL4o5pmiyty0ITjOICD5s7XYg%3D%3D);">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5 d-flex flex-column justify-content-center
+          position-relative px-6 px-md-5" data-aos="fade-up">
+          <div class="border-bottom pb-3 pb-md-5 mb-3 mb-md-5">
+            <h3 class="font-sm font-h6-md text-primary font-weight-normal
+              d-flex justify-content-between pr-md-4">{{ product.category }}
+              <span class="h6 favorite text-danger-500 hover--enlarge shadow-black-30"
+                v-if="!isFavorite(product.id)"
+                @click.prevent="
+                  addFavorite(product.id, product.title, product.origin_price, product.imageUrl)">
+                <i class="far fa-heart font-h5"></i></span>
+              <span class="h6 favorite text-danger-500 hover--enlarge shadow-black-30"
+                v-if="isFavorite(product.id)"
+                @click.prevent="removeFavorite(product.id)">
+                <i class="fas fa-heart font-h5"></i></span>
+            </h3>
+            <h2 class="h4 font-h3-md mb-2 text-dark text-letter-spacing-3">
+              {{ product.title }}</h2>
+            <p class="font-sm font-h6-md text-secondary text-truncate">
+              {{ product.content }}
+            </p>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-md-7 pr-4 d-flex flex-column justify-content-end mb-2 mb-md-0">
+              <div class="text-right mr-lg-4">
+                <p class="text-secondary text-decoration-del">
+                  原價
+                  <span class="font-weight-bold ml-4 mr-2">
+                    NT {{ product.origin_price }}</span>
+                  元
+                </p>
+              </div>
+              <p class="text-right text-secondary mr-lg-4">
+                售價
+                <span class="h5 font-h4-md font-family-roboto text-danger-500
+                  ml-4 mr-2">NT {{ product.price }}</span>
+                元
+              </p>
+            </div>
+            <div class="col-md-5">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <a href="#" class="btn btn-light font"
+                    :class="{'disabled': qty === 1}"
+                    @click.prevent="qty = qty - 1">
+                    <i class="fas fa-minus"></i></a>
+                </div>
+                <input type="number" min="1" max="15" value="1"
+                  class="form-control text-center border-light"
+                  v-model.number="qty">
+                <div class="input-group-append">
+                  <a href="#" class="btn btn-light"
+                    :class="{'disabled':qty === 15}"
+                    @click.prevent="qty = qty + 1">
+                    <i class="fas fa-plus"></i></a>
+                </div>
+              </div>
+              <button class="btn btn-block btn-danger-500 hover--doublePulse"
                 @click="addCart(product.id, qty)">
-                  加到購物車
-                <i class="fas fa-spinner fa-spin mx-1"
-                  v-if="status.itemLodingId === product.id"></i>
-                <i class="fas fa-shopping-cart" v-else></i>
+                <span v-if="status.itemLodingId === product.id">
+                  加入中<i class="fas fa-spinner fa-spin mx-1"></i></span>
+                <span v-else>加入購物車</span>
               </button>
             </div>
           </div>
         </div>
       </div>
-      <!-- 相關商品 -->
-      <div class="col-12 similar" v-if="similarProducts.length !== 0">
-        <div class="similar-line">
-          <span class="similar-titlet">相關商品</span>
+      <!-- Flower Meanings -->
+      <div class="row">
+        <div class="col-12 text-center mb-12">
+          <h4 class="font-h5 font-h4-xs font-weight-normal font-italic
+            text-letter-spacing-3 mb-5" data-aos="fade-up">
+            Flower Meanings
+            <span class="font-xs font-h6-xs"> [花語]</span></h4>
+          <p class="mb-1" data-aos="fade-up" data-aos-delay="100">
+            花不只美麗，<br class="d-sm-none">花語更能給予花朵不一樣的浪漫氣息</p>
+          <p data-aos="fade-up" data-aos-delay="100">
+            {{ product.title }}的花語象徵著，
+            <br class="d-sm-none">{{ product.content }}</p>
         </div>
-        <div class="row mx-3 text-center">
-          <div class="col-lg-3 col-sm-6 mb-4"
-            v-for="item in similarProducts" :key="item.id">
-            <router-link  class="similar-conent"
-              :to="{ name:'ProductDetail', params: { productId: item.id } }">
-              <img class="img-fluid similar-img"
-                :src="item.imageUrl" alt="">
-            </router-link>
-            <div class="similar-text my-0">
-              <span class="">{{ item.title }}</span>
-            </div>
-          </div>
+        <div class="col-4 col-md-3 mx-md-4 mx-lg-6" data-aos="fade-right">
+          <img class="img-cover img-fluid" src="../../assets/images/detail/2.jpg" alt="">
+        </div>
+        <div class="col-8 mt-8 mt-md-15 ml-md-4 ml-lg-6 mb-15" data-aos="fade-left">
+          <img class="img-cover img-fluid mt-lg-4" src="../../assets/images/detail/1.jpg" alt="">
+        </div>
+      </div>
+      <!-- Particular -->
+      <div class="row particular justify-content-center justify-content-md-start
+        position-relative mb-12 mb-md-15">
+        <div class="particular__inner d-flex flex-column justify-content-center
+          h-100 mb-6 mr-md-4 text-center z-index-2"
+            data-aos="zoom-in-left" data-aos-duration="2000">
+          <h4 class="font-h4 font-h3-xs font-weight-normal font-italic
+            text-letter-spacing-3 mb-5">
+            Particular
+            <span class="font-xs font-h6-xs">[特色]</span>
+          </h4>
+          <p v-if="product.description">
+            {{ product.description }}
+          </p>
+        </div>
+        <div class="col-md-7 col-lg-8" data-aos="fade-right">
+          <img class="img-fluid" src="../../assets/images/detail/3.jpg" alt="">
+        </div>
+      </div>
+    </section>
+    <!-- bigImage -->
+    <div class="container-fluid bg-gradual mb-8 mb-md-12">
+      <div class="row no-gutters justify-content-center pb-15 position-relative">
+        <div class="col-12 text-center mb-4 mb-sm-5">
+          <h2 class="font-h5 font-h4-xs font-weight-normal font-italic
+            text-letter-spacing-3">Queen's Day <br class="d-md-none">
+            <span class="font-xs font-h6-xs">[{{ product.title }}]</span></h2>
+        </div>
+        <div class="col-10 col-md-8 col-xl-6 bg-cover detail__bigImg" data-aos="fade-up"
+          :style="`background-image: url( ${product.imageUrl});`"
+          :alt="product.title">
         </div>
       </div>
     </div>
-  </div>
+    <!-- Recommend -->
+    <section class="container recommend mb-2 mb-md-8">
+      <div class="row">
+        <div class="col-12 mb-4 mb-sm-7 mb-lg-8 px-0">
+          <h5 class="recommend__title h4 font-h3-md text-warning
+            d-inline-block bg-white px-2 px-sm-4 px-md-6 ml-6 ml-md-12">Recommend</h5>
+        </div>
+        <RecommendProducts/>
+      </div>
+    </section>
+  </main>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import RecommendProducts from '@/components/RecommendProducts.vue';
 
 export default {
+  components: {
+    RecommendProducts,
+  },
   data() {
     return {
       qty: 1,
@@ -111,11 +213,21 @@ export default {
   },
   computed: {
     ...mapGetters(['status']),
-    ...mapGetters('productModules', ['product', 'productId', 'similarProducts']),
+    ...mapGetters('productModules', ['product', 'productId', 'filterProducts']),
   },
   methods: {
     addCart(id, qty = 1) {
       this.$store.dispatch('cartModules/addCart', { id, qty });
+    },
+    productLink(id) {
+      if (this.$route.params.productId !== id) {
+        this.$router.push({ name: 'ProductDetail', params: { productId: id } });
+      } else {
+        this.$store.dispatch(
+          'alertMessageModules/updateMessage',
+          { message: '您已在本頁', status: 'warning' },
+        );
+      }
     },
     addFavorite(id, title, price, imageUrl) {
       const data = {
@@ -142,90 +254,8 @@ export default {
     this.$store.commit('productModules/PRODUCT_ID', this.$route.params.productId);
     this.$store.dispatch('productModules/getProduct');
   },
+  mounted() {
+    this.$store.dispatch('productModules/getProduct');
+  },
 };
 </script>
-
-<style lang="scss" scoped>
-
-.favorite {
-  position: absolute;
-  top: 10px;
-  right: 28px;
-}
-
-.img-cover {
-  width: 100vw;
-  max-height: 550px;
-}
-
-.back {
-  position: absolute;
-  bottom: 16px;
-  left: -56px;
-}
-
-.btn-add {
-  background-color: #EFE5DC;
-  text-align: center;
-  &:hover {
-    background-color: #EEDEA6;
-  }
-}
-
-/* 相關商品的分隔線 */
-.similar-line {
-  position: relative;
-  text-align: center;
-  padding: 2rem 0;
-  &:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    border-top: 2px solid #F5EED7;
-    width: 100%;
-    z-index: -1;
-  }
-  .similar-titlet {
-    z-index: 1;
-    background-color: #FFF;
-    padding: 0 1.5rem;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    line-height: 2rem;
-    border-inline-start: 10px solid #EEDEA6;
-    border-inline-end: 10px solid #EEDEA6;
-  }
-}
-
-.similar-conent {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  .similar-img {
-    height: 150px;
-    width: 100vw;
-    object-fit:cover;
-    margin-bottom: 0;
-    transition: .3s all ease-in-out;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
-}
-
-.similar-text {
-  position: absolute;
-  z-index: 2;
-  bottom: -0.5rem;
-  width: 90%;
-  text-align: center;
-  span {
-    border: 1px solid #D1A813;
-    padding: 0.5rem 1rem;
-    background: rgba(#343a40, .9);
-    color: #f5eed7;
-  }
-}
-</style>

@@ -1,0 +1,35 @@
+.carousel {
+  height: calc(100vh - 56px);
+  &-img {
+    height: calc(100vh - 56px);
+  }
+  &-indicators  {
+    margin-bottom: 1rem;
+    li {
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      padding: 12px;
+      border: 1px solid transparent;
+      background-color: transparent;
+      transition: all 0.5s ease-in-out;
+      opacity: .7;
+      &.active {
+        border-color: rgba($white, .6);
+        background-color: rgba($white, .3);
+      }
+      &:hover {
+        opacity: 1;
+        background-color: rgba($white, .2);
+      }
+      span {
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 100%;
+        background-color: #fff;
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.15));
+      }
+    }
+  }
+}

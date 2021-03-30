@@ -1,0 +1,16 @@
+.list-group-item {
+  font-weight: $font-weight-bold;
+  transition: all 0.3s;
+  &.active {
+    border-style: solid;
+    border-width: 2px;
+  }
+  & + & {
+    &.active {
+      border-top-width: 2px;
+    }
+  }
+  &:hover {
+    color: $primary;
+  }
+}

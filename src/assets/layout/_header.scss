@@ -1,0 +1,84 @@
+.badge-danger {
+  position: absolute;
+  top: 2px;
+  right: -3px;
+  font-size: 0.75rem;
+  padding: 2px 5px 2px 6px;
+}
+.navbar-nav .dropdown-menu {
+  position: absolute;
+}
+.navbar-light .navbar-nav {
+  .nav-item {
+    background-color: $secondary;
+    border-bottom: 1px solid $white;
+    &:hover,
+    &:focus {
+      background: lighten($secondary, 20%);
+    }
+    @include media-breakpoint-up(md) {
+      background-color: transparent;
+      border: none;
+      &:hover,
+      &:focus {
+        background-color: transparent;
+      }
+    }
+    &.position-relative {
+      @include media-breakpoint-up(md) {
+        position: relative;
+        &::after {
+          transition: 0.5s;
+          position: absolute;
+          content: '';
+          width: 100%;
+          display: block;
+          height: 0px;
+          bottom: -8px;
+          background-color: $primary-300;
+        }
+        &:hover,
+        &:focus {
+          &::after {
+            height: 8px;
+          }
+        }
+      }
+    }
+  }
+  .nav-link {
+    color: $white;
+    font-size: $h5-font-size;
+    line-height: 1.2;
+    transition: 0.5s;
+    @include media-breakpoint-up(md) {
+      color: $dark;
+      &:hover {
+        color: $warning;
+      }
+    }
+    &.active {
+      background: $dark;
+      @include media-breakpoint-up(md) {
+        background-color: transparent;
+        color: $primary;
+        position: relative;
+        &::after {
+          position: absolute;
+          content: '';
+          left: 0;
+          bottom: -.5rem;
+          width: 100%;
+          display: block;
+          height: .5rem;
+          background-color: $primary;
+        }
+      }
+    }
+  }
+  .text-muted {
+    &:hover {
+      color: $secondary !important;
+    }
+  }
+}
