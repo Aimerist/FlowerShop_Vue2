@@ -28,9 +28,9 @@ export default ({
           } else {
             context.commit('PAGE', response.data.pagination, { root: true });
           }
-          context.commit('IS_LOADING', false, { root: true });
         }
       });
+      context.commit('IS_LOADING', false, { root: true });
     },
     getProduct(context) {
       const prouctId = context.state.productId;
