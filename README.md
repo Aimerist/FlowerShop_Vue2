@@ -30,7 +30,6 @@
 
 ![](https://i.imgur.com/C4Acz7N.png)
 
-
 * 商品列表
 
 ![](https://i.imgur.com/dPsma45.jpg)
@@ -46,8 +45,8 @@
 * 購物車、我的最愛
 
 <p>
-  <img align='left' src="https://i.imgur.com/3KD0AEB.png">
-  <img align='left' src="https://i.imgur.com/ZhLIcUy.png">
+  <img src="https://i.imgur.com/3KD0AEB.png">
+  <img src="https://i.imgur.com/ZhLIcUy.png">
 </p>
 
 ### 後台
