@@ -42,6 +42,10 @@
   
 ![](https://i.imgur.com/B6AGv6C.png)
 
+* 相似商品
+  
+![](https://i.imgur.com/TDCE1wT.png)
+
 * 購物車、我的最愛
 
 <p>
