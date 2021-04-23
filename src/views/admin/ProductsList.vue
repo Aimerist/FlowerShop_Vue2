@@ -1,11 +1,10 @@
 <template>
   <div class="back-grid-setting d-flex flex-column justify-content-between">
     <main>
-      <div class="d-flex align-items-center justify-content-between
-        mt-4 mb-6 mx-md-4">
+      <div class="d-flex align-items-center justify-content-between mt-4 mb-6 mx-md-4">
         <h2 class="h4 text-dark">Product List</h2>
         <button class="btn ml-8 font-weight-bold hover--colorPrimary"
-          @click="openModal(true)">
+          @click="openModal(true)" type="button">
           <span class="fas fa-plus mr-1 text-primary"></span>
           Add
           <span class="d-none d-md-inline hover--colorPrimary">New Product</span>
@@ -31,7 +30,8 @@
               <span v-if="item.is_enabled" class="text-success">啟動</span>
               <span v-else class="text-danger">未啟動</span></td>
             <td class="align-middle d-none d-lg-table-cell">
-              <img :src="item.imageUrl" alt="" class="img-cover" height="50px" width="50px">
+              <img class="img-cover" height="50px" width="50px"
+              :src="item.imageUrl" :alt="item.title">
             </td>
             <td class="align-middle text-left">
               {{ item.title }}</td>
@@ -42,7 +42,7 @@
             <td class="align-middle text-right">
               {{ item.price | currency }}</td>
             <th class="align-middle">
-              <button class="btn btn-sm hover--colorPrimary"
+              <button class="btn btn-sm hover--colorPrimary" type="button"
                 @click.stop="openModal(false, item)">
                 <span class="fas fa-pen fa-lg"></span>
               </button>
@@ -85,7 +85,7 @@
                     <input type="file" id="customFile" class="form-control"
                       ref="files" @change="uploadFile">
                   </div>
-                  <img class="img-fluid mb-4" :src="tempProduct.imageUrl" alt="">
+                  <img class="img-fluid mb-4" :src="tempProduct.imageUrl" :alt="tempProduct.title">
                   <hr class="d-sm-none">
                 </div>
                 <div class="col-sm-8">
@@ -186,16 +186,16 @@
                     <span class="fas fa-exclamation-triangle mr-1"></span>
                     刪除商品</p>
                   <a class="btn btn-outline-danger btn-block font-weight-bold font-family-raleway"
-                    href="#" type="button" data-dismiss="modal"
-                    @click="openModal(false, tempProduct, true)">
+                    href="#" data-dismiss="modal"
+                    @click.prevent="openModal(false, tempProduct, true)">
                     Delete This Product !</a>
                 </div>
               </div>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-              <a v-if="!isCreate" type="button" href="#" data-dismiss="modal"
+              <a v-if="!isCreate" href="#" data-dismiss="modal"
                 class="btn text-danger font-weight-bold d-none d-sm-block"
-                @click="openModal(false, tempProduct, true)">
+                @click.prevent="openModal(false, tempProduct, true)">
                 <span class="fas fa-exclamation-triangle"></span>
                 Delete This Product !</a>
               <div class="ml-auto">
@@ -268,7 +268,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-6">
-                  <img class="img-cover" :src="tempProduct.imageUrl" alt="">
+                  <img class="img-cover" :src="tempProduct.imageUrl" :alt="tempProduct.title">
                 </div>
                 <div class="col-sm-6 d-flex flex-column justify-content-around">
                   <h3 class="h4 text-dark my-2">{{ tempProduct.title }}
@@ -333,9 +333,9 @@
             </div>
           </div>
           <div class="modal-footer d-flex justify-content-between py-1">
-            <a type="button" href="#" data-dismiss="modal"
+            <a href="#" data-dismiss="modal"
               class="font-xs font-h6-sm text-danger font-weight-bold text-decoration-none px-2"
-              @click="openModal(false, tempProduct, true)">
+              @click.prevent="openModal(false, tempProduct, true)">
               <span class="fas fa-exclamation-triangle"></span>
               Delete This Product !</a>
             <button type="button" data-dismiss="modal"
@@ -353,100 +353,100 @@
 import {
   ValidationProvider,
   ValidationObserver,
-  extend,
-} from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-import $ from 'jquery';
-import Pagination from '@/components/Pagination.vue';
-import { mapActions, mapGetters } from 'vuex';
+  extend
+} from 'vee-validate'
+import { required } from 'vee-validate/dist/rules'
+import $ from 'jquery'
+import Pagination from '@/components/Pagination.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 extend('required', {
   ...required,
-  message: '{_field_} 欄位不得留空',
-});
+  message: '{_field_} 欄位不得留空'
+})
 
 export default {
   components: {
     Pagination,
     ValidationProvider,
-    ValidationObserver,
+    ValidationObserver
   },
-  data() {
+  data () {
     return {
       productId: '',
-      isCreate: true,
-    };
+      isCreate: true
+    }
   },
   computed: {
     ...mapGetters(['page', 'status']),
-    ...mapGetters('productModules', ['productList', 'tempProduct']),
+    ...mapGetters('productModules', ['productList', 'tempProduct'])
   },
   methods: {
     ...mapActions('productModules', ['delProduct']),
-    getProductsList(page) {
-      this.$store.dispatch('productModules/getProductList', { isFront: false, page });
+    getProductsList (page) {
+      this.$store.dispatch('productModules/getProductList', { isFront: false, page })
     },
-    updataProduct() {
-      const vm = this;
+    updataProduct () {
+      const vm = this
       vm.$refs.form.validate().then((valid) => {
         if (valid) {
-          vm.$store.dispatch('productModules/updataProduct', vm.isCreate);
+          vm.$store.dispatch('productModules/updataProduct', vm.isCreate)
         } else {
           vm.$store.dispatch(
             'alertMessageModules/updateMessage',
-            { message: '欄位填寫不完整', status: 'danger' },
-          );
+            { message: '欄位填寫不完整', status: 'danger' }
+          )
         }
-      });
+      })
     },
-    openModal(isCreate, product, isDelete = false) {
+    openModal (isCreate, product, isDelete = false) {
       if (isDelete) {
-        $('#delModal').modal('show');
-        this.$store.state.productModules.tempProduct = { ...product };
+        $('#delModal').modal('show')
+        this.$store.state.productModules.tempProduct = { ...product }
       } else {
-        this.isCreate = isCreate;
+        this.isCreate = isCreate
         if (isCreate) {
-          this.$store.state.productModules.tempProduct = {};
+          this.$store.state.productModules.tempProduct = {}
         } else {
-          this.$store.state.productModules.tempProduct = { ...product };
+          this.$store.state.productModules.tempProduct = { ...product }
         }
-        $('#updataModal').modal('show');
+        $('#updataModal').modal('show')
       }
     },
-    detailModal(product) {
-      this.$store.state.productModules.tempProduct = { ...product };
-      $('#detailModal').modal('show');
+    detailModal (product) {
+      this.$store.state.productModules.tempProduct = { ...product }
+      $('#detailModal').modal('show')
     },
-    uploadFile() {
-      const vm = this;
-      const uploadedFile = this.$refs.files.files[0];
-      const formData = new FormData();
-      formData.append('file-to-upload', uploadedFile);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/upload`;
-      vm.$store.commit('ITEM_LOADING_ID', 'change');
+    uploadFile () {
+      const vm = this
+      const uploadedFile = this.$refs.files.files[0]
+      const formData = new FormData()
+      formData.append('file-to-upload', uploadedFile)
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/admin/upload`
+      vm.$store.commit('ITEM_LOADING_ID', 'change')
       vm.$http.post(url, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+          'Content-Type': 'multipart/form-data'
+        }
       }).then((response) => {
         if (response.data.success) {
-          vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);
+          vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl)
           vm.$store.dispatch(
             'alertMessageModules/updateMessage',
-            { message: '圖片上傳成功', status: 'success' },
-          );
+            { message: '圖片上傳成功', status: 'success' }
+          )
         } else {
           vm.$store.dispatch(
             'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'danger' },
-          );
+            { message: response.data.message, status: 'danger' }
+          )
         }
-        vm.$store.commit('ITEM_LOADING_ID', '');
-      });
-    },
+        vm.$store.commit('ITEM_LOADING_ID', '')
+      })
+    }
   },
-  created() {
-    this.getProductsList();
-  },
-};
+  created () {
+    this.getProductsList()
+  }
+}
 </script>

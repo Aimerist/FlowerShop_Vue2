@@ -12,8 +12,7 @@
           <input type="password" class="form-control mb-5"
             id="inputPassword" placeholder="Passwords"
             v-model="user.password" required>
-          <button class="btn btn-lg btn-primary btn-block text-white
-            font-weight-bold mb-5"
+          <button class="btn btn-lg btn-primary btn-block text-white font-weight-bold mb-5"
             type="submit">LOGIN</button>
         </form>
         <router-link class="text-brown font-weight-bold hover--shadowLine"
@@ -28,31 +27,31 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       user: {
         username: '',
-        password: '',
-      },
-    };
+        password: ''
+      }
+    }
   },
   methods: {
-    signin() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/admin/signin`;
+    signin () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/admin/signin`
       vm.$http.post(url, vm.user).then((response) => {
         if (response.data.success) {
-          vm.$router.push({ name: 'ProductsList' });
+          vm.$router.push({ name: 'ProductsList' })
         } else {
           vm.$store.dispatch(
             'alertMessageModules/updateMessage',
-            { message: response.data.message, status: 'danger' },
-          );
+            { message: response.data.message, status: 'danger' }
+          )
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>

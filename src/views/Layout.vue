@@ -8,41 +8,41 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import AlertMessage from '../components/AlertMessage.vue';
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+import { mapGetters } from 'vuex'
+import AlertMessage from '../components/AlertMessage.vue'
+import Header from '../components/Header.vue'
+import Footer from '../components/Footer.vue'
 
 export default {
   components: {
     AlertMessage,
     Header,
-    Footer,
+    Footer
   },
-  data() {
+  data () {
     return {
-      isLongin: false,
-    };
+      isLongin: false
+    }
   },
   computed: {
-    ...mapGetters('productModules', ['filterProducts']),
+    ...mapGetters('productModules', ['filterProducts'])
   },
   methods: {
-    Loginstatus() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/user/check`;
+    Loginstatus () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/api/user/check`
       vm.$http.post(url).then((response) => {
         if (response.data.success) {
-          vm.isLongin = true;
+          vm.isLongin = true
         } else {
-          vm.isLongin = false;
+          vm.isLongin = false
         }
-      });
-    },
+      })
+    }
   },
-  created() {
-    this.Loginstatus();
-    this.$store.dispatch('productModules/getProductList', { isFront: true });
-  },
-};
+  created () {
+    this.Loginstatus()
+    this.$store.dispatch('productModules/getProductList', { isFront: true })
+  }
+}
 </script>

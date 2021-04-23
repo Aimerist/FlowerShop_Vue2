@@ -20,19 +20,19 @@
               <span v-else class="text-danger">未付</span>
             </td>
             <td class="d-sm-table-cell d-none text-right">
-              {{item.total | currency}}</td>
+              {{ item.total | currency }}</td>
             <td class="pl-sm-8 pl-lg-12 text-center text-sm-left"
-              :class="{'text-danger':!item.is_paid}">
-              {{item.id}}</td>
+              :class="{ 'text-danger': !item.is_paid }">
+              {{ item.id }}</td>
             <td class="d-lg-table-cell d-none">
-              {{item.create_at | date}}</td>
+              {{ item.create_at | date }}</td>
             <td class="align-middle d-none d-sm-table-cell">
               <ul class="m-0 p-0" v-for="(product, i) in item.products" :key="i">
                 <li class="list-unstyled">{{ product.product.title }}</li>
               </ul>
             </td>
             <td class="d-xl-table-cell d-none">
-              {{item.message | contentLength(6)}}</td>
+              {{ item.message | contentLength(6) }}</td>
           </tr>
         </tbody>
       </table>
@@ -42,28 +42,28 @@
 </template>
 
 <script>
-import Pagination from '@/components/Pagination.vue';
-import { mapGetters } from 'vuex';
-import contentLength from '@/filters/stringlenght';
+import Pagination from '@/components/Pagination.vue'
+import { mapGetters } from 'vuex'
+import contentLength from '@/filters/stringlenght'
 
 export default {
   filters: {
-    contentLength,
+    contentLength
   },
   components: {
-    Pagination,
+    Pagination
   },
   computed: {
     ...mapGetters(['page']),
-    ...mapGetters('orderModules', ['orders']),
+    ...mapGetters('orderModules', ['orders'])
   },
   methods: {
-    getOrderList(page) {
-      this.$store.dispatch('orderModules/getOrderList', page);
-    },
+    getOrderList (page) {
+      this.$store.dispatch('orderModules/getOrderList', page)
+    }
   },
-  created() {
-    this.getOrderList();
-  },
-};
+  created () {
+    this.getOrderList()
+  }
+}
 </script>

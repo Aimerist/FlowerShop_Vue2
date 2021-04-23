@@ -45,16 +45,16 @@
 <script>
 export default {
   methods: {
-    signout() {
-      const url = `${process.env.VUE_APP_APIPATH}/logout`;
+    signout () {
+      const url = `${process.env.VUE_APP_APIPATH}/logout`
       this.$http.post(url).then((response) => {
         if (response.data.success) {
-          this.$router.push({ name: 'Products' });
+          this.$router.push({ name: 'Products' })
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>

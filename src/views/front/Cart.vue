@@ -5,22 +5,21 @@
     </div>
     <!-- 流程 -->
     <ol class="row justify-content-center list-unstyled mb-4 mb-md-6">
-      <li class="col-md-3 col-lg-2 text-center
-        py-1 py-md-3 mx-4 mx-md-2 bg-primary-300"
+      <li class="col-md-3 col-lg-2 text-center py-1 py-md-3 mx-4 mx-md-2 bg-primary-300"
         data-aos="zoom-in">
-        <span class="font-sm font-h6-md text-brown d-block font-weight-bold">STOP</span>
+        <span class="font-sm font-h6-md text-brown d-block font-weight-bold">STEP</span>
         <span class="h5 font-h4-md text-brown d-block py-md-1 font-family-roboto">01</span>
         <p class="font-sm font-h6-md text-brown">確認清單內容</p>
       </li>
       <li class="col-3 col-lg-2 text-center d-none d-md-block py-3 mx-2 bg-gray-100"
         data-aos="zoom-in" data-aos-delay="150">
-        <span class="h6 text-secondary d-block">STOP</span>
+        <span class="h6 text-secondary d-block">STEP</span>
         <span class="h4 text-secondary d-block py-md-1 font-family-roboto">02</span>
         <p class="text-secondary">填寫訂購資料</p>
       </li>
       <li class="col-3 col-lg-2 text-center d-none d-md-block py-3 mx-2 bg-gray-100"
         data-aos="zoom-in" data-aos-delay="300">
-        <span class="h6 text-secondary d-block">STOP</span>
+        <span class="h6 text-secondary d-block">STEP</span>
         <span class="h4 text-secondary d-block py-md-1 font-family-roboto">03</span>
         <p class="text-secondary">付款/完成訂單</p>
       </li>
@@ -33,7 +32,7 @@
           v-if="cartLength === 0">
           <div class="h4 text-base mb-5">購物車內無商品</div>
           <router-link class="btn btn-lg btn-primary py-1 mt-4 rounded-0"
-            :to="{ name: 'Products'}" >
+            :to="{ name: 'Products' }" >
             前往購物</router-link>
         </div>
         <h2 class="h4 text-base bg-light text-center py-4 rounded-top"
@@ -55,8 +54,8 @@
               @click="productLink(cart.product_id)">
               <td class="table-img align-middle d-none d-xs-table-cell">
                 <img class="img-cover"
-                  :src="`${ cart.product.imageUrl }`"
-                  :alt="`${ cart.product.title }`">
+                  :src="cart.product.imageUrl"
+                  :alt="cart.product.title">
                   </td>
               <td class="align-middle">
                 <span class="text-success line-height-1 d-none d-md-block font-sm"
@@ -68,11 +67,10 @@
                     v-if="cart.total!==cart.final_total">(已折價)</span>
                 </h3>
               </td>
-              <td class="align-middle text-center
-                font-xs font-sm-sm font-h6-md">{{ cart.qty }}/{{ cart.product.unit }}
+              <td class="align-middle text-center font-xs font-sm-sm font-h6-md">
+                {{ cart.qty }}/{{ cart.product.unit }}
               </td>
-              <td class="align-middle text-center text-dark
-                h6 font-h5-sm font-family-roboto">
+              <td class="align-middle text-center text-dark h6 font-h5-sm font-family-roboto">
                 {{ cart.final_total | currency }}
               </td>
               <td class="align-middle text-center" width="20">
@@ -86,9 +84,8 @@
             </tr>
           </tbody>
         </table>
-        <router-link class="btn-light text-center text-decoration-none
-          d-none d-md-block py-2 my-6"
-          :to="{ name: 'Products'}"
+        <router-link class="btn-light text-center text-decoration-none d-none d-md-block py-2 my-6"
+          :to="{ name: 'Products' }"
           v-if="cartLength !== 0">
           <i class="fas fa-arrow-left"></i>
            返回商店</router-link>
@@ -96,8 +93,8 @@
       <!-- 購物車合計-折價券-->
       <div class="col-md-5" data-aos="fade-down" data-aos-delay="150">
         <div class="card p-4 shadow mb-6">
-          <h4 class="h5 text-base text-center border-bottom
-            d-flex justify-content-center pb-4">購 物 車 合 計
+          <h4 class="h5 text-base text-center border-bottom d-flex justify-content-center pb-4">
+            購 物 車 合 計
             <span class="badge badge-pill badge-warning text-white ml-2">
               {{ cartLength }}</span>
           </h4>
@@ -122,9 +119,9 @@
                 aria-label="add Coupon Code"
                 v-model="couponCode">
               <div class="input-group-append">
-                <a class="btn btn-outline-secondary py-2" type="button" href="#"
-                  @click="addCouponCode"
-                  :class="{'disabled': cartLength === 0}">使用優惠</a>
+                <a class="btn btn-outline-secondary py-2" href="#"
+                  @click.prevent="addCouponCode"
+                  :class="{ 'disabled': cartLength === 0 }">使用優惠</a>
               </div>
             </div>
             <p class="text-info line-height-1 mb-5 font-xs">
@@ -132,16 +129,15 @@
             </p>
             <router-link class="btn btn-sm-sm btn-block btn-warning btn-lg rounded-0 text-white"
               :to="{ name: 'ConsumerForm' }"
-              :class="{'disabled': cartLength === 0}">
+              :class="{ 'disabled': cartLength === 0 }">
               確認商品
               <i class="fas  fa-arrow-right"></i>
             </router-link>
           </div>
         </div>
         <div class="px-8 my-6">
-          <router-link class="d-block btn-light py-2 text-center
-            text-decoration-none d-md-none"
-            :to="{ name: 'Products'}"
+          <router-link class="d-block btn-light py-2 text-center text-decoration-none d-md-none"
+            :to="{ name: 'Products' }"
             v-if="cartLength !== 0">
             <i class="fas fa-arrow-left"></i>
              返回商店</router-link>
@@ -152,48 +148,48 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
-  data() {
+  data () {
     return {
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   computed: {
     ...mapGetters(['status']),
     ...mapGetters('cartModules', ['carts', 'cartLength']),
     couponCode: {
-      get() {
-        return this.$store.state.couponModules.couponCode;
+      get () {
+        return this.$store.state.couponModules.couponCode
       },
-      set(value) {
-        this.$store.commit('couponModules/COUPON_CODE', value);
-      },
-    },
+      set (value) {
+        this.$store.commit('couponModules/COUPON_CODE', value)
+      }
+    }
   },
   methods: {
-    removeCart(id) {
-      this.$store.dispatch('cartModules/removeCart', id);
+    removeCart (id) {
+      this.$store.dispatch('cartModules/removeCart', id)
     },
-    addCouponCode() {
-      this.$store.dispatch('couponModules/useCouponCode');
+    addCouponCode () {
+      this.$store.dispatch('couponModules/useCouponCode')
     },
-    productLink(id) {
+    productLink (id) {
       if (this.$route.params.productId !== id) {
-        this.$router.push({ name: 'ProductDetail', params: { productId: id } });
+        this.$router.push({ name: 'ProductDetail', params: { productId: id } })
       } else {
         this.$store.dispatch(
           'alertMessageModules/updateMessage',
-          { message: '您已在本頁', status: 'warning' },
-        );
+          { message: '您已在本頁', status: 'warning' }
+        )
       }
-    },
+    }
   },
-  created() {
-    this.$store.dispatch('cartModules/getCart');
-  },
-};
+  created () {
+    this.$store.dispatch('cartModules/getCart')
+  }
+}
 </script>
 
 <style scoped lang="scss">

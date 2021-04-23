@@ -4,12 +4,12 @@
     <header class="header navbar navbar-light sticky-top bg-white
       flex-row py-0 px-3 shadow">
       <h1 class="navbar-brand py-2 pl-md-4 pl-lg-8">
-        <a class="navbar-brand mr-0 text-decoration-none" href="./index.html">Flower Shop</a>
+        <a class="navbar-brand mr-0 text-decoration-none" href="/">Flower Shop</a>
       </h1>
       <button class="navbar-toggler d-md-none collapsed"
         data-toggle="collapse" data-target="#sidebarMenu"
         aria-controls="sidebarMenu" aria-expanded="false"
-        aria-label="Toggle navigation">
+        aria-label="Toggle navigation" type="button">
         <span class="navbar-toggler-icon"></span>
       </button>
     </header>
@@ -21,15 +21,15 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar.vue';
-import AlertMessage from '../components/AlertMessage.vue';
+import Sidebar from '../components/Sidebar.vue'
+import AlertMessage from '../components/AlertMessage.vue'
 
 export default {
   components: {
     Sidebar,
-    AlertMessage,
-  },
-};
+    AlertMessage
+  }
+}
 </script>
 
 <style lang="scss"  scoped scope="this api replaced by slot-scope in 2.5.0+">

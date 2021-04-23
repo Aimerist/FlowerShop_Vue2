@@ -6,11 +6,11 @@
         <ul class="list-group mb-3 text-center">
           <li class="list-group-item border border-light disabled px-0">CATEGORY</li>
           <li class="list-group-item"
-            :class="{active: nowCategoryStatus === 'all'}"
+            :class="{ active: nowCategoryStatus === 'all' }"
             @click="switchCategoryStatus('all')">
             ALL</li>
           <li class="list-group-item"
-            :class="{active: nowCategoryStatus === `${ category }`}"
+            :class="{ active: nowCategoryStatus === `${ category }` }"
             @click="switchCategoryStatus(category)"
             v-for="category in categories" :key="category">
             {{ category }}</li>
@@ -24,7 +24,7 @@
             v-for="item in filterProducts" :key="item.id">
             <div class="card hover--shadow">
               <router-link class="text-decoration-none position-relative"
-                :to="{ name: 'ProductDetail', params: { productId: `${item.id}` }}">
+                :to="{ name: 'ProductDetail', params: { productId: `${ item.id }` }}">
                 <div class="favorite position-absolute shadow-black-30 hover--enlarge">
                   <a class="text-white" href="#"
                     v-if="!isFavorite(item.id)"
@@ -70,62 +70,62 @@
 </template>
 
 <script>
-import contentLength from '@/filters/stringlenght';
-import { mapGetters } from 'vuex';
+import contentLength from '@/filters/stringlenght'
+import { mapGetters } from 'vuex'
 
 export default {
   filters: {
-    contentLength,
+    contentLength
   },
-  data() {
+  data () {
     return {
-      nowCategoryStatus: 'all',
-    };
+      nowCategoryStatus: 'all'
+    }
   },
   computed: {
     ...mapGetters(['status']),
     ...mapGetters('productModules', ['categories']),
-    filterProducts() {
-      const vm = this;
-      const Data = vm.$store.state.productModules.filterProducts;
+    filterProducts () {
+      const vm = this
+      const Data = vm.$store.state.productModules.filterProducts
       if (vm.nowCategoryStatus !== 'all') {
-        return Data.filter((item) => item.category === vm.nowCategoryStatus);
+        return Data.filter((item) => item.category === vm.nowCategoryStatus)
       }
-      return Data;
-    },
+      return Data
+    }
   },
   methods: {
-    getRouteQuery() {
+    getRouteQuery () {
       if (this.$route.query.category) {
-        this.nowCategoryStatus = this.$route.query.category;
+        this.nowCategoryStatus = this.$route.query.category
       }
     },
-    switchCategoryStatus(CategoryName) {
-      this.nowCategoryStatus = CategoryName;
-      this.$router.replace({ query: { category: CategoryName } });
+    switchCategoryStatus (CategoryName) {
+      this.nowCategoryStatus = CategoryName
+      this.$router.replace({ query: { category: CategoryName } })
     },
-    addCart(id) {
-      this.$store.dispatch('cartModules/addCart', { id });
+    addCart (id) {
+      this.$store.dispatch('cartModules/addCart', { id })
     },
-    addFavorite(id, title, price, imageUrl) {
+    addFavorite (id, title, price, imageUrl) {
       const data = {
-        id, title, price, imageUrl,
-      };
-      this.$store.dispatch('favoriteModules/addFavorite', data);
+        id, title, price, imageUrl
+      }
+      this.$store.dispatch('favoriteModules/addFavorite', data)
     },
-    isFavorite(id) {
+    isFavorite (id) {
       return this.$store.state.favoriteModules.favorites
         .map((item) => item.id)
-        .some((item) => item === id);
+        .some((item) => item === id)
     },
-    removeFavorite(id) {
-      this.$store.dispatch('favoriteModules/removeFavorite', { id });
-    },
+    removeFavorite (id) {
+      this.$store.dispatch('favoriteModules/removeFavorite', { id })
+    }
   },
-  created() {
-    this.getRouteQuery();
-  },
-};
+  created () {
+    this.getRouteQuery()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

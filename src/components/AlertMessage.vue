@@ -12,24 +12,24 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   computed: {
-    ...mapGetters('alertMessageModules', ['messages']),
+    ...mapGetters('alertMessageModules', ['messages'])
   },
   methods: {
-    updateMessage(message, status) {
-      this.$store.dispatch('alertMessageModules/updateMessage', { message, status });
+    updateMessage (message, status) {
+      this.$store.dispatch('alertMessageModules/updateMessage', { message, status })
     },
-    removeMessage(num) {
-      this.$store.dispatch('alertMessageModules/removeMessage', num);
-    },
-  },
-};
+    removeMessage (num) {
+      this.$store.dispatch('alertMessageModules/removeMessage', num)
+    }
+  }
+}
 </script>
 
 <style scope>

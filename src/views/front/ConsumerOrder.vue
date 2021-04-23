@@ -7,7 +7,7 @@
     <ol class="row justify-content-center list-unstyled mb-4 mb-md-6">
       <li class="col-3 col-lg-2 text-center d-none d-md-block py-3 mx-2 bg-gray-100"
         data-aos="zoom-in">
-        <span class="h6 text-secondary d-block">STOP</span>
+        <span class="h6 text-secondary d-block">STEP</span>
         <span class="h4 text-secondary d-block py-md-1 font-family-roboto">
           <i class="fa fa-check"></i>
         </span>
@@ -15,16 +15,15 @@
       </li>
       <li class="col-3 col-lg-2 text-center d-none d-md-block py-3 mx-2 bg-gray-100"
         data-aos="zoom-in" data-aos-delay="150">
-        <span class="h6 text-secondary d-block">STOP</span>
+        <span class="h6 text-secondary d-block">STEP</span>
         <span class="h4 text-secondary d-block py-md-1 font-family-roboto">
           <i class="fa fa-check"></i>
         </span>
         <p class="text-secondary">填寫訂購資料</p>
       </li>
-      <li class="col-md-3 col-lg-2 text-center py-1 py-md-3 mx-4 mx-md-2
-        bg-primary-300"
+      <li class="col-md-3 col-lg-2 text-center py-1 py-md-3 mx-4 mx-md-2 bg-primary-300"
         data-aos="zoom-in" data-aos-delay="300">
-        <span class="font-sm font-h6-md text-brown d-block font-weight-bold">STOP</span>
+        <span class="font-sm font-h6-md text-brown d-block font-weight-bold">STEP</span>
         <span class="h5 text-brown d-block py-md-1 font-family-roboto"
           v-if="order.is_paid">
           <i class="fa fa-check"></i>
@@ -36,8 +35,8 @@
     </ol>
     <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
       <div class="col-md-7">
-        <div class="bg-light text-center rounded-top
-          d-md-flex align-items-center py-3 py-md-4 px-md-6">
+        <div class="bg-light text-center rounded-top d-md-flex align-items-center
+          py-3 py-md-4 px-md-6">
           <p class="mx-2 mt-md-1">訂單編號：</p>
           <h2 class="h4 text-dark ml-lg-8 ml-xl-15">{{ order.id }}</h2>
         </div>
@@ -83,7 +82,7 @@
           </table>
           <div class="text-center mx-2 mb-5">
             <button class="btn btn-warning btn-lg btn-block text-white"
-              v-if="!order.is_paid"
+              v-if="!order.is_paid" type="button"
               @click.prevent="payOrder">確認付款</button>
           </div>
         </div>
@@ -98,29 +97,29 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  data() {
+  data () {
     return {
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   computed: {
-    ...mapGetters('orderModules', ['order', 'orderId']),
+    ...mapGetters('orderModules', ['order', 'orderId'])
   },
   methods: {
-    ...mapActions('orderModules', ['getOrder', 'payOrder']),
+    ...mapActions('orderModules', ['getOrder', 'payOrder'])
   },
   watch: {
-    $route() {
-      this.$store.commit('orderModules/ORDER_ID', this.$route.params.orderId);
-      this.$store.dispatch('orderModules/getOrder');
-    },
+    $route () {
+      this.$store.commit('orderModules/ORDER_ID', this.$route.params.orderId)
+      this.$store.dispatch('orderModules/getOrder')
+    }
   },
-  created() {
-    this.$store.commit('orderModules/ORDER_ID', this.$route.params.orderId);
-    this.$store.dispatch('orderModules/getOrder');
-  },
-};
+  created () {
+    this.$store.commit('orderModules/ORDER_ID', this.$route.params.orderId)
+    this.$store.dispatch('orderModules/getOrder')
+  }
+}
 </script>

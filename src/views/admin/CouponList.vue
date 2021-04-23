@@ -1,10 +1,9 @@
 <template>
   <div class="back-grid-setting d-flex flex-column justify-content-between">
     <main>
-      <div class="d-flex align-items-center justify-content-between
-        mt-4 mb-6 mx-md-4">
+      <div class="d-flex align-items-center justify-content-between mt-4 mb-6 mx-md-4">
         <h2 class="h4 text-dark">Coupon List</h2>
-        <button class="btn ml-8 font-weight-bold hover--colorPrimary"
+        <button class="btn ml-8 font-weight-bold hover--colorPrimary" type="button"
           @click="openModal(true)">
           <span class="fas fa-plus mr-1 text-primary"></span>
           Add
@@ -38,7 +37,7 @@
             <td class="d-md-table-cell d-none align-middle">
               {{ item.due_date | date }}</td>
             <th class="align-middle">
-              <button class="btn btn-sm hover--colorPrimary"
+              <button class="btn btn-sm hover--colorPrimary" type="button"
                 @click.stop="openModal(false, item)">
                 <span class="fas fa-pen fa-lg"></span>
               </button>
@@ -69,7 +68,7 @@
               <div class="row">
                 <div class="col-sm text-left">
                   <div class="form-row">
-                    <div class="form-group  col-md-6">
+                    <div class="form-group col-md-6">
                       <label for="title">名稱</label>
                       <ValidationProvider name="名稱" rules="required" v-slot="{ errors }">
                         <input type="text" class="form-control" id="title"
@@ -77,7 +76,7 @@
                         <span class="font-sm text-danger-500">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
-                    <div class="form-group  col-md-6">
+                    <div class="form-group col-md-6">
                       <label for="code">優惠碼</label>
                       <ValidationProvider name="優惠碼" rules="required" v-slot="{ errors }">
                         <input type="text" class="form-control" id="code"
@@ -123,16 +122,16 @@
                     <span class="fas fa-exclamation-triangle mr-1"></span>
                     刪除優惠</p>
                   <a class="btn btn-outline-danger btn-block font-weight-bold font-family-raleway"
-                    href="#" type="button" data-dismiss="modal"
-                    @click="openModal(false, tempCoupon, true)">
+                    href="#" data-dismiss="modal"
+                    @click.prevent="openModal(false, tempCoupon, true)">
                     Delete This Coupon !</a>
                 </div>
               </div>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-              <a v-if="!isCreate" type="button" href="#" data-dismiss="modal"
+              <a v-if="!isCreate" href="#" data-dismiss="modal"
                 class="btn text-danger font-weight-bold d-none d-sm-block"
-                @click="openModal(false, tempCoupon, true)">
+                @click.prevent="openModal(false, tempCoupon, true)">
                 <span class="fas fa-exclamation-triangle"></span>
                 Delete This Coupon !</a>
               <div class="ml-auto">
@@ -229,9 +228,9 @@
             </div>
           </div>
           <div class="modal-footer d-flex justify-content-between py-1">
-            <a type="button" href="#" data-dismiss="modal"
+            <a href="#" data-dismiss="modal"
               class="font-xs text-danger font-weight-bold text-decoration-none"
-              @click="openModal(false, tempCoupon, true)">
+              @click.prevent="openModal(false, tempCoupon, true)">
               <span class="fas fa-exclamation-triangle"></span>
               Delete This Coupon</a>
             <button type="button" data-dismiss="modal"
@@ -249,77 +248,77 @@
 import {
   ValidationProvider,
   ValidationObserver,
-  extend,
-} from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-import $ from 'jquery';
-import Pagination from '@/components/Pagination.vue';
-import percentage from '@/filters/percentage';
-import { mapActions, mapGetters } from 'vuex';
+  extend
+} from 'vee-validate'
+import { required } from 'vee-validate/dist/rules'
+import $ from 'jquery'
+import Pagination from '@/components/Pagination.vue'
+import percentage from '@/filters/percentage'
+import { mapActions, mapGetters } from 'vuex'
 
 extend('required', {
   ...required,
-  message: '{_field_} 欄位不得留空',
-});
+  message: '{_field_} 欄位不得留空'
+})
 
 export default {
   components: {
     Pagination,
     ValidationProvider,
-    ValidationObserver,
+    ValidationObserver
   },
   filters: {
-    percentage,
+    percentage
   },
-  data() {
+  data () {
     return {
-      isCreate: true,
-    };
+      isCreate: true
+    }
   },
   computed: {
     ...mapGetters(['page', 'status']),
-    ...mapGetters('couponModules', ['coupons', 'tempCoupon']),
+    ...mapGetters('couponModules', ['coupons', 'tempCoupon'])
   },
   methods: {
     ...mapActions('couponModules', ['delCoupon']),
-    getCoupons(page) {
-      this.$store.dispatch('couponModules/getCoupons', page);
+    getCoupons (page) {
+      this.$store.dispatch('couponModules/getCoupons', page)
     },
-    openModal(isCreate, coupon, isDelete = false) {
+    openModal (isCreate, coupon, isDelete = false) {
       if (isDelete) {
-        $('#delModal').modal('show');
-        this.$store.state.couponModules.tempCoupon = { ...coupon };
+        $('#delModal').modal('show')
+        this.$store.state.couponModules.tempCoupon = { ...coupon }
       } else {
-        this.isCreate = isCreate;
+        this.isCreate = isCreate
         if (isCreate) {
-          this.$store.state.couponModules.tempCoupon = {};
+          this.$store.state.couponModules.tempCoupon = {}
         } else {
-          this.$store.state.couponModules.tempCoupon = { ...coupon };
-          this.$store.commit('couponModules/DUE_DATE_FORMAT', coupon.due_date);
+          this.$store.state.couponModules.tempCoupon = { ...coupon }
+          this.$store.commit('couponModules/DUE_DATE_FORMAT', coupon.due_date)
         }
-        $('#updataModal').modal('show');
+        $('#updataModal').modal('show')
       }
     },
-    detailModal(coupon) {
-      this.$store.state.couponModules.tempCoupon = { ...coupon };
-      $('#detailModal').modal('show');
+    detailModal (coupon) {
+      this.$store.state.couponModules.tempCoupon = { ...coupon }
+      $('#detailModal').modal('show')
     },
-    updataCoupon() {
-      const vm = this;
+    updataCoupon () {
+      const vm = this
       vm.$refs.form.validate().then((valid) => {
         if (valid) {
-          vm.$store.dispatch('couponModules/updataCoupon', vm.isCreate);
+          vm.$store.dispatch('couponModules/updataCoupon', vm.isCreate)
         } else {
           vm.$store.dispatch(
             'alertMessageModules/updateMessage',
-            { message: '欄位填寫不完整', status: 'danger' },
-          );
+            { message: '欄位填寫不完整', status: 'danger' }
+          )
         }
-      });
-    },
+      })
+    }
   },
-  created() {
-    this.getCoupons();
-  },
-};
+  created () {
+    this.getCoupons()
+  }
+}
 </script>

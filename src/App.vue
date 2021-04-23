@@ -6,15 +6,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['status']),
-  },
-};
+    ...mapGetters(['status'])
+  }
+}
 </script>
 
 <style lang="scss">
-@import "./assets/all.scss";
+@import "./assets/scss/all.scss";
 </style>

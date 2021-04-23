@@ -1,13 +1,13 @@
 <template>
   <main class="grid-setting py-0">
-    <!-- banner -->
     <section class="container-fluid container-lg banner mb-8 mb-md-12 mb-lg-20">
       <div class="row justify-content-center">
         <div class="col-3 z-index-2 py-12 py-md-15 pl-0 pl-md-4">
-          <div class="d-flex flex-column justify-content-center align-items-center
-            bg-warning mr-n20 h-100" data-aos="zoom-in-right">
+          <div class="d-flex flex-column justify-content-center align-items-center bg-warning
+            mr-n20 h-100"
+            data-aos="zoom-in-right">
             <h2 class="h4 font-h2-md font-h1-lg text-white font-family-raleway
-              border-bottom border-2 border-light mb-3">
+            border-bottom border-2 border-light mb-3">
               About us
             </h2>
             <h2 class="font-sm font-h6-md text-white-80 text-letter-spacing-3">關於我們</h2>
@@ -16,7 +16,6 @@
         <div class="col-9 banner__img bg-cover"></div>
       </div>
     </section>
-    <!-- contact 1 -->
     <section class="container mb-12  mb-md-12 mb-lg-20">
       <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8 col-xl-7">
@@ -29,42 +28,41 @@
             我們相信生命需要點綴，花賦予我們更繽紛的人生。 <br>
             <router-link class="font-family-raleway hover--shadowLine"
               :to="{ name: 'Home' }">Flower Shop</router-link>
-            是我們對每個人的祝福。 <br class="">
+            是我們對每個人的祝福。
             在喧鬧的都市角落，讓
             <router-link class="font-family-raleway hover--shadowLine"
               :to="{ name: 'Home' }">Flower Shop</router-link>
-            為你的一天點綴上色彩。<br class="">
-            花朵隨著季節的變化交替著它的色彩，帶給每一個平凡的日常不一樣的心情。 <br class="">
+            為你的一天點綴上色彩
+            花朵隨著季節的變化交替著它的色彩，帶給每一個平凡的日常不一樣的心情。
             慢下腳步，感受
             <router-link class="font-family-raleway hover--shadowLine"
               :to="{ name: 'Home' }">Flower Shop</router-link>
-            的朝氣，將各種美好分享給大家。<br class="">
+            的朝氣，將各種美好分享給大家
           </p>
           <p class="font-sm font-h6-sm" data-aos="fade-up" data-aos-delay="450">
-            我們相信生命需要點綴，花賦予我們更繽紛的人生。 <br class="">
+            我們相信生命需要點綴，花賦予我們更繽紛的人生。
             <router-link class="font-family-raleway hover--shadowLine"
               :to="{ name: 'Home' }">Flower Shop</router-link>
-            是我們對每個人的祝福。 <br class="">
+            是我們對每個人的祝福。
             在喧鬧的都市角落，讓
             <router-link class="font-family-raleway hover--shadowLine"
               :to="{ name: 'Home' }">Flower Shop</router-link>
-            為你的一天點綴上色彩。<br class="">
-            花朵隨著季節的變化交替著它的色彩，帶給每一個平凡的日常不一樣的心情。 <br class="">
+            為你的一天點綴上色彩
+            花朵隨著季節的變化交替著它的色彩，帶給每一個平凡的日常不一樣的心情。
             慢下腳步，感受
             <router-link class="font-family-raleway hover--shadowLine"
               :to="{ name: 'Home' }">Flower Shop</router-link>
-            的朝氣，將各種美好分享給大家。<br class="">
+            的朝氣，將各種美好分享給大家
           </p>
         </div>
       </div>
     </section>
-    <!-- contact 2 -->
     <section class="container-fluid container-lg mb-8 mb-md-12 mb-lg-20">
       <div class="row justify-content-center">
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center
           mb-6 mb-md-0 px-md-0 px-lg-4" data-aos="fade-up">
           <img class="img-cover img-fluid"
-            src="../../assets/images/about/people.jpg" alt="">
+            src="../../assets/images/about/people.jpg" alt="花與笑容">
         </div>
         <div class="col-12 col-sm-10 col-md-6 d-flex flex-column justify-content-center
           align-items-center px-lg-8 px-xl-15" data-aos="fade-up" data-aos-duration="2000">
@@ -87,14 +85,12 @@
             精緻高貴的設計，精準描繪出「幸福」的形狀，細心對待每一位顧客，
             <router-link class="font-family-raleway hover--shadowLine"
               :to="{ name: 'Home' }">Flower Shop</router-link>
-            <!-- 永遠為你獻上最真誠的服務(祝福)，用行動來表達我們最純粹的理念(承諾)(追求)(祝福)(服務)。 -->
             永遠為你獻上最真誠的祝福，用行動來表達我們的追求。
             能讓你在生活中的每個當下，能夠使美好時刻更加美好。
           </p>
         </div>
       </div>
     </section>
-    <!-- serivce -->
     <section class="container mb-8 mb-md-12 mb-lg-20">
       <div class="row mb-8 mb-md-12">
         <div class="col text-center">
@@ -120,7 +116,7 @@
             d-inline-block border-bottom pb-1 mb-5">02</span>
           <h4 class="h5 font-h4-md text-base mb-2">Garden</h4>
           <p class="px-lg-5">
-            空間造景｜住宅庭院｜<br class="d-none d-lg-block">活動展場｜商業空間花藝規劃
+            空間造景｜住宅庭院｜活動展場｜商業空間花藝規劃
           </p>
         </li>
         <li class="col-6 col-md-3 text-center mb-6" data-aos="fade-up" data-aos-delay="300">
@@ -145,7 +141,6 @@
         </li>
       </ol>
     </section>
-    <!-- access -->
     <section class="container access">
       <div class="row pb-5 pb-xs-10 pb-sm-12 pb-lg-20">
         <div class="col-10">
@@ -153,7 +148,7 @@
             <h3 class="h5 font-h3-sm font-h2-lg font-weight-normal text-md-left
               mb-1 mb-md-2  pt-2 pt-xs-3 px-md-2 px-lg-6">Access</h3>
             <img class="img-cover w-100" data-aos="fade-up-right"
-              src="../../assets/images/about/access.jpg" alt="">
+              src="../../assets/images/about/access.jpg" alt="實體店家">
           </div>
         </div>
         <div class="col-12 col-sm-10 col-md-7 d-flex
@@ -175,7 +170,6 @@
         </div>
       </div>
     </section>
-    <!-- footer -->
     <section class="container-fluid bg-gradual">
       <div class="row justify-content-center py-6 py-sm-8 pt-lg-10"
         data-aos="fade-up" data-aos-duration="1500">

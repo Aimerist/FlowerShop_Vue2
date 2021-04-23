@@ -1,41 +1,41 @@
 export default ({
   namespaced: true,
   state: {
-    messages: [],
+    messages: []
   },
   actions: {
-    updateMessage(context, { message, status }) {
-      const timestamp = Math.floor(new Date() / 1000);
+    updateMessage (context, { message, status }) {
+      const timestamp = Math.floor(new Date() / 1000)
       context.commit('PUSH_MESSAGE', {
         message,
         status,
-        timestamp,
-      });
-      context.dispatch('removeMessageWithTiming', timestamp);
+        timestamp
+      })
+      context.dispatch('removeMessageWithTiming', timestamp)
     },
-    removeMessage(context, num) {
-      context.commit('REMOVE_MESSAGE', num);
+    removeMessage (context, num) {
+      context.commit('REMOVE_MESSAGE', num)
     },
-    removeMessageWithTiming(context, timestamp) {
-      const messageData = [...context.state.messages];
+    removeMessageWithTiming (context, timestamp) {
+      const messageData = [...context.state.messages]
       setTimeout(() => {
         messageData.forEach((item, i) => {
           if (item.timestamp === timestamp) {
-            context.commit('REMOVE_MESSAGE', i);
+            context.commit('REMOVE_MESSAGE', i)
           }
-        });
-      }, 2000);
-    },
+        })
+      }, 2000)
+    }
   },
   mutations: {
-    PUSH_MESSAGE(state, messageData) {
-      state.messages.push(messageData);
+    PUSH_MESSAGE (state, messageData) {
+      state.messages.push(messageData)
     },
-    REMOVE_MESSAGE(state, num) {
-      state.messages.splice(num, 1);
-    },
+    REMOVE_MESSAGE (state, num) {
+      state.messages.splice(num, 1)
+    }
   },
   getters: {
-    messages: (state) => state.messages,
-  },
-});
+    messages: (state) => state.messages
+  }
+})

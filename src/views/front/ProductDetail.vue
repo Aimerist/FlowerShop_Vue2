@@ -106,7 +106,7 @@
               <div class="input-group mb-2">
                 <div class="input-group-prepend">
                   <a href="#" class="btn btn-light font"
-                    :class="{'disabled': qty === 1}"
+                    :class="{ 'disabled': qty === 1 }"
                     @click.prevent="qty = qty - 1">
                     <i class="fas fa-minus"></i></a>
                 </div>
@@ -115,12 +115,12 @@
                   v-model.number="qty">
                 <div class="input-group-append">
                   <a href="#" class="btn btn-light"
-                    :class="{'disabled':qty === 15}"
+                    :class="{ 'disabled':qty === 15 }"
                     @click.prevent="qty = qty + 1">
                     <i class="fas fa-plus"></i></a>
                 </div>
               </div>
-              <button class="btn btn-block btn-danger-500 hover--doublePulse"
+              <button class="btn btn-block btn-danger-500 hover--doublePulse" type="button"
                 @click="addCart(product.id, qty)">
                 <span v-if="status.itemLodingId === product.id">
                   加入中<i class="fas fa-spinner fa-spin mx-1"></i></span>
@@ -133,21 +133,23 @@
       <!-- Flower Meanings -->
       <div class="row">
         <div class="col-12 text-center mb-12">
-          <h4 class="font-h5 font-h4-xs font-weight-normal font-italic
-            text-letter-spacing-3 mb-5" data-aos="fade-up">
+          <h4 class="font-h5 font-h4-xs font-weight-normal font-italic text-letter-spacing-3 mb-5"
+            data-aos="fade-up">
             Flower Meanings
             <span class="font-xs font-h6-xs"> [花語]</span></h4>
           <p class="mb-1" data-aos="fade-up" data-aos-delay="100">
-            花不只美麗，<br class="d-sm-none">花語更能給予花朵不一樣的浪漫氣息</p>
+            花不只美麗，<span class="d-sm-none"><br></span>
+            花語更能給予花朵不一樣的浪漫氣息</p>
           <p data-aos="fade-up" data-aos-delay="100">
             {{ product.title }}的花語象徵著，
-            <br class="d-sm-none">{{ product.content }}</p>
+            <span class="d-sm-none"><br></span>{{ product.content }}</p>
         </div>
         <div class="col-4 col-md-3 mx-md-4 mx-lg-6" data-aos="fade-right">
-          <img class="img-cover img-fluid" src="../../assets/images/detail/2.jpg" alt="">
+          <img class="img-cover img-fluid" src="../../assets/images/detail/2.jpg" alt="花瓶與花">
         </div>
         <div class="col-8 mt-8 mt-md-15 ml-md-4 ml-lg-6 mb-15" data-aos="fade-left">
-          <img class="img-cover img-fluid mt-lg-4" src="../../assets/images/detail/1.jpg" alt="">
+          <img class="img-cover img-fluid mt-lg-4" alt="結婚與花束"
+            src="../../assets/images/detail/1.jpg" >
         </div>
       </div>
       <!-- Particular -->
@@ -155,9 +157,8 @@
         position-relative mb-12 mb-md-15">
         <div class="particular__inner d-flex flex-column justify-content-center
           h-100 mb-6 mr-md-4 text-center z-index-2"
-            data-aos="zoom-in-left" data-aos-duration="2000">
-          <h4 class="font-h4 font-h3-xs font-weight-normal font-italic
-            text-letter-spacing-3 mb-5">
+          data-aos="zoom-in-left" data-aos-duration="2000">
+          <h4 class="font-h4 font-h3-xs font-weight-normal font-italic text-letter-spacing-3 mb-5">
             Particular
             <span class="font-xs font-h6-xs">[特色]</span>
           </h4>
@@ -166,7 +167,7 @@
           </p>
         </div>
         <div class="col-md-7 col-lg-8" data-aos="fade-right">
-          <img class="img-fluid" src="../../assets/images/detail/3.jpg" alt="">
+          <img class="img-fluid" src="../../assets/images/detail/3.jpg" alt="粉色玫瑰花">
         </div>
       </div>
     </section>
@@ -174,12 +175,13 @@
     <div class="container-fluid bg-gradual mb-8 mb-md-12">
       <div class="row no-gutters justify-content-center pb-15 position-relative">
         <div class="col-12 text-center mb-4 mb-sm-5">
-          <h2 class="font-h5 font-h4-xs font-weight-normal font-italic
-            text-letter-spacing-3">Queen's Day <br class="d-md-none">
+          <h2 class="font-h5 font-h4-xs font-weight-normal font-italic text-letter-spacing-3">
+            Queen's Day
+            <span class="d-sm-none"><br></span>
             <span class="font-xs font-h6-xs">[{{ product.title }}]</span></h2>
         </div>
         <div class="col-10 col-md-8 col-xl-6 bg-cover detail__bigImg" data-aos="fade-up"
-          :style="`background-image: url( ${product.imageUrl});`"
+          :style="`background-image: url( ${ product.imageUrl });`"
           :alt="product.title">
         </div>
       </div>
@@ -198,64 +200,61 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import RecommendProducts from '@/components/RecommendProducts.vue';
+import { mapGetters } from 'vuex'
+import RecommendProducts from '@/components/RecommendProducts.vue'
 
 export default {
   components: {
-    RecommendProducts,
+    RecommendProducts
   },
-  data() {
+  data () {
     return {
       qty: 1,
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   computed: {
     ...mapGetters(['status']),
-    ...mapGetters('productModules', ['product', 'productId', 'filterProducts']),
+    ...mapGetters('productModules', ['product', 'productId', 'filterProducts'])
   },
   methods: {
-    addCart(id, qty = 1) {
-      this.$store.dispatch('cartModules/addCart', { id, qty });
+    addCart (id, qty = 1) {
+      this.$store.dispatch('cartModules/addCart', { id, qty })
     },
-    productLink(id) {
+    productLink (id) {
       if (this.$route.params.productId !== id) {
-        this.$router.push({ name: 'ProductDetail', params: { productId: id } });
+        this.$router.push({ name: 'ProductDetail', params: { productId: id } })
       } else {
         this.$store.dispatch(
           'alertMessageModules/updateMessage',
-          { message: '您已在本頁', status: 'warning' },
-        );
+          { message: '您已在本頁', status: 'warning' }
+        )
       }
     },
-    addFavorite(id, title, price, imageUrl) {
+    addFavorite (id, title, price, imageUrl) {
       const data = {
-        id, title, price, imageUrl,
-      };
-      this.$store.dispatch('favoriteModules/addFavorite', data);
+        id, title, price, imageUrl
+      }
+      this.$store.dispatch('favoriteModules/addFavorite', data)
     },
-    removeFavorite(id) {
-      this.$store.dispatch('favoriteModules/removeFavorite', { id });
+    removeFavorite (id) {
+      this.$store.dispatch('favoriteModules/removeFavorite', { id })
     },
-    isFavorite(id) {
+    isFavorite (id) {
       return this.$store.state.favoriteModules.favorites
         .map((item) => item.id)
-        .some((item) => item === id);
-    },
+        .some((item) => item === id)
+    }
   },
   watch: {
-    $route() {
-      this.$store.commit('productModules/PRODUCT_ID', this.$route.params.productId);
-      this.$store.dispatch('productModules/getProduct');
-    },
+    $route () {
+      this.$store.commit('productModules/PRODUCT_ID', this.$route.params.productId)
+      this.$store.dispatch('productModules/getProduct')
+    }
   },
-  created() {
-    this.$store.commit('productModules/PRODUCT_ID', this.$route.params.productId);
-    this.$store.dispatch('productModules/getProduct');
-  },
-  mounted() {
-    this.$store.dispatch('productModules/getProduct');
-  },
-};
+  created () {
+    this.$store.commit('productModules/PRODUCT_ID', this.$route.params.productId)
+    this.$store.dispatch('productModules/getProduct')
+  }
+}
 </script>

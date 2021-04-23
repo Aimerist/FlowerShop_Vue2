@@ -11,7 +11,7 @@
             <!-- shop cart -->
             <li class="mr-2 btn-group">
               <a class="position-relative text-muted p-2 m-0" href="#"
-                type="button" data-toggle="dropdown" aria-expanded="false">
+              data-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-shopping-cart fa-lg"></i>
                 <span class="badge badge-pill badge-danger">{{ cartLength }}</span>
               </a>
@@ -24,15 +24,15 @@
                     v-for="cart in carts.carts" :key="cart.id">
                     <router-link class="text-decoration-none d-flex align-items-center"
                       :to="{ name: 'ProductDetail', params: { productId: `${cart.product_id}` }}">
-                      <button class="btn btn-del pl-0 text-danger focus--outline-none"
+                      <button class="btn btn-del pl-0 text-danger focus--outline-none" type="button"
                         @click.stop.prevent="removeCart(cart.id)">
                         <i class="fas fa-spinner fa-spin"
                           v-if="status.itemLodingId === cart.id"></i>
                         <i class="fas fa-trash-alt" v-else></i>
                       </button>
                       <img class="dropdown-img img-cover mr-3"
-                        :src="`${ cart.product.imageUrl }`"
-                        :alt="`${ cart.product.title }`">
+                        :src="cart.product.imageUrl"
+                        :alt="cart.product.title">
                       <div class="mr-auto">
                         <h5 class="h6 mr-4 text-dark">{{ cart.product.title }}</h5>
                         <p class="text-gray line-height-1">
@@ -64,7 +64,7 @@
             <!-- fraovate -->
             <li class="mr-2 btn-group">
               <a class="position-relative text-muted p-2 m-0" href="#"
-                type="button" data-toggle="dropdown" aria-expanded="false">
+              data-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-heart fa-lg"></i>
                 <span class="badge badge-pill badge-danger">{{ favoriteLength }}</span>
               </a>
@@ -77,10 +77,11 @@
                     <router-link class="text-decoration-none d-flex align-items-center"
                       :to="{ name: 'ProductDetail', params: { productId: `${favorite.id}` }}">
                       <img class="dropdown-img img-cover mr-3 rounded-lg"
-                        :src="`${ favorite.imageUrl }`"
-                        :alt="`${ favorite.title }`">
+                        :src="favorite.imageUrl"
+                        :alt="favorite.title">
                       <h5 class="h6 text-dark mr-auto">{{ favorite.title }}</h5>
                       <button class="btn btn-del px-0 text-danger mr-2 focus--outline-none"
+                      type="button"
                         @click.stop.prevent="removeFavorite(false, favorite.id)">
                         <i class="fas fa-trash-alt"></i>
                       </button>
@@ -89,7 +90,7 @@
                 </ul>
                 <!-- 全部刪除 btn -->
                 <div class="mx-4 my-2">
-                  <button class="btn btn-block btn-outline-danger"
+                  <button class="btn btn-block btn-outline-danger" type="button"
                     data-toggle="modal" data-target="#delFavoriteModal"
                     v-if="favoriteLength !== 0">
                     刪除全部</button>
@@ -124,13 +125,10 @@
             <li class="nav-item position-relative mr-md-4">
               <router-link class="nav-link text-center py-4 py-md-2"
                 :to="{ name: 'Cart' }">Cart</router-link></li>
-            <li class="nav-item position-relative mr-md-4">
-              <router-link class="nav-link text-center py-4 py-md-2"
-                :to="{ name: 'Login' }">Login</router-link></li>
             <!-- shop cart -->
             <li class="nav-item d-none d-md-inline btn-group">
               <a class="nav-link text-muted position-relative" href="#"
-                type="button" data-toggle="dropdown" aria-expanded="false">
+              data-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="badge badge-pill badge-danger">{{ cartLength }}</span>
               </a>
@@ -143,15 +141,15 @@
                     v-for="cart in carts.carts" :key="cart.id">
                     <router-link class="text-decoration-none d-flex align-items-center"
                       :to="{ name: 'ProductDetail', params: { productId: `${cart.product_id}` }}">
-                      <button class="btn btn-del pl-0 text-danger focus--outline-none"
+                      <button class="btn btn-del pl-0 text-danger focus--outline-none" type="button"
                         @click.stop.prevent="removeCart(cart.id)">
                         <i class="fas fa-spinner fa-spin"
                           v-if="status.itemLodingId === cart.id"></i>
                         <i class="fas fa-trash-alt" v-else></i>
                       </button>
                       <img class="dropdown-img img-cover mr-3"
-                        :src="`${ cart.product.imageUrl }`"
-                        :alt="`${ cart.product.title }`">
+                        :src="cart.product.imageUrl"
+                        :alt="cart.product.title">
                       <div class="mr-auto">
                         <h5 class="h6 mr-4 text-dark">{{ cart.product.title }}</h5>
                         <p class="text-gray line-height-1">
@@ -183,7 +181,7 @@
             <!-- fraovate -->
             <li class="nav-item d-none d-md-inline btn-group">
               <a class="nav-link text-muted position-relative" href="#"
-              type="button" data-toggle="dropdown" aria-expanded="false">
+              data-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-heart"></i>
                 <span class="badge badge-pill badge-danger">{{ favoriteLength }}</span>
               </a>
@@ -191,15 +189,16 @@
                 <h4 class="h5 text-center text-brown my-2">收藏夾</h4>
                 <div class="dropdown-divider"></div>
                 <ul class="list-unstyled">
-                  <li class="dropdown-item "
+                  <li class="dropdown-item"
                     v-for="favorite in favorites" :key="favorite.id">
                     <router-link class="text-decoration-none d-flex align-items-center"
                       :to="{ name: 'ProductDetail', params: { productId: `${favorite.id}` }}">
                       <img class="dropdown-img img-cover mr-3 rounded-lg"
-                        :src="`${ favorite.imageUrl }`"
-                        :alt="`${ favorite.title }`">
+                        :src="favorite.imageUrl"
+                        :alt="favorite.title">
                       <h5 class="h6 text-dark mr-auto">{{ favorite.title }}</h5>
                       <button class="btn btn-del px-0 text-danger mr-2 focus--outline-none"
+                      type="button"
                         @click.stop.prevent="removeFavorite(false, favorite.id)">
                         <i class="fas fa-trash-alt"></i>
                       </button>
@@ -208,7 +207,7 @@
                 </ul>
                 <!-- 全部刪除 btn -->
                 <div class="mx-4 my-2">
-                  <button class="btn btn-block btn-outline-danger"
+                  <button class="btn btn-block btn-outline-danger" type="button"
                     data-toggle="modal" data-target="#delFavoriteModal"
                     v-if="favoriteLength !== 0">
                     刪除全部</button>
@@ -255,27 +254,27 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
     ...mapGetters(['status']),
     ...mapGetters('cartModules', ['carts', 'cartLength', 'isShowCart']),
-    ...mapGetters('favoriteModules', ['favorites', 'favoriteLength']),
+    ...mapGetters('favoriteModules', ['favorites', 'favoriteLength'])
   },
   methods: {
-    removeCart(id) {
-      this.$store.dispatch('cartModules/removeCart', id);
+    removeCart (id) {
+      this.$store.dispatch('cartModules/removeCart', id)
     },
-    removeFavorite(isDeleteAll, id) {
-      this.$store.dispatch('favoriteModules/removeFavorite', { id, isDeleteAll });
-    },
+    removeFavorite (isDeleteAll, id) {
+      this.$store.dispatch('favoriteModules/removeFavorite', { id, isDeleteAll })
+    }
   },
-  created() {
-    this.$store.dispatch('cartModules/getCart');
-    this.$store.dispatch('favoriteModules/getFavorite');
-  },
-};
+  created () {
+    this.$store.dispatch('cartModules/getCart')
+    this.$store.dispatch('favoriteModules/getFavorite')
+  }
+}
 </script>
 
 <style scoped lang="scss">

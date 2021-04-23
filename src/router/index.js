@@ -1,9 +1,13 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '*',
+    redirect: '/'
+  },
   {
     path: '/',
     component: () => import('../views/Layout.vue'),
@@ -11,44 +15,44 @@ const routes = [
       {
         path: '/',
         name: 'Home',
-        component: () => import('../views/front/Home.vue'),
+        component: () => import('../views/front/Home.vue')
       },
       {
         path: 'about',
         name: 'About',
-        component: () => import('../views/front/About.vue'),
+        component: () => import('../views/front/About.vue')
       },
       {
         path: 'products',
         name: 'Products',
-        component: () => import('../views/front/Products.vue'),
+        component: () => import('../views/front/Products.vue')
       },
       {
         path: '/products/:productId',
         name: 'ProductDetail',
-        component: () => import('../views/front/ProductDetail.vue'),
+        component: () => import('../views/front/ProductDetail.vue')
       },
       {
         path: '/cart',
         name: 'Cart',
-        component: () => import('../views/front/Cart.vue'),
+        component: () => import('../views/front/Cart.vue')
       },
       {
         path: '/consumerform',
         name: 'ConsumerForm',
-        component: () => import('../views/front/ConsumerForm.vue'),
+        component: () => import('../views/front/ConsumerForm.vue')
       },
       {
         path: '/consumerorder/:orderId',
         name: 'ConsumerOrder',
-        component: () => import('../views/front/ConsumerOrder.vue'),
+        component: () => import('../views/front/ConsumerOrder.vue')
       },
       {
         path: '/login',
         name: 'Login',
-        component: () => import('../views/front/Login.vue'),
-      },
-    ],
+        component: () => import('../views/front/Login.vue')
+      }
+    ]
   },
   {
     path: '/admin',
@@ -58,27 +62,27 @@ const routes = [
         path: 'productsList',
         name: 'ProductsList',
         meta: { requiresAuth: true },
-        component: () => import('../views/admin/ProductsList.vue'),
+        component: () => import('../views/admin/ProductsList.vue')
       },
       {
         path: 'orders',
         name: 'OrderList',
         meta: { requiresAuth: true },
-        component: () => import('../views/admin/OrderList.vue'),
+        component: () => import('../views/admin/OrderList.vue')
       },
       {
         path: 'coupons',
         name: 'CouponList',
         meta: { requiresAuth: true },
-        component: () => import('../views/admin/CouponList.vue'),
-      },
-    ],
-  },
-];
+        component: () => import('../views/admin/CouponList.vue')
+      }
+    ]
+  }
+]
 
 const router = new VueRouter({
   routes,
-  linkActiveClass: 'active',
-});
+  linkActiveClass: 'active'
+})
 
-export default router;
+export default router

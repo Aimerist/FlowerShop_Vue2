@@ -13,7 +13,7 @@
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="../../assets/images/index/banner/banner1.jpg"
-            class="carousel-img d-block w-100 img-cover" alt="...">
+            class="carousel-img d-block w-100 img-cover" alt="結婚與花束">
           <div class="carousel-caption d-none">
             <h5>精緻嚴選，花研美學</h5>
             <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -21,19 +21,19 @@
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/index/banner/banner2.jpg"
-            class="carousel-img d-block w-100 img-cover" alt="...">
+            class="carousel-img d-block w-100 img-cover" alt="天空與花">
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/index/banner/banner3.jpg"
-            class="carousel-img d-block w-100 img-cover" alt="...">
+            class="carousel-img d-block w-100 img-cover" alt="梅花">
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/index/banner/banner4.jpg"
-            class="carousel-img d-block w-100 img-cover" alt="...">
+            class="carousel-img d-block w-100 img-cover" alt="櫻花">
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/index/banner/banner5.jpg"
-            class="carousel-img d-block w-100 img-cover" alt="...">
+            class="carousel-img d-block w-100 img-cover" alt="藍邊繡球">
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselBanner" role="button" data-slide="prev">
@@ -52,8 +52,8 @@
             <span class="font-xs font-h6-md font-h5-xl text-primary d-block">
               2021 Open Special Offer</span>
             開幕全館限時折扣</h3>
-          <p class="sale__text font-xs font-sm-sm font-h6-md font-h5-xl text-white
-            d-inline-block bg-primary rounded-lg  px-4 px-sm-8"
+          <p class="sale__text font-xs font-sm-sm font-h6-md font-h5-xl text-white d-inline-block
+            bg-primary rounded-lg  px-4 px-sm-8"
             data-aos="flip-up" data-aos-duration="500">
             輸入折扣碼 【 <span class="font-weight-bold">OPEN8080</span> 】</p>
         </div>
@@ -67,14 +67,14 @@
           @click.prevent="productLinkOfCategory(category)">
           <div class="card card-overlay text-decoration-none border-0">
             <img class="img-cover h-100 rounded-lg"
-              :class="`categories__img-${key+1}`"
+              :class="`categories__img-${ key+1 }`"
               src="../../assets/images/index/banner/banner5.jpg"
               :alt="category">
             <div class="card-overlay-inner d-flex justify-content-between align-items-center
               rounded-lg">
               <div>
-                <p class="font-xs font-family-raleway
-                  font-weight-bold text-letter-spacing-1">{{ category }}</p>
+                <p class="font-xs font-family-raleway font-weight-bold text-letter-spacing-1">
+                  {{ category }}</p>
                 <h4 class="font-h4 text-white text-letter-spacing-3">{{ category }}</h4>
               </div>
               <span class="fas fa-angle-right text-white font-h4 shadow-black-30"></span>
@@ -88,8 +88,8 @@
       <div class="container text-center">
         <div class="row">
           <div class="col">
-            <h3 class="font-h4 font-h3-xs font-italic font-weight-normal
-              text-letter-spacing-3 text-center mb-4"
+            <h3 class="font-h4 font-h3-xs font-italic font-weight-normal text-letter-spacing-3
+              text-center mb-4"
               data-aos-throttleDelay="2000">Hot
               <span class="font-xs font-h6-xs">[熱門]</span></h3>
           </div>
@@ -102,7 +102,7 @@
               data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="center-bottom"
               :data-aos-delay="100*key">
               <div class="bg-cover mb-3 hot__img"
-                :style="`background-image:url(${hotProduct.imageUrl})`"></div>
+                :style="`background-image:url(${ hotProduct.imageUrl })`"></div>
               <div class=" px-2">
                 <h4 class="text-dark font-weight-bold text-letter-spacing-1 d-inline-block
                   hover--shadowLine mb-1">
@@ -130,20 +130,26 @@
               <span class="d-none d-sm-inline">，送花送到心坎裡</span>
               <span class="h6 d-block font-weight-normal font-family-raleway text-white-80
                 text-letter-spacing-1 mb-6">
-                Convey a good mood,<br class="d-sm-none">
+                Convey a good mood,
+                <span class="d-sm-none"><br></span>
                 send flowers to your heart</span>
             </h3>
             <div class="d-inline-block contact__content text-white-80 text-center py-6 px-8"
               data-aos="zoom-in" data-aos-once="false"
               data-aos-duration="1500">
               <p class="font-sm font-h6-md mb-2">
-                為你傳遞一份純粹而美好的心意<span class="d-none d-sm-inline">，</span><br class="d-sm-none">
+                為你傳遞一份純粹而美好的心意
+                <span class="d-none d-sm-inline">，</span>
+                <span class="d-sm-none"><br></span>
                 化為一段段動人而浪漫的詩篇<br>
-                讓思念留下美好回憶 <span class="d-none d-sm-inline">，</span><br class="d-sm-none">
+                讓思念留下美好回憶
+                <span class="d-none d-sm-inline">，</span>
+                <span class="d-sm-none"><br></span>
                 客製化只屬於你的心思<br>
               </p>
               <p>
-                歡迎來電洽詢<br class="d-sm-none">
+                歡迎來電洽詢
+                <span class="d-sm-none"><br></span>
                 <a class="text-white-50 text-decoration-none
                   hover--colorPrimary hover--shadowLine px-sm-1 ml-sm-1"
                   href="tel:+021234567">TEL : 02-1234567</a>
@@ -214,36 +220,36 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
-  data() {
+  data () {
     return {
       hotProductIds: [
         '-MHsrgCcA0KJVlemHr-9',
         '-MHpkt62GaADy2v3P0sa',
-        '-MHpjmjUzEd7BHE_ezRU',
-      ],
-    };
+        '-MHpjmjUzEd7BHE_ezRU'
+      ]
+    }
   },
   computed: {
     ...mapGetters('productModules', ['categories']),
-    hotProducts() {
-      const hotData = [];
+    hotProducts () {
+      const hotData = []
       this.$store.state.productModules.filterProducts.forEach((item) => {
         if (this.hotProductIds.includes(item.id)) {
-          hotData.push(item);
+          hotData.push(item)
         }
-      });
-      return hotData;
-    },
+      })
+      return hotData
+    }
   },
   methods: {
-    productLinkOfCategory(categoryName) {
-      this.$router.push({ path: '/products', query: { category: categoryName } });
-    },
-  },
-};
+    productLinkOfCategory (categoryName) {
+      this.$router.push({ path: '/products', query: { category: categoryName } })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

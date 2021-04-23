@@ -1,39 +1,39 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-import alertMessageModules from './alertMessage';
-import cartModules from './cart';
-import productModules from './product';
-import favoriteModules from './favorite';
-import couponModules from './coupon';
-import orderModules from './order';
+import alertMessageModules from './alertMessage'
+import cartModules from './cart'
+import productModules from './product'
+import favoriteModules from './favorite'
+import couponModules from './coupon'
+import orderModules from './order'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     page: {},
     status: {
       isLoading: false,
-      itemLodingId: '',
-    },
+      itemLodingId: ''
+    }
   },
   actions: {
   },
   mutations: {
-    PAGE(state, payload) {
-      state.page = payload;
+    PAGE (state, payload) {
+      state.page = payload
     },
-    IS_LOADING(state, payload) {
-      state.status.isLoading = payload;
+    IS_LOADING (state, payload) {
+      state.status.isLoading = payload
     },
-    ITEM_LOADING_ID(state, payload) {
-      state.status.itemLodingId = payload;
-    },
+    ITEM_LOADING_ID (state, payload) {
+      state.status.itemLodingId = payload
+    }
   },
   getters: {
     page: (state) => state.page,
-    status: (state) => state.status,
+    status: (state) => state.status
   },
   modules: {
     alertMessageModules,
@@ -41,6 +41,6 @@ export default new Vuex.Store({
     productModules,
     favoriteModules,
     couponModules,
-    orderModules,
-  },
-});
+    orderModules
+  }
+})

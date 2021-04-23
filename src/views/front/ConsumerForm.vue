@@ -7,21 +7,20 @@
     <ol class="row justify-content-center list-unstyled mb-4 mb-md-6">
       <li class="col-3 col-lg-2 text-center d-none d-md-block py-3 mx-2 bg-gray-100"
         data-aos="zoom-in">
-        <span class="h6 text-secondary d-block">STOP</span>
+        <span class="h6 text-secondary d-block">STEP</span>
         <span class="h5 font-h4-md text-secondary d-block py-md-1 font-family-roboto">
           <i class="fa fa-check"></i></span>
         <p class="text-secondary">確認清單內容</p>
       </li>
-      <li class="col-md-3 col-lg-2 text-center bg-primary-300
-        py-1 py-md-3 mx-4 mx-md-2"
+      <li class="col-md-3 col-lg-2 text-center bg-primary-300 py-1 py-md-3 mx-4 mx-md-2"
         data-aos="zoom-in" data-aos-delay="150">
-        <span class="font-sm font-h6-md text-brown font-weight-bold d-block">STOP</span>
-        <span class="h5 font-h4-md text-brown font-family-roboto d-block py-md-1 ">02</span>
+        <span class="font-sm font-h6-md text-brown font-weight-bold d-block">STEP</span>
+        <span class="h5 font-h4-md text-brown font-family-roboto d-block py-md-1">02</span>
         <p class="font-sm font-h6-md text-brown">填寫訂購資料</p>
       </li>
       <li class="col-3 col-lg-2 text-center d-none d-md-block py-3 mx-2 bg-gray-100"
         data-aos="zoom-in" data-aos-delay="300">
-        <span class="h6 text-secondary d-block">STOP</span>
+        <span class="h6 text-secondary d-block">STEP</span>
         <span class="h4 text-secondary d-block py-md-1 font-family-roboto">03</span>
         <p class="text-secondary">付款/完成訂單</p>
       </li>
@@ -29,10 +28,9 @@
     <ValidationObserver ref="form">
       <form class="row justify-content-center" @submit.prevent="createdOrder">
         <div class="col d-md-none mb-6 mx-2" data-aos="fade-up" data-aos-delay="150">
-          <div class="border border-light shadow rounded position-relative
-            px-4 py-4">
-            <a class="h6 font-h5-sm text-dark font-weight-normal
-              d-flex justify-content-center text-decoration-none py-1"
+          <div class="border border-light shadow rounded position-relative px-4 py-4">
+            <a class="h6 font-h5-sm text-dark font-weight-normal d-flex justify-content-center
+              text-decoration-none py-1"
               data-toggle="collapse" href="#collapseExample" role="button"
               aria-expanded="false" aria-controls="collapseExample">訂 單 內 容
               <span class="badge badge-pill badge-warning text-white ml-2">{{ cartLength }}</span>
@@ -58,8 +56,8 @@
                   </tr>
                   <tr v-if="carts.total!==carts.final_total">
                     <td class="font-weight-bold">折扣價
-                      <p class="text-success font-xs font-weight-normal line-height-1">(已套用優惠券)</p>
-                      </td>
+                      <p class="text-success font-xs font-weight-normal line-height-1">
+                        (已套用優惠券)</p></td>
                     <td class="h3 text-right text-success font-family-roboto">
                       {{ carts.final_total | currency }}</td>
                   </tr>
@@ -74,11 +72,10 @@
             v-if="cartLength === 0">
             <div class="h4 text-base mb-5">購物清單內無商品</div>
             <router-link class="btn btn-lg btn-primary py-1 mt-4 rounded-0"
-              :to="{ name: 'Products'}" >
+              :to="{ name: 'Products' }">
               前往購物</router-link>
           </div>
-          <h2 class="h4 text-base text-center bg-light rounded-top
-            d-none d-md-block mb-md-3 py-4"
+          <h2 class="h4 text-base text-center bg-light rounded-top d-none d-md-block mb-md-3 py-4"
             v-if="cartLength !== 0">
             訂單資料</h2>
           <div class="px-2"
@@ -125,15 +122,14 @@
           </div>
           <div class="m-5 d-md-none">
             <button class="btn btn-block btn-warning btn-submit btn-lg text-white py-3 rounded-0"
-              :class="{'d-none': cartLength === 0}">
+              :class="{ 'd-none': cartLength === 0 }" type="button">
               送出訂單
               <i class="fas fa-arrow-right"></i>
             </button>
           </div>
           <div class="m-5 mx-md-0 text-center">
-            <router-link class="d-block btn-light text-center
-              text-decoration-none py-1 py-md-2"
-              :to="{ name: 'Cart'}"
+            <router-link class="d-block btn-light text-center text-decoration-none py-1 py-md-2"
+              :to="{ name: 'Cart' }"
               v-if="cartLength !== 0">
               <i class="fas fa-arrow-left"></i>
               上一步，編輯購物清單</router-link>
@@ -148,8 +144,8 @@
         <!-- 訂單內容 -->
         <div class="col-md-5 d-none d-md-block" data-aos="fade-down" data-aos-delay="150">
           <div class="card p-4 shadow mb-6">
-            <h4 class="h5 text-base text-center pb-4 border-bottom border-light
-              d-flex justify-content-center">訂 單 內 容
+            <h4 class="h5 text-base text-center pb-4 border-bottom border-light d-flex
+              justify-content-center">訂 單 內 容
               <span class="badge badge-pill badge-warning text-white ml-2">{{ cartLength }}</span>
             </h4>
             <table class="table">
@@ -179,7 +175,7 @@
             </table>
             <div class="m-4">
               <button class="btn btn-block btn-warning btn-submit btn-lg rounded-0 text-white"
-                :class="{'disabled': cartLength === 0}">
+                :class="{ 'disabled': cartLength === 0 }" type="button">
                 送出訂單
                 <i class="fas fa-arrow-right"></i>
               </button>
@@ -195,72 +191,72 @@
 import {
   ValidationProvider,
   ValidationObserver,
-  extend,
-} from 'vee-validate';
-import { required, email } from 'vee-validate/dist/rules';
-import { mapGetters } from 'vuex';
+  extend
+} from 'vee-validate'
+import { required, email } from 'vee-validate/dist/rules'
+import { mapGetters } from 'vuex'
 
 extend('required', {
   ...required,
-  message: '{_field_} 欄位不得留空',
-});
+  message: '{_field_} 欄位不得留空'
+})
 extend('email', {
   ...email,
-  message: '{_field_} 必須是有效的電子郵件地址',
-});
+  message: '{_field_} 必須是有效的電子郵件地址'
+})
 
 export default {
   components: {
     ValidationProvider,
-    ValidationObserver,
+    ValidationObserver
   },
-  data() {
+  data () {
     return {
       form: {
-        user: {},
+        user: {}
       },
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   computed: {
-    ...mapGetters('cartModules', ['carts', 'cartLength']),
+    ...mapGetters('cartModules', ['carts', 'cartLength'])
   },
   methods: {
-    createdOrder() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order`;
+    createdOrder () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUTOMPATH}/order`
       this.$refs.form.validate().then((valid) => {
         if (valid) {
           vm.$http.post(url, { data: vm.form }).then((response) => {
             if (response.data.success) {
               vm.$store.dispatch(
                 'alertMessageModules/updateMessage',
-                { message: response.data.message, status: 'success' },
-              );
+                { message: response.data.message, status: 'success' }
+              )
               vm.$router.push({
                 name: 'ConsumerOrder',
-                params: { orderId: response.data.orderId },
-              });
+                params: { orderId: response.data.orderId }
+              })
             } else {
               vm.$store.dispatch(
                 'alertMessageModules/updateMessage',
-                { message: response.data.message, status: 'danger' },
-              );
+                { message: response.data.message, status: 'danger' }
+              )
             }
-          });
+          })
         } else {
           vm.$store.dispatch(
             'alertMessageModules/updateMessage',
-            { message: '欄位填寫不完整', status: 'danger' },
-          );
+            { message: '欄位填寫不完整', status: 'danger' }
+          )
         }
-      });
-    },
+      })
+    }
   },
-  created() {
-    this.$store.dispatch('cartModules/getCart');
-  },
-};
+  created () {
+    this.$store.dispatch('cartModules/getCart')
+  }
+}
 </script>
 
 <style scoped lang="scss">
