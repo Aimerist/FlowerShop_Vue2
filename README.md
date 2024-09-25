@@ -4,7 +4,7 @@
 
 ## 簡介
 
-此作品  Vue Cli 3 、 Vuex 及 Vue Router 製作的購物網站，主要功能有以下：
+此作品  Vue2 、 Vuex 及 Vue Router 製作的購物網站，主要功能有以下：
 
 - 前台:
 	1. 電商展示 
