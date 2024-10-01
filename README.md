@@ -1,4 +1,4 @@
-# FlowerShop 電商網站 - [Demo](https://aimer-ist.github.io/FlowerShop_VueCLI3/dist/#/)
+# FlowerShop 電商網站
 
 ![FlowerShop](https://i.imgur.com/OsYqkVl.jpg)
 
