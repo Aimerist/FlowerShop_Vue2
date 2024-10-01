@@ -54,7 +54,6 @@
 </p>
 
 ### 後台
-登入帳號請參考 [vue-course-api-wiki/登入及驗證](https://github.com/hexschool/vue-course-api-wiki/wiki/%E7%99%BB%E5%85%A5%E5%8F%8A%E9%A9%97%E8%AD%89)
 
 * 後台管理介面
   
